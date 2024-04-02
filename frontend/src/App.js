@@ -1,5 +1,5 @@
 
-import Sellpage from "./AllPages/Sellpage";
+import Sellpage from "./SellPageComponent/Sellpage";
 import State from "./ContextApi/State"
 import Home from './AllPages/Home'
 import { BrowserRouter,Route,Routes,Navigate} from "react-router-dom";

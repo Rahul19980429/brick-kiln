@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import context from '../ContextApi/Context'
-import CustomerItems from '../SellPageComponent/CustomerItems';
+import CustomerItems from './CustomerItems';
 import ReceiptCashpage from '../Components/Receiptpage';
 import PaymentCashpage from '../Components/Paymentpage';
 import CustomerNameList from '../Components/CustomerNameList';
