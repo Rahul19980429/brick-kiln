@@ -23,17 +23,27 @@ const SideOffcanvas = () => {
             <div className="offcanvas-body py-0">
                 <div className='d-flex px-5 ' style={{ flexFlow: 'column' }}>
                     <Link to="/" className='btn btn-danger mb-1' onClick={() => menuBtnClick()}>Home</Link>
-                    <Link to="/item" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>New Item</Link>
-                    <Link to="/member" className='btn btn-danger mb-1' onClick={() => menuBtnClick()}>New Member</Link>
+                    <button className="btn btn-danger dropdown-toggle mb-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       Create New
+                    </button>
+                    <ul className="dropdown-menu dropdown-menu-dark px-2">
+                        <li className='mb-2'><Link to="/item" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>New Item</Link></li>
+                        <li><Link to="/member" className="dropdown-item bg-danger"onClick={() => menuBtnClick()}>New Member</Link></li>
+                    </ul>
                     <Link to="/sale-bill" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>Sale</Link>
                     <Link to="/purchase-bill" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>Purchase</Link>
                     <Link to="/driver-bill" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>Transport</Link>
                     <Link to="/labor-bill" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>Labor</Link>
-                    <Link to="/item-sale-numbers" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>Check Item's Sale</Link>
-                    <Link to="/sale-bill-check" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>All Sale Entries</Link>
-                    <Link to="/driver-bill-check" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>All Transport Entries</Link>
-                    <Link to="/labor-bill-check" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>All Labor Entries</Link>
-                    <Link to="/bank-transection" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>Bank Transection</Link>
+                    <button className="btn btn-danger dropdown-toggle mb-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       All Entries
+                    </button>
+                    <ul className="dropdown-menu dropdown-menu-dark px-2">
+                        <li className='mb-2'><Link to="/sale-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Sale Entry</Link></li>
+                        <li className='mb-2'><Link to="/driver-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Transport Entry</Link></li>
+                        <li className='mb-2'><Link to="/labor-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Labor Entry</Link></li>
+                        <li className='mb-2'><Link to="/bank-transection" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Bank Entry</Link></li>
+                    </ul>
+                    
                     <Link to="/balance-check" className='btn btn-danger  mb-1' onClick={() => menuBtnClick()}>Balance</Link>
                     <Link to="/login" className='btn btn-danger  ' onClick={() => logOutClick()}>Log Out</Link>
 

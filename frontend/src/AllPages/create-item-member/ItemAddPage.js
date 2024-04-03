@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import context from '../../ContextApi/Context'
 import { useNavigate } from 'react-router-dom';
-
+import { Link } from "react-router-dom"
 const ItemAddPage = () => {
     let navigate = useNavigate();
     const [search, setSearch] = useState('')
@@ -125,8 +125,11 @@ const ItemAddPage = () => {
                     </div>
                     <div className='col-lg-6 offset-lg-2'>
                         <div className='row mt-3'>
-                            <div className='col-lg-12 d-flex'>
-                                <input className=" form-control me-5 ms-lg-3 " value={search} onChange={(e) => setSearch(e.target.value)} type="search" placeholder="Search" aria-label="Search" />
+                            <div className='col-lg-6 d-flex'>
+                                <input className=" form-control ms-lg-3 " value={search} onChange={(e) => setSearch(e.target.value)} type="search" placeholder="Search" aria-label="Search" />
+                            </div>
+                            <div className='col-lg-6'>
+                            <Link to="/item-sale-numbers" className={`btn btn-primary  mx-1`}>Check Item's Sale Numbers</Link>
                             </div>
 
                         </div>
