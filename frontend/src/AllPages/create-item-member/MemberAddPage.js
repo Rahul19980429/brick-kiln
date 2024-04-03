@@ -3,6 +3,8 @@ import context from '../../ContextApi/Context'
 import { useNavigate } from 'react-router-dom';
 
 const MemberAddPage = () => {
+const [handleUseEffect, setHandleUseEffect] = useState(false)
+
     const setDateFunc = (mdate) => {
         let date = new Date(mdate)
         return date.getFullYear() + "-" + (date.getMonth() + 1 < 10 ? '0' + parseInt(date.getMonth() + 1) : parseInt(date.getMonth() + 1)) + "-" + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
@@ -76,6 +78,7 @@ const MemberAddPage = () => {
         }
         else {
             AddNewMember(input.name.toLowerCase(), input.category, input.contact, input.address, memberBalance, balanceDate)
+             setHandleUseEffect(handleUseEffect===false?true:false)
             clearInput()
 
         }
@@ -92,6 +95,7 @@ const MemberAddPage = () => {
         else {
             const { name, category, contact, address } = data;
             UpdateMember(id, name, category, contact, address, memberBalance, balanceDate)
+             setHandleUseEffect(handleUseEffect===false?true:false)
             clearInput()
         }
     }
@@ -101,8 +105,7 @@ const MemberAddPage = () => {
         setBalanceDate(setDateFunc(new Date()));
         setMemberBalance(0)
         setMemberId('')
-
-
+       
     }
 
     const editMember = (memberData) => {
@@ -133,6 +136,7 @@ const MemberAddPage = () => {
 
     // useEffect
     useEffect(() => {
+        console.log('hey')
         if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
             if (localStorage.getItem('user_activeStatus') === 'false') {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
@@ -143,7 +147,7 @@ const MemberAddPage = () => {
         else {
             getAllMember().then((data) => setAllmembers(data.result))
         }
-    }, [members])
+    }, [handleUseEffect])
 
     if (error.length !== 0) {
         setTimeout(() => {
