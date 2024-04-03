@@ -27,10 +27,13 @@ const PaymentCashpage = (props) => {
     document.getElementById('paymentCloseBtn').click()
 
   }
+  const clearState = ()=>{
+    setPayment({ amount: '', mode: 'cash', naration: '' });
+  }
   return (
     <div>
       {/* <!-- Button trigger modal --> */}
-      <button type="button" className={`btn btn-${btnColor} me-3 mt-2`} data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+      <button type="button" className={`btn btn-${btnColor} btn-sm me-3 mt-2`} data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
         Pay
       </button>
 
@@ -42,7 +45,7 @@ const PaymentCashpage = (props) => {
             <form className='form' onSubmit={paymentClick}>
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">Pay Amount</h1>
-                <button type="button" id="paymentCloseBtn" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="paymentCloseBtn" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={()=>clearState()}></button>
               </div>
               <div className="modal-body">
 
@@ -62,7 +65,7 @@ const PaymentCashpage = (props) => {
               </div>
               <div className="modal-footer">
                 <button type="submit" className={`btn btn-${btnColor}`}>save</button>
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>clearState()}>cancel</button>
 
               </div>
             </form>

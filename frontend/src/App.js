@@ -1,5 +1,5 @@
 
-import Sellpage from "./SellPageComponent/Sellpage";
+import Sellpage from "./AllPages/SellPageComponent/Sellpage";
 import State from "./ContextApi/State"
 import Home from './AllPages/Home'
 import { BrowserRouter,Route,Routes,Navigate} from "react-router-dom";
@@ -10,6 +10,7 @@ import AllSaleEntryPage from "./AllPages/AllSaleEntryPage";
 import Menubtn from "./Components/MenuBtn";
 import LogIn from "./AllPages/login/LogIn";
 import ItemSaleNumbersCheck from "./AllPages/create-item-member/ItemSaleNumbersCheck";
+import Purchasepage from "./AllPages/PurchasePageComponent/Purchasepage";
 
 
 
@@ -34,7 +35,11 @@ function App() {
          <Route exact path="/item-sale-numbers" element={ <ItemSaleNumbersCheck/>}/>
 
         {/* <Sellpage/> */}
-        <Route exact path="/sale-bill" element={ <Sellpage/>}/>
+        <Route exact path="/sale-bill" element={ <Sellpage btnColor={'primary'}/>}/>
+
+        {/* <Sellpage/> */}
+        <Route exact path="/purchase-bill" element={ <Purchasepage btnColor={'success'}/>}/>
+
         {/* <BalanceCheckPage/> */}
         <Route exact path="/balance-check" element={ <BalanceCheckPage/>}/>
         {/* <AllSaleEntryPage/> */}

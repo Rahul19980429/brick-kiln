@@ -12,18 +12,14 @@ const States = (props) => {
 
   // useState for Members
   const [members, setMembers] = useState([])
-
   // useState for items 
   const [items, setItems] = useState([])
 
   // useState for CustomerItems array of items display in table
   const [customerItems, setCustomerItems] = useState([])
 
-
   // useState for items Final amount
   const [finalAmount, setFinalAmount] = useState(0)
-
-
 
   // useState for receipt amount
   const [recAmount, setRecAmount] = useState(0)
@@ -34,22 +30,17 @@ const States = (props) => {
   // useState for payment amount
   const [discount, setDiscount] = useState(0)
 
-
   // Item name useState 
   const [itemName, setItemName] = useState({ _id: '', iname: '', category: '', irate: '' })
 
   // useState for selected customer's data show on page
   const [selectedCustomer, setSelectedCustomer] = useState({ _id: '', name: '', address: '', contact: '', balance: '', category: '' })
 
-
-
-
   // useState for sell bill data
   const [sellBill, setSellBill] = useState('')
 
   // 
   const [billNumberForNextBtn, setBillNumberForNextBtn] = useState(0)
-
 
   // useState for Customer Interest Data
   const [interestData, setInterestData] = useState([])
@@ -88,7 +79,6 @@ const States = (props) => {
 
   // api call for create New Member
   const AddNewMember = async (name, category, contact, address, memberBalance, balanceDate) => {
-
     const response = await fetch(`${host}/api/member/createMember`, {
       method: 'POST',
       mode: 'cors',
@@ -102,7 +92,6 @@ const States = (props) => {
     if (data.success) {
       getAllMember()
       setError(data.msg)
-
     }
     else {
       setError(data)
@@ -110,7 +99,7 @@ const States = (props) => {
     }
   }
 
-  // api call for create New Member
+  // api call for update Member
   const UpdateMember = async (mId, name, category, contact, address, memberBalance, balanceDate) => {
     const response = await fetch(`${host}/api/member/updateMember/${mId}`, {
       method: 'PUT',
@@ -135,7 +124,6 @@ const States = (props) => {
 
   // api call to get All Item
   const getAllItem = async () => {
-
     const response = await fetch(`${host}/api/item/getItems`, {
       method: 'GET',
       mode: 'cors',
@@ -175,6 +163,7 @@ const States = (props) => {
       setError(data)
     }
   }
+
   //  api call for Update Item
   const UpdateItem = async (itemId, itemname, category, itemrate) => {
     const response = await fetch(`${host}/api/item/updateItem/${itemId}`, {
@@ -244,7 +233,7 @@ const States = (props) => {
     // }
   }
 
-  // delete sale Bill
+  // delete sell Bill
   const DeleteSaleBill = async (billId) => {
     setSpinner(true)
     const response = await fetch(`${host}/api/bill/deleteSaleBill/${billId}`, {
@@ -267,7 +256,8 @@ const States = (props) => {
     }
 
   }
-  // api call to get all sells bill
+
+  // api call to get all Purchase bill
   const getAllPurchaseBill = async () => {
     setSpinner(true)
     const response = await fetch(`${host}/api/bill/getPurchaseBill`, {
@@ -277,7 +267,6 @@ const States = (props) => {
         'Content-Type': 'application/json',
         'auth-token': localStorage.getItem('Jwt_token')
       },
-
     });
     let data = await response.json();
     if (data.success) {
@@ -292,10 +281,10 @@ const States = (props) => {
     }
   }
 
-  // api call for creating new sell bill
-  const ADDNewPurchaseBill = async (supplier_id, purchaseBillNumber, itemsArray, receiptInfo, paymentInfo, recMetal, payMetal, goldMetalBhav, silverMetalBhav, supplierLastBalance, balance) => {
+  // api call for creating new Purchase bill
+  const ADDNewPurchaseBill = async (supplier_id,purchaseBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,supplierLastBalance,balance) => {
     setSpinner(true)
-    // console.log(supplier_id,purchaseBillNumber,itemsArray,receiptInfo,paymentInfo,recMetal,payMetal,goldMetalBhav,silverMetalBhav,supplierLastBalance,balance)
+    // console.log(supplier_id,purchaseBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,supplierLastBalance,balance)
     const response = await fetch(`${host}/api/bill/createPurchaseBill`, {
       method: 'POST',
       mode: 'cors',
@@ -303,7 +292,7 @@ const States = (props) => {
         'Content-Type': 'application/json',
         'auth-token': localStorage.getItem('Jwt_token')
       },
-      body: JSON.stringify({ supplier_id, purchaseBillNumber, itemsArray, receiptInfo, paymentInfo, receiveMetal: recMetal, payMetal, goldBhav: goldMetalBhav, silverBhav: silverMetalBhav, supplierLastBalance, balance })
+      body: JSON.stringify({supplier_id,purchaseBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,supplierLastBalance,balance})
 
     });
     let data = await response.json();

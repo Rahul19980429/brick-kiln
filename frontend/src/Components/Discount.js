@@ -27,10 +27,14 @@ const Discountpage = (props) => {
        document.getElementById('discountCloseBtn').click()
 
    }
+
+   const clearState = ()=>{
+    setDiscount({ amount: '', mode: 'cash', naration: '' });
+  }
   return (
     <div>
        {/* <!-- Button trigger modal --> */}
-       <button type="button" className={`btn btn-${btnColor} me-3 mt-2`} data-bs-toggle="modal" data-bs-target="#staticBackdrop5">
+       <button type="button" className={`btn btn-${btnColor} btn-sm me-3 mt-2`} data-bs-toggle="modal" data-bs-target="#staticBackdrop5">
             Discount
           </button>
 
@@ -42,7 +46,7 @@ const Discountpage = (props) => {
               <form className='form' onSubmit={discountClick}>
                 <div className="modal-header">
                   <h1 className="modal-title fs-5" id="staticBackdropLabel">Discount Amount</h1>
-                  <button type="button" id="discountCloseBtn" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button type="button" id="discountCloseBtn" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={()=>clearState()}></button>
                 </div>
                 <div className="modal-body">
                  
@@ -58,7 +62,7 @@ const Discountpage = (props) => {
                 </div>
                 <div className="modal-footer">
                 <button type="submit" className={`btn btn-${btnColor}`}>save</button>
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>clearState()}>cancel</button>
                   
                 </div>
                 </form>

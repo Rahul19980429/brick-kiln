@@ -69,7 +69,10 @@ const MemberAddPage = () => {
     const submitMember = (e) => {
         e.preventDefault()
         if (!input.name || !input.address || !input.contact) {
-            alert("Empty field is not allowed")
+            setError({error:"Empty field is not allowed"})
+        }
+        else if (input.contact.length !== 10) {
+            setError({error:"Required 10 digit Number "})
         }
         else {
             AddNewMember(input.name.toLowerCase(), input.category, input.contact, input.address, memberBalance, balanceDate)
@@ -80,9 +83,17 @@ const MemberAddPage = () => {
     }
 
     const updateMember = (id, data) => {
-        const { name, category, contact, address } = data;
-        UpdateMember(id, name, category, contact, address, memberBalance, balanceDate)
-        clearInput()
+        if (!input.name || !input.address || !input.contact) {
+            setError({error:"Empty field is not allowed"})
+        }
+        else if (input.contact.length !== 10) {
+            setError({error:"Required 10 digit Number "})
+        }
+        else {
+            const { name, category, contact, address } = data;
+            UpdateMember(id, name, category, contact, address, memberBalance, balanceDate)
+            clearInput()
+        }
     }
 
     const clearInput = () => {
@@ -108,16 +119,16 @@ const MemberAddPage = () => {
     }
 
 
-const getCategory = (category) =>{
-    if(category==='all'){
-        setAllmembers(members)
+    const getCategory = (category) => {
+        if (category === 'all') {
+            setAllmembers(members)
+        }
+        else {
+            let result = members.filter((data) => { return data.category === category });
+            setAllmembers(result)
+        }
+
     }
-    else{
-    let result = members.filter((data)=>{return data.category===category});
-    setAllmembers(result)
-    }
-    
-}
 
 
     // useEffect
@@ -130,9 +141,9 @@ const getCategory = (category) =>{
             navigate('/login')
         }
         else {
-           getAllMember().then((data)=>setAllmembers(data.result))
+            getAllMember().then((data) => setAllmembers(data.result))
         }
-    }, [])
+    }, [members])
 
     if (error.length !== 0) {
         setTimeout(() => {
@@ -219,14 +230,14 @@ const getCategory = (category) =>{
                         <div className='row mt-3'>
                             <div className='col-lg-12'>
                                 <div className="d-flex gap-2 mt-2">
-                                    <button className="btn btn-primary fw-bold ms-3 " onClick={(e) =>  getCategory('all')}>All</button>
+                                    <button className="btn btn-primary fw-bold ms-3 " onClick={(e) => getCategory('all')}>All</button>
                                     <button className="btn btn-primary fw-bold " onClick={() => getCategory('customer')} >Customer</button>
                                     <button className="btn btn-primary fw-bold " onClick={(e) => getCategory('supplier')}>Supplier</button>
                                     <button className="btn btn-primary fw-bold " onClick={() => getCategory('transport')} >Transport</button>
                                     <button className="btn btn-primary fw-bold " onClick={() => getCategory('labor')}>Labor</button>
                                     <input className=" form-control " value={search} onChange={(e) => setSearch(e.target.value)} type="search" placeholder="Search" aria-label="Search" />
                                 </div>
-                                
+
                             </div>
 
                         </div>

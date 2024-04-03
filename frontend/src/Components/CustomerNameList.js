@@ -43,7 +43,7 @@ const CustomerNameList = (props) => {
                                     }) :  members.filter((mdata) => (props.memberType ? mdata.category === props.memberType && (mdata.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 || mdata.contact.toLowerCase().indexOf(search.toLowerCase()) !== -1) : mdata)).map((data) => {
                                         return <li onClick={() => handelClick(data)} className="dropdown-item py-1 ps-3 border-top fs-6 text-capitalize" style={{ cursor: 'pointer' }} key={data._id} ><small>{data.name}</small> # {data.contact}</li>
                                     })
-                                :<h5 className='text-center'>Not Fount</h5>}
+                                :<h5 className='text-center'>Not Found</h5>}
                                 
                             </ul>
                         </div>

@@ -26,10 +26,13 @@ const ReceiptCashpage = (props) => {
     document.getElementById('receiptCloseBtn').click()
 
   }
+  const clearState = ()=>{
+    setReceipt({ amount: '', mode: 'cash', naration: '' });
+  }
   return (
     <div>
       {/* <!-- Button trigger modal --> */}
-      <button type="button" className={`btn btn-${btnColor} me-3 mt-2`} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      <button type="button" className={`btn btn-${btnColor} btn-sm me-3 mt-2`} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Receive
       </button>
 
@@ -40,7 +43,7 @@ const ReceiptCashpage = (props) => {
             <form className='form' onSubmit={receiptClick}>
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="staticBackdropLabel">Receive Amount</h1>
-                <button type="button" id="receiptCloseBtn" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="receiptCloseBtn" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={()=>clearState()}></button>
               </div>
               <div className="modal-body">
                 <div className="input-group">
@@ -60,7 +63,7 @@ const ReceiptCashpage = (props) => {
               </div>
               <div className="modal-footer">
                 <button type="submit" className={`btn btn-${btnColor}`} disabled={receipt.amount===''?true:false}>save</button>
-                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>clearState()}>cancel</button>
 
               </div>
             </form>

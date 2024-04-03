@@ -6,21 +6,18 @@ import PaymentCashpage from '../../Components/Paymentpage';
 import CustomerNameList from '../../Components/CustomerNameList';
 import ItemNameList from '../../Components/ItemNameList';
 import { useNavigate } from 'react-router-dom';
-// import BillPrint from '../SellPageComponent/BillPrint';
+// import BillPrint from '../PurchasePageComponents/BillPrint';
 import Discountpage from '../../Components/Discount';
 import { Link } from "react-router-dom"
-const Sellpage = ({btnColor}) => {
-  let customeKaBalanveAfterCalculation = 0;
+const PurchasePage = ({btnColor}) => {
 
-  // variables declaration
-  let finalTotalAmount = 0;
-
-  // navigate
   let navigate = useNavigate();
-
-  // use State 
   const [lastBill, setLastBill] = useState('')
   const [billId, setBillId] = useState('')
+
+  let customeKaBalanveAfterCalculation = 0;
+
+  let finalTotalAmount = 0;
 
   //useState for date
   const [date, setDate] = useState(new Date())
@@ -29,7 +26,7 @@ const Sellpage = ({btnColor}) => {
   const [inputBillNumber, setInputBillNumber] = useState('')
 
   // input field k liye useState initallize
-  const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '', VehicleNo: '', RefNo: '', Other: '' })
+  const [itemInput, setItemInput] = useState({ NetWeight: '', Rate: '', BillNo: '', Other: '' })
 
   let fullYear = date.getFullYear();
   let month = date.getMonth() + 1;
@@ -37,11 +34,10 @@ const Sellpage = ({btnColor}) => {
 
   // context d-Structuring
   const a = useContext(context);
-  const {recAmount,setRecAmount,payAmount,setPayAmount,discount,setDiscount,getAllSellBill, 
-        customerItems,setCustomerItems,selectedCustomer,setSelectedCustomer,sellBill,
-        setSellBill,ADDNewSellBill,members,billNumberForNextBtn,setItemName,setFinalAmount,
-        DeleteSaleBill, setError, logOutClick, finalAmount, spinner } = a;
-
+  const { recAmount, setRecAmount, payAmount, setPayAmount, discount, setDiscount, getAllPurchaseBill,
+    customerItems, setCustomerItems, selectedCustomer, setSelectedCustomer, sellBill,
+    setSellBill, ADDNewPurchaseBill, members, billNumberForNextBtn, setItemName, setFinalAmount,
+    DeletePurchaseBill, setError, logOutClick, finalAmount, spinner } = a;
 
   //  save btn click function
   const billSaveBtn = () => {
@@ -50,7 +46,8 @@ const Sellpage = ({btnColor}) => {
     }
 
     else {
-      ADDNewSellBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
+      // console.log(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount,recMetal,payMetal,goldMetalBhav,silverMetalBhav,selectedCustomer.balance, balance)
+      ADDNewPurchaseBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
       clearAll();
     }
   }
@@ -65,7 +62,6 @@ const Sellpage = ({btnColor}) => {
     setItemName('')
     setFinalAmount(0)
     setLastBill('')
-    setBillId('')
   }
 
   // previous btn click function
@@ -77,24 +73,22 @@ const Sellpage = ({btnColor}) => {
         document.getElementById('preBtn').disabled = true;
       }
       setSellBill({ ...sellBill, SellBillNumber: number })
-      let result = sellBill.sellBillData.filter((data) => data.sellBillNumber === number);
+      let result = sellBill.sellBillData.filter((data) => data.purchaseBillNumber === number);
       if (result.length > 0) {
-        let customerData = members.filter((cdata) => cdata._id === result[0].customer_id)
+        let customerData = members.filter((cdata) => cdata._id === result[0].supplier_id)
         setDate(new Date(result[0].date))
         setBillId(result[0]._id)
-        setSelectedCustomer({ _id: result[0].customer_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].customerLastBalance, category: customerData[0].category })
+        setSelectedCustomer({ _id: result[0].supplier_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].supplierLastBalance, category: customerData[0].category })
         setRecAmount(result[0].receiptInfo)
         setPayAmount(result[0].paymentInfo)
         setDiscount(result[0].discountInfo)
         setCustomerItems(result[0].itemsArray)
-        setLastBill(result[0].lastSellBillNumber)
+        setLastBill(result[0].lastPurchaseBillNumber)
         result[0].itemsArray.map((data) => {
           return (
-            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + parseFloat(data.amount))
+            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (-parseFloat(data.amount)))
           )
-        }
-        )
-
+        })
       }
       else {
         setDate(new Date())
@@ -110,24 +104,22 @@ const Sellpage = ({btnColor}) => {
     let number = sellBill.SellBillNumber + 1;
     if (number < billNumberForNextBtn) {
       setSellBill({ ...sellBill, SellBillNumber: number })
-      let result = sellBill.sellBillData.filter((data) => data.sellBillNumber === number);
+      let result = sellBill.sellBillData.filter((data) => data.purchaseBillNumber === number);
       if (result.length > 0) {
-        let customerData = members.filter((cdata) => cdata._id === result[0].customer_id)
+        let customerData = members.filter((cdata) => cdata._id === result[0].supplier_id)
         setDate(new Date(result[0].date))
         setBillId(result[0]._id)
-        setSelectedCustomer({ _id: result[0].customer_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].customerLastBalance, category: customerData[0].category })
+        setSelectedCustomer({ _id: result[0].supplier_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].supplierLastBalance, category: customerData[0].category })
         setRecAmount(result[0].receiptInfo)
         setPayAmount(result[0].paymentInfo)
         setDiscount(result[0].discountInfo)
         setCustomerItems(result[0].itemsArray)
-        setLastBill(result[0].lastSellBillNumber)
+        setLastBill(result[0].lastPurchaseBillNumber)
         result[0].itemsArray.map((data) => {
           return (
-            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + parseFloat(data.amount))
+            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (-parseFloat(data.amount)))
           )
-        }
-        )
-
+        })
       }
       else {
         setDate(new Date())
@@ -165,37 +157,35 @@ const Sellpage = ({btnColor}) => {
         document.getElementById('preBtn').disabled = true;
       }
 
-      let result = sellBill.sellBillData.filter((data) => data.sellBillNumber === number);
+      let result = sellBill.sellBillData.filter((data) => data.purchaseBillNumber === number);
       if (result.length > 0) {
         clearAll()
         setSellBill({ ...sellBill, SellBillNumber: number })
-        let customerData = members.filter((cdata) => cdata._id === result[0].customer_id)
+        let customerData = members.filter((cdata) => cdata._id === result[0].supplier_id)
         setDate(new Date(result[0].date))
         setBillId(result[0]._id)
-        setSelectedCustomer({ _id: result[0].customer_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].customerLastBalance, category: customerData[0].category })
+        setSelectedCustomer({ _id: result[0].supplier_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].supplierLastBalance, category: customerData[0].category })
         setRecAmount(result[0].receiptInfo)
         setPayAmount(result[0].paymentInfo)
         setDiscount(result[0].discountInfo)
         setCustomerItems(result[0].itemsArray)
-        setLastBill(result[0].lastSellBillNumber)
+        setLastBill(result[0].lastPurchaseBillNumber)
         result[0].itemsArray.map((data) => {
           return (
-            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + parseFloat(data.amount))
+            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (-parseFloat(data.amount)))
           )
-        }
-        )
-
+        })
       }
       else {
         setDate(new Date())
         clearAll()
-        setSellBill({ ...sellBill, SellBillNumber: parseInt(sellBill.sellBillData[sellBill.sellBillData.length - 1].sellBillNumber) + 1 })
+        setSellBill({ ...sellBill, SellBillNumber: parseInt(sellBill.sellBillData[sellBill.sellBillData.length - 1].purchaseBillNumber) + 1 })
       }
     }
   }
 
   const DeleteBill = (billId) => {
-    DeleteSaleBill(billId);
+    DeletePurchaseBill(billId);
     clearAll();
   }
 
@@ -209,14 +199,13 @@ const Sellpage = ({btnColor}) => {
     }
     else {
       // api call function get all customer
-      getAllSellBill()
+      getAllPurchaseBill()
 
       //clear page first
       clearAll()
     }
 
   }, [])
-
   if (spinner === true) {
     return (
       <div style={{ height: '100vh' }} className=' d-flex justify-content-center align-items-center'>
@@ -224,13 +213,14 @@ const Sellpage = ({btnColor}) => {
       </div>
     )
   }
+
   return (
     localStorage.getItem('Jwt_token') && localStorage.getItem('user_activeStatus') === 'true' ?
       <div className='container mt-2'>
         {/* part first bill search row */}
         <div className='row my-1'>
           <div className='col-lg-4 col-12'>
-            <h5 className='text-center py-2 bg-dark text-white'>Customer Bill</h5>
+            <h5 className='text-center py-2 bg-dark text-white'>Purchase Bill</h5>
           </div>
           <div className='col-lg-5 col-12 text-center py-1'>
             <Link to="/member" className={`btn btn-${btnColor} btn-sm mx-1`}>Create New Member</Link>
@@ -238,7 +228,7 @@ const Sellpage = ({btnColor}) => {
           </div>
           <div className='col-lg-3 col-12'>
             <div className="input-group input-group-sm mb-2 border border-white rounded-1">
-              <button className={`btn btn-${btnColor} btn-sm `}> <span className={`py-0 input-group-text  border-0 rounded-0 bg-${btnColor} text-white rounded-start`} id="basic-addon1">Bill No.</span></button>
+              <button className={`btn btn-${btnColor}`}> <span className={`py-0 input-group-text  border-0 rounded-0 bg-${btnColor} text-white rounded-start`} id="basic-addon1">Bill No.</span></button>
               <input value={inputBillNumber} onChange={enterBillNumberSearch} autoComplete='off' type="text" className="form-control " id="billNumber" name="billNumber" placeholder='Enter Bill Number' />
             </div>
           </div>
@@ -253,13 +243,13 @@ const Sellpage = ({btnColor}) => {
           <div className='col-lg-6'>
             <div className="row g-3">
               <div className='d-flex '>
-                <div className='col-3'><h6 className='pt-2'>Customer Name:</h6></div>
+                <div className='col-3'><h6 className='pt-2'>Supplier Name:</h6></div>
                 <div className='col-9'>
                   <div className='d-flex'>
-                    <button type="button" className={`btn btn-${btnColor} me-3 btn-sm`} id="HiddenBtnCustomer" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
-                      Customer
+                    <button type="button" className={`btn btn-${btnColor} btn-sm mx-1`} id="HiddenBtnCustomer" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
+                      Supplier
                     </button>
-                    <input type="text" value={selectedCustomer.name} placeholder='Customer Name' className='form-control' name="customerName" autoComplete='off' readOnly />
+                    <input type="text" value={selectedCustomer.name} placeholder='Supplier Name' className='form-control' name="supplierName" autoComplete='off' readOnly />
                   </div>
                 </div>
               </div>
@@ -267,11 +257,11 @@ const Sellpage = ({btnColor}) => {
                 {/* customer address and contact show */}
                 <div className='d-flex '>
                   <div className='col-3'>
-                    <h6 className='pt-2'>Customer Detail:</h6>
+                    <h6 className='pt-2'>Supplier Detail:</h6>
                   </div>
                   <div className='col-9'>
                     <input type="text" readOnly value={selectedCustomer.address && selectedCustomer.contact && selectedCustomer.category ?
-                      selectedCustomer.address + " #" + selectedCustomer.contact + " #" + selectedCustomer.category : ''} className='form-control' name="customerName" autoComplete='off' placeholder='Customer Detail' />
+                      selectedCustomer.address + " #" + selectedCustomer.contact + " #" + selectedCustomer.category : ''} className='form-control' name="customerName" autoComplete='off' placeholder='Supplier Detail' />
                   </div>
                 </div>
               </div>
@@ -288,31 +278,33 @@ const Sellpage = ({btnColor}) => {
             <h6>Last Bill No:{lastBill ? lastBill : 'XXXX'}</h6>
             <h6>Last Balance: {selectedCustomer.balance ? selectedCustomer.balance : 0}</h6>
           </div>
+
         </div>
 
         {/* part three show customer's add items data and list component */}
         <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }} />
         {/* part forth rec,pay,discount and other functionality (all buttons) */}
+
         <div className='row mt-2'>
           <div className='col-lg-5'>
             <div className='d-flex' style={{ flexWrap: 'wrap' }}>
               <ReceiptCashpage btnColor={btnColor} />
               <PaymentCashpage btnColor={btnColor} />
               <Discountpage btnColor={btnColor} />
-
             </div>
             <hr className='mt-2 mb-1' />
             <div className='d-flex' style={{ flexWrap: 'wrap' }}>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} onClick={() => clearAll()}>Cancel</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} id="preBtn" disabled={sellBill.SellBillNumber === 1 ? true : false} onClick={() => previousBtnClick()}>Prev </button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} onClick={() => NewbtnClick()}>New</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop10">Print</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} onClick={billSaveBtn}>Save</button>
+              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} onClick={() => clearAll()}>Cancel</button>
+              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} id="preBtn" disabled={sellBill.SellBillNumber === 1 ? true : false} onClick={() => previousBtnClick()}>Prev </button>
+              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
+              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} onClick={() => NewbtnClick()}>New</button>
+              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
+              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop20">Print</button>
+              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} onClick={billSaveBtn}>Save</button>
             </div>
             <hr className='d-lg-none' />
           </div>
+
           {/* billing table part */}
           <div className='col-lg-7'>
             <div className='row border rounded-2'>
@@ -366,7 +358,7 @@ const Sellpage = ({btnColor}) => {
 
             </div>
             <div className='row'>
-              <table className="table table-success table-striped mb-2">
+              <table className="table table-btnColor table-striped mb-2">
                 <tfoot>
                   <tr className='table-dark text-start'>
                     <th scope="col" >Left Balance: {customeKaBalanveAfterCalculation = parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0) + parseInt(parseInt(finalAmount)) + parseInt(payAmount.amount ? payAmount.amount : 0) - parseInt(recAmount.amount ? recAmount.amount : 0)
@@ -380,12 +372,14 @@ const Sellpage = ({btnColor}) => {
           </div>
         </div>
         <div className='row'>
-          <CustomerNameList memberType="customer" />
+          <CustomerNameList memberType="supplier" />
           <ItemNameList initalvalues={{ itemInput, setItemInput }} />
           {/* <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
-            billitems={customerItems} recData={{ recAmount }}
-            payData={{ payAmount }} discountData={{ discount }}
+            billitems={customerItems} recData={{ recAmount, recMetal }}
+            payData={{ payAmount, payMetal }}
+            bhav={{ goldMetalBhav, silverMetalBhav }}
+            fine={totalFine}
             finalAmount={finalAmount}
           /> */}
         </div>
@@ -393,4 +387,4 @@ const Sellpage = ({btnColor}) => {
   )
 }
 
-export default Sellpage
+export default PurchasePage

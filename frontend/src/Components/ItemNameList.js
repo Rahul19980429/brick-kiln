@@ -45,7 +45,7 @@ const ItemNameList = (props) => {
                                 }): items.filter((mdata) =>  mdata.itemname.toLowerCase().indexOf(search.toLowerCase()) !== -1 ).map((data) => {
                                     return <li onClick={() => handelClick(data)} className="dropdown-item py-1 ps-3 border-top fs-6 text-capitalize" style={{ cursor: 'pointer' }} key={data._id} >{data.itemname} Rate: {data.itemrate}</li>
                                 })
-                                :<h5 className='text-center'>Not Fount</h5>}
+                                :<h5 className='text-center'>Not Found</h5>}
                             </ul>
                         </div>
                         <div className="modal-footer">

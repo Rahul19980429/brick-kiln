@@ -21,12 +21,12 @@ const CustomerItems = (props) => {
     }
 
     const editItemFromList = (data, index) => {
+        console.log(data)
         setItemInput(
             {
-                Quantity: data.quantity,
+                NetWeight: data.NetWeight,
                 Rate: data.rate,
-                VehicleNo: data.vehicleNo,
-                RefNo: data.refNo,
+                BillNo: data.BillNo,
                 Other: data.other,
 
             })
@@ -50,8 +50,8 @@ const CustomerItems = (props) => {
             e.target.value = "";
         }
         else {
-            if (itemInput.Rate && itemInput.Quantity) {
-                setItemAmount(parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseInt(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))
+            if (itemInput.Rate && itemInput.NetWeight) {
+                setItemAmount(parseInt(itemInput.NetWeight ? itemInput.NetWeight : 0) * parseInt(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))
             }
             else {
                 setItemAmount(0)
@@ -63,7 +63,7 @@ const CustomerItems = (props) => {
 
     // on clean button click
     const clearForm = () => {
-        setItemInput({ Quantity: '', Rate: '', VehicleNo: '', RefNo: '', Other: '' })
+        setItemInput({ NetWeight: '', Rate: '', BillNo: '', Other: '' })
         setItemName({ _id: '', iname: '', category: '' })
         setItemAmount(0)
 
@@ -76,10 +76,9 @@ const CustomerItems = (props) => {
         const newItemAdd = {
             "item": itemName.iname,
             "itemCategory": itemName.category,
-            "quantity": itemInput.Quantity ? itemInput.Quantity : 0,
+            "netWeight": itemInput.NetWeight ? itemInput.NetWeight : 0,
             "rate": itemInput.Rate ? itemInput.Rate : 0,
-            "vehicleNo": itemInput.VehicleNo ? itemInput.VehicleNo : 0,
-            "refNo": itemInput.RefNo ? itemInput.RefNo : 0,
+            "billNo": itemInput.BillNo ? itemInput.BillNo : 0,
             "other": itemInput.Other ? itemInput.Other : 0,
             "amount": itemAmount ? itemAmount : 0,
         }
@@ -100,10 +99,9 @@ const CustomerItems = (props) => {
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">ITEM</th>
-                                <th scope="col">QTY/WT</th>
+                                <th scope="col">QTY/WT/LTS</th>
                                 <th scope="col">RATE</th>
-                                <th scope="col">VEHICLE</th>
-                                <th scope="col">REF NO.</th>
+                                <th scope="col">BILL NO.</th>
                                 <th scope="col">Other</th>
                                 <th scope="col">Amount</th>
                                 <th scope="col"></th>
@@ -116,10 +114,9 @@ const CustomerItems = (props) => {
                                     return <tr key={index}  >
                                         <td>{customerItems.length - index}</td>
                                         <td>{data.item}</td>
-                                        <td>{data.quantity}</td>
+                                        <td>{data.netWeight}</td>
                                         <td>{data.rate}</td>
-                                        <td>{data.vehicleNo}</td>
-                                        <td>{data.refNo}</td>
+                                        <td>{data.billNo}</td>
                                         <td>{data.other}</td>
                                         <td>{data.amount}</td>
                                         <td>
@@ -133,7 +130,7 @@ const CustomerItems = (props) => {
                                         </td>
 
                                     </tr>
-                                }) : <tr><td colSpan={9}>Items Will Display Here </td></tr>}
+                                }) : <tr><td colSpan={8}>Items Will Display Here </td></tr>}
                         </tbody>
                     </table>
                 </div>
@@ -163,10 +160,10 @@ const CustomerItems = (props) => {
                                     <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>QTY/WT</h6>
+                            <div className='col-lg-2 col-md-2 col-3 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>Net WT/LTS</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemInput.Quantity} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Quantity" name="Quantity" placeholder='Qty/Wt' />
+                                    <input value={itemInput.NetWeight} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="NetWeight" name="NetWeight" placeholder='Qty/Wt' />
                                 </div>
                             </div>
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
@@ -175,16 +172,10 @@ const CustomerItems = (props) => {
                                     <input value={itemInput.Rate} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Rate" name="Rate" placeholder='Rate' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>VEHICLE</h6>
+                            <div className='col-lg-2 col-md-2 col-3 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>BILL NO.</h6>
                                 <div className=" input-group mb-3">
-                                    <input value={itemInput.VehicleNo} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="VehicleNo" name="VehicleNo" placeholder='XXXX' />
-                                </div>
-                            </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>REF NO.</h6>
-                                <div className=" input-group mb-3">
-                                    <input value={itemInput.RefNo} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="RefNo" name="RefNo" placeholder='XXXX' />
+                                    <input value={itemInput.BillNo} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="BillNo" name="BillNo" placeholder='XXXX' />
                                 </div>
                             </div>
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
@@ -201,8 +192,8 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
                             <div className='col-lg-2 col  d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.VehicleNo || !itemInput.RefNo ? true : false}>Add</button>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.VehicleNo && !itemInput.RefNo && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.NetWeight || !itemInput.Rate ||  !itemInput.BillNo ? true : false}>Add</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.NetWeight && !itemInput.Rate &&  !itemInput.BillNo && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
                             </div>
                         </div>
                     </form>
