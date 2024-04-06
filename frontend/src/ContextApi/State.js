@@ -42,8 +42,7 @@ const States = (props) => {
   // 
   const [billNumberForNextBtn, setBillNumberForNextBtn] = useState(0)
 
-  // useState for Customer Interest Data
-  const [interestData, setInterestData] = useState([])
+  
 
 
 
@@ -333,55 +332,55 @@ const States = (props) => {
 
   }
 
-  const createInterest = async (customer_id, interestRate, interestAmount, customerLastBalance, balance) => {
+  // const createInterest = async (customer_id, interestRate, interestAmount, customerLastBalance, balance) => {
 
-    const response = await fetch(`${host}/api/interest/createInterest`, {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('Jwt_token')
-      },
-      body: JSON.stringify({ customer_id, interestRate, interestAmount, customerLastBalance, balance })
+  //   const response = await fetch(`${host}/api/interest/createInterest`, {
+  //     method: 'POST',
+  //     mode: 'cors',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'auth-token': localStorage.getItem('Jwt_token')
+  //     },
+  //     body: JSON.stringify({ customer_id, interestRate, interestAmount, customerLastBalance, balance })
 
-    });
-    let data = await response.json();
-    if (data.success) {
-      getCustomerIntData()
-      getAllMember()
-
-
-    }
-    else {
-
-      setError(data)
-    }
-
-  }
-
-  const getCustomerIntData = async () => {
-
-    const response = await fetch(`${host}/api/interest/getInterest`, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('Jwt_token')
-      }
+  //   });
+  //   let data = await response.json();
+  //   if (data.success) {
+  //     getCustomerIntData()
+  //     getAllMember()
 
 
-    });
-    let data = await response.json();
-    if (data.success) {
-      setInterestData(data.result)
+  //   }
+  //   else {
 
-    }
-    else {
+  //     setError(data)
+  //   }
 
-      setError(data)
-    }
+  // }
 
-  }
+  // const getCustomerIntData = async () => {
+
+  //   const response = await fetch(`${host}/api/interest/getInterest`, {
+  //     method: 'GET',
+  //     mode: 'cors',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'auth-token': localStorage.getItem('Jwt_token')
+  //     }
+
+
+  //   });
+  //   let data = await response.json();
+  //   if (data.success) {
+  //     setInterestData(data.result)
+
+  //   }
+  //   else {
+
+  //     setError(data)
+  //   }
+
+  // }
 
   const logInUser = async (contact, password) => {
     const response = await fetch(`${host}/api/auth/loginUser`, {
@@ -417,8 +416,8 @@ const States = (props) => {
       setFinalAmount, setCustomerItems, getAllSellBill, ADDNewSellBill, DeleteSaleBill,
       getAllPurchaseBill, ADDNewPurchaseBill, DeletePurchaseBill,
 
-      createInterest, discount, setDiscount,
-      interestData, getCustomerIntData,
+     discount, setDiscount,
+
       spinner, error, setError, logInUser, logOutClick,
 
     }}>

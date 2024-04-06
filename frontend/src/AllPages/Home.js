@@ -67,14 +67,14 @@ const Home = () => {
                     <div className='col-lg-6 col-6'>
                       <div className='d-grid'>
                         {/* customer bill */}
-                        <Link to="/sale-bill" className='btn btn-danger  mb-3'>Sale</Link>
+                        <Link to="/sale-bill" className='btn btn-danger btn-lg mb-3'>Sale</Link>
                       </div>
                     </div>
 
                     <div className='col-lg-6 col-6'>
                     <div className='d-grid'>
                         {/* customer bill */}
-                        <Link to="/purchase-bill" className='btn btn-danger  mb-3'>Purchase</Link>
+                        <Link to="/purchase-bill" className='btn btn-danger btn-lg  mb-3'>Purchase</Link>
                       </div>
                     </div>
 
@@ -84,14 +84,14 @@ const Home = () => {
                     <div className='col-lg-6 col-6'>
                       <div className='d-grid'>
                         {/* Driver bill */}
-                        <Link to="/driver-bill" className='btn btn-danger  mb-3'>Transport</Link>
+                        <Link to="/driver-bill" className='btn btn-danger btn-lg  mb-3'>Transport</Link>
                       </div>
                     </div>
 
                     <div className='col-lg-6 col-6'>
                       <div className='d-grid'>
                         {/* Labor bill */}
-                        <Link to="/labor-bill" className='btn btn-danger  mb-3'>Labor</Link>
+                        <Link to="/labor-bill" className='btn btn-danger btn-lg mb-3'>Labor</Link>
                       </div>
                     </div>
 
@@ -146,7 +146,7 @@ const Home = () => {
                     <div className='col-lg-12'>
                       <div className='d-grid'>
 
-                        <Link to="/login" className='btn btn-danger  mb-3' onClick={() => logOutBtnClick()}>Log Out</Link>
+                        <Link to="/login" className='btn btn-danger btn-lg ' onClick={() => logOutBtnClick()}>Log Out</Link>
                       </div>
                     </div>
                   </div>

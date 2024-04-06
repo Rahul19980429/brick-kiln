@@ -21,7 +21,7 @@ const ItemSaleNumbersCheck = () => {
         ItemArray.map((data) => {
             if (data.length > 0) {
                 data.map((data) => {
-                    ItemSalesNumber.TQuantity = ItemSalesNumber.TQuantity + parseFloat(data.quentity);
+                    ItemSalesNumber.TQuantity = ItemSalesNumber.TQuantity + parseFloat(data.quantity);
                     ItemSalesNumber.TAmount = ItemSalesNumber.TAmount + parseFloat(data.amount);
                 })
             }

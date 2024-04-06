@@ -152,7 +152,7 @@ const CustomerItems = (props) => {
             <div className='row'>
                 <div className='col-12 border '>
                     <form onSubmit={AddItemToCustomer}>
-                        <div className={`row  text-${btnColor} py-2`}>
+                        <div className={`row  text-${btnColor} pt-2`}>
                             <div className='col-lg-1 col-md-2 col-3 text-center d-flex d-lg-block align-items-center'>
                                 <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
                             </div>

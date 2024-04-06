@@ -86,7 +86,7 @@ const PurchasePage = ({btnColor}) => {
         setLastBill(result[0].lastPurchaseBillNumber)
         result[0].itemsArray.map((data) => {
           return (
-            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (-parseFloat(data.amount)))
+            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
           )
         })
       }
@@ -117,7 +117,7 @@ const PurchasePage = ({btnColor}) => {
         setLastBill(result[0].lastPurchaseBillNumber)
         result[0].itemsArray.map((data) => {
           return (
-            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (-parseFloat(data.amount)))
+            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
           )
         })
       }
@@ -172,7 +172,7 @@ const PurchasePage = ({btnColor}) => {
         setLastBill(result[0].lastPurchaseBillNumber)
         result[0].itemsArray.map((data) => {
           return (
-            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (-parseFloat(data.amount)))
+            setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
           )
         })
       }
@@ -216,7 +216,7 @@ const PurchasePage = ({btnColor}) => {
 
   return (
     localStorage.getItem('Jwt_token') && localStorage.getItem('user_activeStatus') === 'true' ?
-      <div className='container mt-2'>
+      <div className='container'>
         {/* part first bill search row */}
         <div className='row my-1'>
           <div className='col-lg-4 col-12'>
@@ -322,7 +322,7 @@ const PurchasePage = ({btnColor}) => {
                       <th scope="row">Pay Amount: {payAmount.amount ? payAmount.amount : 0}</th>
 
                       <td>{payAmount.naration ? payAmount.naration : 'Naration'}</td>
-                      <td>{parseInt(payAmount.amount ? payAmount.amount : 0) !== 0 ?
+                      <td className='p-0 pt-1'>{parseInt(payAmount.amount ? payAmount.amount : 0) !== 0 ?
                         <button className="btn btn-danger btn-sm py-0 px-1" onClick={() => setPayAmount({ amount: 0, mode: 'cash', naration: 'naration' })}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-octagon-fill pb-1" viewBox="0 0 16 16">
                           <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
                         </svg></button>
@@ -333,7 +333,7 @@ const PurchasePage = ({btnColor}) => {
                       <th scope="row">Receive Amount: {recAmount.amount ? recAmount.amount : 0}</th>
 
                       <td>{recAmount.naration ? recAmount.naration : 'Naration'}</td>
-                      <td> {parseInt(recAmount.amount ? recAmount.amount : 0) !== 0 ?
+                      <td className='p-0 pt-1'> {parseInt(recAmount.amount ? recAmount.amount : 0) !== 0 ?
                         <button className="btn btn-danger btn-sm py-0 px-1" onClick={() => setRecAmount({ amount: 0, mode: 'cash', naration: 'naration' })}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-octagon-fill pb-1" viewBox="0 0 16 16">
                           <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
                         </svg></button>
@@ -344,7 +344,7 @@ const PurchasePage = ({btnColor}) => {
                     <tr>
                       <th scope="row">Discount: {discount.amount ? discount.amount : 0}</th>
                       <td>{discount.naration ? discount.naration : 'Naration'}</td>
-                      <td>{parseInt(discount.amount ? discount.amount : 0) !== 0 ?
+                      <td className='p-0 pt-1'>{parseInt(discount.amount ? discount.amount : 0) !== 0 ?
                         <button className="btn btn-danger btn-sm py-0 px-1" onClick={() => setDiscount({ amount: 0, naration: 'naration' })}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-octagon-fill pb-1" viewBox="0 0 16 16">
                           <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zm-6.106 4.5L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
                         </svg></button>
@@ -361,8 +361,12 @@ const PurchasePage = ({btnColor}) => {
               <table className="table table-btnColor table-striped mb-2">
                 <tfoot>
                   <tr className='table-dark text-start'>
-                    <th scope="col" >Left Balance: {customeKaBalanveAfterCalculation = parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0) + parseInt(parseInt(finalAmount)) + parseInt(payAmount.amount ? payAmount.amount : 0) - parseInt(recAmount.amount ? recAmount.amount : 0)
-                      - parseInt(discount.amount ? discount.amount : 0)}</th>
+                    <th scope="col" >Left Balance:
+                    {customeKaBalanveAfterCalculation = - parseInt(finalAmount) 
+                                                        + (parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)  
+                                                        - parseInt(recAmount.amount ? recAmount.amount : 0)
+                                                        + parseInt(payAmount.amount ? payAmount.amount : 0) 
+                                                        + parseInt(discount.amount ? discount.amount : 0))}</th>
 
 
                   </tr>

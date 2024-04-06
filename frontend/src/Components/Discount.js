@@ -29,7 +29,7 @@ const Discountpage = (props) => {
    }
 
    const clearState = ()=>{
-    setDiscount({ amount: '', mode: 'cash', naration: '' });
+    setDiscountV({ amount: '', naration: '' });
   }
   return (
     <div>
