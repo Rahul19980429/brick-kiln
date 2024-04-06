@@ -57,11 +57,10 @@ const BillPrint = (props) => {
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Item</th>
-                                        <th scope="col">Wt</th>
-                                        <th scope="col">Tnch</th>
-                                        <th scope="col">Rate</th>
-                                        <th scope="col">Lbr</th>
-                                        <th scope="col">Fine</th>
+                                        <th scope="col">Qty/Wt</th>
+                                        <th scope="col">VNo.</th>
+                                        <th scope="col">RefNo.</th>
+                                        <th scope="col">Other</th>
                                         <th scope="col">Amount</th>
 
                                     </tr>
@@ -74,11 +73,11 @@ const BillPrint = (props) => {
                                             return <tr key={index}  >
                                                 <td>{index + 1}</td>
                                                 <td><small>{data.item}</small></td>
-                                                <td>{data.weight}</td>
-                                                <td>{data.tnch}</td>
-                                                <td>{data.rate}</td>
+                                                <td>{data.Quantity}</td>
+                                                <td>{data.Rate}</td>
+                                                {/* <td>{data.V}</td>
                                                 <td>{parseInt(data.labour) + parseInt(data.other)}</td>
-                                                <td>{data.fine}</td>
+                                                <td>{data.fine}</td> */}
                                                 <td>{data.amount}</td>
 
 
@@ -89,8 +88,7 @@ const BillPrint = (props) => {
                                 <tfoot>
                                     <tr className='table-dark text-start'>
                                         <th scope="col" colSpan={2}>T.Item: {billitems.length}</th>
-                                        <th scope="col" colSpan={2}>G.Fine: {fine.goldFine}</th>
-                                        <th scope="col" colSpan={2}>S.Fine: {fine.silverFine}</th>
+                                      
                                         <th scope="col" colSpan={2}>T.Amount: {finalAmount}</th>
 
                                     </tr>
@@ -98,42 +96,17 @@ const BillPrint = (props) => {
                             </table>
                             </div>
                             <table className="table table-success table-striped mb-2">
-                                <thead >
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Gold</th>
-                                        <th scope="col">Silver</th>
-                                        <th scope="col">Amount</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
                                     <tr className='table-light text-start'>
                                         <th scope="col">Receive</th>
-                                        <th scope="col">{parseFloat(recData.recMetal.gold) * parseFloat(recData.recMetal.gtnch / 100).toFixed(3)}</th>
-                                        <th scope="col">{parseFloat(recData.recMetal.silver) * parseFloat(recData.recMetal.stnch / 100).toFixed(3)}</th>
                                         <th scope="col">{recData.recAmount.amount}</th>
 
                                     </tr>
                                     <tr className='table-light text-start'>
                                         <th scope="col">Payment</th>
-                                        <th scope="col">{parseFloat(payData.payMetal.gold) * parseFloat(payData.payMetal.gtnch / 100).toFixed(3)}</th>
-                                        <th scope="col">{parseFloat(payData.payMetal.silver) * parseFloat(payData.payMetal.stnch / 100).toFixed(3)}</th>
                                         <th scope="col">{payData.payAmount.amount}</th>
 
                                     </tr>
-                                    <tr className='table-light text-start'>
-                                        <th scope="col">Gold Bhav</th>
-                                        <th scope="col" colSpan={2}>({parseFloat(fine.goldFine - parseFloat(recData.recMetal.gold) * parseFloat(recData.recMetal.gtnch / 100).toFixed(3)).toFixed(3)} *{parseFloat(bhav.goldMetalBhav / 10)})</th>
-                                        <th scope="col"> {Math.floor((parseFloat(fine.goldFine) - parseFloat(recData.recMetal.gold) * parseFloat(recData.recMetal.gtnch / 100).toFixed(3)).toFixed(3) * parseFloat(bhav.goldMetalBhav / 10))}</th>
-
-                                    </tr>
-                                    <tr className='table-light text-start'>
-                                        <th scope="col">Silver Bhav</th>
-                                        <th scope="col" colSpan={2}>({parseFloat(fine.silverFine - parseFloat(recData.recMetal.silver) * parseFloat(recData.recMetal.stnch / 100).toFixed(3)).toFixed(3)} *{parseFloat(bhav.silverMetalBhav / 10)})</th>
-                                        <th scope="col">{Math.floor((parseFloat(fine.silverFine) - parseFloat(recData.recMetal.silver) * parseFloat(recData.recMetal.stnch / 100).toFixed(3)).toFixed(3) * parseFloat(bhav.silverMetalBhav / 10))}</th>
-
-                                    </tr>
+                                   
 
                                     <tr className='table-light text-start'>
                                         <th scope="col" colSpan={3}>Last Balance</th>
@@ -143,7 +116,7 @@ const BillPrint = (props) => {
 
 
 
-                                </tbody>
+                             
                             </table>
                         </div>
                         <div className="modal-footer">
@@ -154,8 +127,7 @@ const BillPrint = (props) => {
                                         <th scope="col">{
                                             Math.floor(parseFloat(finalAmount)
                                                 + parseFloat(payData.payAmount.amount ? payData.payAmount.amount : 0)
-                                                + parseFloat(parseFloat((parseFloat(fine.silverFine) - parseFloat(recData.recMetal.silver) * parseFloat(recData.recMetal.stnch / 100).toFixed(3)).toFixed(3) * parseFloat(bhav.silverMetalBhav / 10)).toFixed(3))
-                                                + parseFloat(parseFloat((parseFloat(fine.goldFine) - parseFloat(recData.recMetal.gold) * parseFloat(recData.recMetal.gtnch / 100).toFixed(3)).toFixed(3) * parseFloat(bhav.goldMetalBhav / 10)).toFixed(3))
+                                              
                                                 + parseFloat(nameData.balance ? nameData.balance : 0)
                                                 - parseFloat(recData.recAmount.amount ? recData.recAmount.amount : 0)
                                             )}

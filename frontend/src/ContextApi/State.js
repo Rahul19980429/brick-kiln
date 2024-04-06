@@ -121,6 +121,28 @@ const States = (props) => {
     }
   }
 
+  // api call for Delete Member
+  const DeleteMember = async (mId) => {
+    const response = await fetch(`${host}/api/member/deleteMember/${mId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      }
+    });
+    let data = await response.json();
+    if (data.success) {
+      setError(data.msg)
+      return true
+
+    }
+    else {
+      setError(data.msg)
+      return false
+    }
+  }
+
   // api call to get All Item
   const getAllItem = async () => {
     const response = await fetch(`${host}/api/item/getItems`, {
@@ -407,7 +429,7 @@ const States = (props) => {
 
   return (
     <context.Provider value={{
-      members, setMembers, getAllMember, AddNewMember, UpdateMember,
+      members, setMembers, getAllMember, AddNewMember, UpdateMember,DeleteMember,
       items, setItems, getAllItem, AddNewItem, UpdateItem,
       customerItems, finalAmount, recAmount,
       payAmount, selectedCustomer, itemName,

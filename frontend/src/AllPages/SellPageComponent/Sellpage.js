@@ -6,7 +6,7 @@ import PaymentCashpage from '../../Components/Paymentpage';
 import CustomerNameList from '../../Components/CustomerNameList';
 import ItemNameList from '../../Components/ItemNameList';
 import { useNavigate } from 'react-router-dom';
-// import BillPrint from '../SellPageComponent/BillPrint';
+import BillPrint from './BillPrint';
 import Discountpage from '../../Components/Discount';
 import { Link } from "react-router-dom"
 const Sellpage = ({btnColor}) => {
@@ -58,6 +58,7 @@ const Sellpage = ({btnColor}) => {
   // cancel btn click function 
   const clearAll = () => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
+    setItemInput({  Quantity: '', Rate: '', VehicleNo: '', RefNo: '', Other: ''})
     setRecAmount(0)
     setPayAmount(0)
     setDiscount(0)
@@ -195,8 +196,11 @@ const Sellpage = ({btnColor}) => {
   }
 
   const DeleteBill = (billId) => {
-    DeleteSaleBill(billId);
-    clearAll();
+    let bool = window.confirm("Are You Sure?")
+    if (bool) {
+      DeleteSaleBill(billId);
+      clearAll();
+    }
   }
 
   useEffect(() => {
@@ -303,13 +307,13 @@ const Sellpage = ({btnColor}) => {
             </div>
             <hr className='mt-2 mb-1' />
             <div className='d-flex' style={{ flexWrap: 'wrap' }}>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} onClick={() => clearAll()}>Cancel</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} id="preBtn" disabled={sellBill.SellBillNumber === 1 ? true : false} onClick={() => previousBtnClick()}>Prev </button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} onClick={() => NewbtnClick()}>New</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop10">Print</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2 btn-sm`} onClick={billSaveBtn}>Save</button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} onClick={() => clearAll()}>Cancel</button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} id="preBtn" disabled={sellBill.SellBillNumber === 1 ? true : false} onClick={() => previousBtnClick()}>Prev </button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} onClick={() => NewbtnClick()}>New</button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop10">Print</button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} onClick={billSaveBtn}>Save</button>
             </div>
             <hr className='d-lg-none' />
           </div>
@@ -386,12 +390,12 @@ const Sellpage = ({btnColor}) => {
         <div className='row'>
           <CustomerNameList memberType="customer" />
           <ItemNameList initalvalues={{ itemInput, setItemInput }} />
-          {/* <BillPrint nameData={selectedCustomer} bdate={date}
+          <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
             billitems={customerItems} recData={{ recAmount }}
             payData={{ payAmount }} discountData={{ discount }}
             finalAmount={finalAmount}
-          /> */}
+          />
         </div>
       </div> : ''
   )

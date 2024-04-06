@@ -32,7 +32,7 @@ const ReceiptCashpage = (props) => {
   return (
     <div>
       {/* <!-- Button trigger modal --> */}
-      <button type="button" className={`btn btn-${btnColor} btn-sm me-3 mt-2`} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      <button type="button" className={`btn btn-${btnColor}  me-3 mt-2`} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Receive
       </button>
 

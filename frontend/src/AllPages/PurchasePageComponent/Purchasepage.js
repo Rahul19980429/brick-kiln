@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 // import BillPrint from '../PurchasePageComponents/BillPrint';
 import Discountpage from '../../Components/Discount';
 import { Link } from "react-router-dom"
-const PurchasePage = ({btnColor}) => {
+const PurchasePage = ({ btnColor }) => {
 
   let navigate = useNavigate();
   const [lastBill, setLastBill] = useState('')
@@ -55,6 +55,7 @@ const PurchasePage = ({btnColor}) => {
   // cancel btn click function 
   const clearAll = () => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
+    setItemInput({ NetWeight: '', Rate: '', BillNo: '', Other: '' })
     setRecAmount(0)
     setPayAmount(0)
     setDiscount(0)
@@ -62,6 +63,7 @@ const PurchasePage = ({btnColor}) => {
     setItemName('')
     setFinalAmount(0)
     setLastBill('')
+    setBillId('')
   }
 
   // previous btn click function
@@ -185,8 +187,11 @@ const PurchasePage = ({btnColor}) => {
   }
 
   const DeleteBill = (billId) => {
-    DeletePurchaseBill(billId);
-    clearAll();
+    let bool = window.confirm("Are You Sure?")
+    if (bool) {
+      DeletePurchaseBill(billId);
+      clearAll();
+    }
   }
 
   useEffect(() => {
@@ -294,13 +299,13 @@ const PurchasePage = ({btnColor}) => {
             </div>
             <hr className='mt-2 mb-1' />
             <div className='d-flex' style={{ flexWrap: 'wrap' }}>
-              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} onClick={() => clearAll()}>Cancel</button>
-              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} id="preBtn" disabled={sellBill.SellBillNumber === 1 ? true : false} onClick={() => previousBtnClick()}>Prev </button>
-              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
-              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} onClick={() => NewbtnClick()}>New</button>
-              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
-              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop20">Print</button>
-              <button className={`col me-2 btn btn-${btnColor} btn-sm mt-2`} onClick={billSaveBtn}>Save</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={() => clearAll()}>Cancel</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} id="preBtn" disabled={sellBill.SellBillNumber === 1 ? true : false} onClick={() => previousBtnClick()}>Prev </button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={() => NewbtnClick()}>New</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop20">Print</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={billSaveBtn}>Save</button>
             </div>
             <hr className='d-lg-none' />
           </div>
@@ -362,11 +367,11 @@ const PurchasePage = ({btnColor}) => {
                 <tfoot>
                   <tr className='table-dark text-start'>
                     <th scope="col" >Left Balance:
-                    {customeKaBalanveAfterCalculation = - parseInt(finalAmount) 
-                                                        + (parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)  
-                                                        - parseInt(recAmount.amount ? recAmount.amount : 0)
-                                                        + parseInt(payAmount.amount ? payAmount.amount : 0) 
-                                                        + parseInt(discount.amount ? discount.amount : 0))}</th>
+                      {customeKaBalanveAfterCalculation = - parseInt(finalAmount)
+                        + (parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)
+                          - parseInt(recAmount.amount ? recAmount.amount : 0)
+                          + parseInt(payAmount.amount ? payAmount.amount : 0)
+                          + parseInt(discount.amount ? discount.amount : 0))}</th>
 
 
                   </tr>
