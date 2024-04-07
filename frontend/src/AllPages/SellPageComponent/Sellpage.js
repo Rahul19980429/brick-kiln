@@ -312,7 +312,7 @@ const Sellpage = ({btnColor}) => {
               <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
               <button className={`col me-2 btn btn-${btnColor} mt-2`} onClick={() => NewbtnClick()}>New</button>
               <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop10">Print</button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop6">Print</button>
               <button className={`col me-2 btn btn-${btnColor} mt-2`} onClick={billSaveBtn}>Save</button>
             </div>
             <hr className='d-lg-none' />
@@ -324,8 +324,8 @@ const Sellpage = ({btnColor}) => {
                 <table className="table mb-0">
                   <tbody>
                     <tr>
-                      <th scope="row">Tota Amount : {finalAmount ? finalAmount : 0} </th>
-                      <th>Last Amount : {selectedCustomer.balance ? selectedCustomer.balance : 0} </th>
+                      <th scope="row">Final Amount : {parseInt(finalAmount ? finalAmount : 0) + parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)} </th>
+                      <th>T.Amount:({finalAmount ? finalAmount : 0})+ Last Balance:({selectedCustomer.balance ? selectedCustomer.balance : 0}) </th>
                       <td></td>
 
                     </tr>

@@ -104,8 +104,8 @@ const CustomerItems = (props) => {
                                 <th scope="col">RATE</th>
                                 <th scope="col">VEHICLE</th>
                                 <th scope="col">REF NO.</th>
-                                <th scope="col">Other</th>
-                                <th scope="col">Amount</th>
+                                <th scope="col">OTHER</th>
+                                <th scope="col">AMOUNT</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -158,7 +158,7 @@ const CustomerItems = (props) => {
                             </div>
 
                             <div className='col-lg-1 col-md-2 col-9 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>Item</h6>
+                                <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />
                                 </div>
@@ -188,14 +188,14 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>Other</h6>
+                                <h6 className='fw-bold text-lg-center mb-1'>OTHER</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.Other} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="Other" name="Other" placeholder='Other' />
                                 </div>
                             </div>
                             <hr className='border border-warning border-2 d-block d-lg-none' />
                             <div className='col-lg-1 col col-md-4 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>Amount</h6>
+                                <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
                                     <input autoComplete='off' type="none" className="form-control" id="itemAmount" name="itemAmount" value={itemAmount} readOnly />
                                 </div>

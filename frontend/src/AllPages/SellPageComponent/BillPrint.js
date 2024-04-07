@@ -5,7 +5,7 @@ import ReactToPrint from 'react-to-print';
 const BillPrint = (props) => {
 
     const componentRef = useRef()
-    const { nameData, bno, bdate, billitems, recData, payData, bhav, fine, finalAmount } = props;
+    const { nameData, bno, bdate, billitems, recData, payData,  finalAmount ,discountData} = props;
 
     const setDateFormat = (intdate) => {
         let date = new Date(intdate)
@@ -17,7 +17,7 @@ const BillPrint = (props) => {
 
             {/* <!-- Modal --> */}
 
-            <div className="modal fade" id="staticBackdrop10" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id="staticBackdrop6" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
                 <div className="modal-dialog">
                     <div ref={componentRef} className="modal-content">
@@ -58,6 +58,7 @@ const BillPrint = (props) => {
                                         <th scope="col">#</th>
                                         <th scope="col">Item</th>
                                         <th scope="col">Qty/Wt</th>
+                                        <th scope="col">Rate</th>
                                         <th scope="col">VNo.</th>
                                         <th scope="col">RefNo.</th>
                                         <th scope="col">Other</th>
@@ -73,11 +74,11 @@ const BillPrint = (props) => {
                                             return <tr key={index}  >
                                                 <td>{index + 1}</td>
                                                 <td><small>{data.item}</small></td>
-                                                <td>{data.Quantity}</td>
-                                                <td>{data.Rate}</td>
-                                                {/* <td>{data.V}</td>
-                                                <td>{parseInt(data.labour) + parseInt(data.other)}</td>
-                                                <td>{data.fine}</td> */}
+                                                <td>{data.quantity}</td>
+                                                <td>{data.rate}</td>
+                                                <td>{data.vehicleNo}</td>
+                                                <td>{data.refNo}</td>
+                                                <td>{data.other}</td>
                                                 <td>{data.amount}</td>
 
 
@@ -87,36 +88,43 @@ const BillPrint = (props) => {
 
                                 <tfoot>
                                     <tr className='table-dark text-start'>
-                                        <th scope="col" colSpan={2}>T.Item: {billitems.length}</th>
+                                        <th scope="col" colSpan={4}>T.Item: {billitems.length}</th>
                                       
-                                        <th scope="col" colSpan={2}>T.Amount: {finalAmount}</th>
+                                        <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th>
 
                                     </tr>
                                 </tfoot>
                             </table>
                             </div>
                             <table className="table table-success table-striped mb-2">
+                                <tbody>
+                                    <tr className='table-light text-start'>
+                                        <th scope="col" >Last Balance</th>
+                                        <th scope="col">{nameData.balance}</th>
+
+                                    </tr>
+                                    <tr className='table-light text-start'>
+                                        <th scope="col" >Final Amount</th>
+                                        <th scope="col">{ parseInt(finalAmount?finalAmount:0) +parseInt(nameData.balance ? nameData.balance : 0)}</th>
+
+                                    </tr>
                                     <tr className='table-light text-start'>
                                         <th scope="col">Receive</th>
                                         <th scope="col">{recData.recAmount.amount}</th>
 
                                     </tr>
                                     <tr className='table-light text-start'>
-                                        <th scope="col">Payment</th>
+                                        <th scope="col">Pay</th>
                                         <th scope="col">{payData.payAmount.amount}</th>
 
                                     </tr>
+                                    <tr className='table-light text-start'>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">{discountData.discount.amount}</th>
+                                    </tr>
                                    
 
-                                    <tr className='table-light text-start'>
-                                        <th scope="col" colSpan={3}>Last Balance</th>
-                                        <th scope="col">{nameData.balance}</th>
-
-                                    </tr>
-
-
-
-                             
+                                    </tbody>  
                             </table>
                         </div>
                         <div className="modal-footer">
@@ -125,12 +133,12 @@ const BillPrint = (props) => {
                                     <tr className='table-light text-start'>
                                         <th scope="col">Current Balance</th>
                                         <th scope="col">{
-                                            Math.floor(parseFloat(finalAmount)
-                                                + parseFloat(payData.payAmount.amount ? payData.payAmount.amount : 0)
-                                              
-                                                + parseFloat(nameData.balance ? nameData.balance : 0)
-                                                - parseFloat(recData.recAmount.amount ? recData.recAmount.amount : 0)
-                                            )}
+                                           parseInt(finalAmount)
+                                            +parseInt(nameData.balance ? nameData.balance : 0)
+                                            +parseInt(payData.payAmount.amount ? payData.payAmount.amount : 0)
+                                                -parseInt(recData.recAmount.amount ? recData.recAmount.amount : 0)
+                                                -parseInt(discountData.discount.amount ? discountData.discount.amount : 0)
+                                            }
                                         </th>
 
                                     </tr>

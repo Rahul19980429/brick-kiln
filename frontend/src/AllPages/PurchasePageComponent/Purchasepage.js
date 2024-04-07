@@ -6,7 +6,7 @@ import PaymentCashpage from '../../Components/Paymentpage';
 import CustomerNameList from '../../Components/CustomerNameList';
 import ItemNameList from '../../Components/ItemNameList';
 import { useNavigate } from 'react-router-dom';
-// import BillPrint from '../PurchasePageComponents/BillPrint';
+import BillPrint from './BillPrint';
 import Discountpage from '../../Components/Discount';
 import { Link } from "react-router-dom"
 const PurchasePage = ({ btnColor }) => {
@@ -304,7 +304,7 @@ const PurchasePage = ({ btnColor }) => {
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={() => NewbtnClick()}>New</button>
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
-              <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop20">Print</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop7">Print</button>
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={billSaveBtn}>Save</button>
             </div>
             <hr className='d-lg-none' />
@@ -383,14 +383,13 @@ const PurchasePage = ({ btnColor }) => {
         <div className='row'>
           <CustomerNameList memberType="supplier" />
           <ItemNameList initalvalues={{ itemInput, setItemInput }} />
-          {/* <BillPrint nameData={selectedCustomer} bdate={date}
+          <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
-            billitems={customerItems} recData={{ recAmount, recMetal }}
-            payData={{ payAmount, payMetal }}
-            bhav={{ goldMetalBhav, silverMetalBhav }}
-            fine={totalFine}
+            billitems={customerItems} recData={{ recAmount}}
+            payData={{ payAmount}}
+            discountData={{discount}}
             finalAmount={finalAmount}
-          /> */}
+          />
         </div>
       </div> : ''
   )
