@@ -317,8 +317,9 @@ const PurchasePage = ({ btnColor }) => {
                 <table className="table mb-0">
                   <tbody>
                     <tr>
-                      <th scope="row">Tota Amount : {finalAmount ? finalAmount : 0} </th>
-                      <th>Last Amount : {selectedCustomer.balance ? selectedCustomer.balance : 0} </th>
+                      <th scope="row">Final Amount : {- parseInt(finalAmount)
+                        + (parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0))} </th>
+                      <th>T.Amount:({finalAmount ? -finalAmount : 0}) + Last Balance:({selectedCustomer.balance ? selectedCustomer.balance : 0}) </th>
                       <td></td>
 
                     </tr>
@@ -368,10 +369,10 @@ const PurchasePage = ({ btnColor }) => {
                   <tr className='table-dark text-start'>
                     <th scope="col" >Left Balance:
                       {customeKaBalanveAfterCalculation = - parseInt(finalAmount)
-                        + (parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)
+                        + parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)
                           - parseInt(recAmount.amount ? recAmount.amount : 0)
                           + parseInt(payAmount.amount ? payAmount.amount : 0)
-                          + parseInt(discount.amount ? discount.amount : 0))}</th>
+                          + parseInt(discount.amount ? discount.amount : 0)}</th>
 
 
                   </tr>
