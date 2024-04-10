@@ -224,6 +224,7 @@ const States = (props) => {
       setSellBill({ sellBillData: data.result, SellBillNumber: number })
       setBillNumberForNextBtn(number)
       setSpinner(false);
+      return data
     }
     // else{
     //     setError(data)

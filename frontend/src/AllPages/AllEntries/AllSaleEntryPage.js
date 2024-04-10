@@ -1,8 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import context from '../../ContextApi/Context'
 import { useNavigate } from 'react-router-dom';
+import ReactToPrint from 'react-to-print';
 
 const AllSaleEntry = () => {
+    const componentRef = useRef()
     let navigate = useNavigate();
     let customerData;
     let date;
@@ -16,10 +18,10 @@ const AllSaleEntry = () => {
 
     }
     const a = useContext(context);
-    const { sellBill, getAllSellBill, members, getAllMember, setError, logOutClick, spinner } = a;
+    const { getAllSellBill, members, getAllMember, setError, logOutClick, spinner } = a;
 
     // useState 
-
+    const [saleBill, setSaleBill] = useState([])
     const [searchInput, setSearchInput] = useState({ textSearch: '', from: '', to: '' })
 
     const onChange = (e) => {
@@ -28,7 +30,7 @@ const AllSaleEntry = () => {
     }
 
     function getcustomerId(data) {
-        if (data.category === 'customer' && data.name.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1) {
+        if (data.category === 'customer' && ( data.contact.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1|| data.name.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1)) {
             return data._id
         }
     }
@@ -40,7 +42,6 @@ const AllSaleEntry = () => {
     const DateFilterFunction = (from, to, Data) => {
         let data = Data.filter((data) => { return (setdateAsgetTime(data.date) >= setdateAsgetTime(from)) && (setdateAsgetTime(to) >= setdateAsgetTime(data.date)) });
         return data;
-        /////////////////////////////////////////// continue here
     }
 
     const SubmitDateButton = () => {
@@ -48,9 +49,15 @@ const AllSaleEntry = () => {
             document.getElementById('SellBillFilterBtn').disabled = true;
         }
         else {
-            sellBill.sellBillData.filter((data) => data)
+            let data = DateFilterFunction(searchInput.from, searchInput.to, saleBill);
+            setSaleBill(data)
 
         }
+
+    }
+    const RefreshBtn = () => {
+        setSearchInput({ textSearch: '', from: '', to: '' })
+        getAllSellBill().then((data) => setSaleBill(data.result))
 
     }
 
@@ -63,7 +70,7 @@ const AllSaleEntry = () => {
             navigate('/login')
         }
         else {
-            getAllSellBill()
+            getAllSellBill().then((data) => setSaleBill(data.result))
             getAllMember()
 
         }
@@ -76,6 +83,7 @@ const AllSaleEntry = () => {
             </div>
         )
     }
+
     return (
         localStorage.getItem('Jwt_token') && localStorage.getItem('user_activeStatus') === 'true' ?
             <div className='container-fluid'>
@@ -100,14 +108,23 @@ const AllSaleEntry = () => {
                         </div>
                         <div className="d-flex gap-2 justify-content-center">
                             <button className="btn btn-dark fw-bold" onClick={() => SubmitDateButton()} id="SellBillFilterBtn" disabled={!searchInput.from || !searchInput.to ? true : false}>OK</button>
-                            <button className="btn btn-dark fw-bold" onClick={() => setSearchInput({ textSearch: '', from: '', to: '' })}>REFRESH</button>
+                            <button className="btn btn-dark fw-bold" onClick={() => RefreshBtn()}>REFRESH</button>
                         </div>
-                        <button className="btn btn-dark fw-bold">Print</button>
+                        <ReactToPrint
+                            trigger={() => {
+                                return <button className="btn btn-dark fw-bold">Print</button>;
+                            }}
+                            content={() => componentRef.current}
+                            documentTitle='Sale-Bill-Entry'
+                            pageStyle='print'
+
+                        />
+
                     </div>
                 </div>
                 <hr className='mb-1' />
                 <div className='row'>
-                    <div className='col-12' style={{ overflowY: 'scroll', height: '85vh' }}>
+                    <div className='col-12' ref={componentRef} >
                         <table className="table table-success table-striped mb-0" >
                             <thead className='sticky-top'>
                                 <tr>
@@ -126,95 +143,95 @@ const AllSaleEntry = () => {
                             </thead>
                             <tbody>
 
-                                {sellBill !== '' && members.length > 0 ?
-                                    sellBill.sellBillData.length > 0 ?
-                                        searchInput.textSearch === '' ?
-                                            sellBill.sellBillData.map((data, index) => {
-                                                customerData = members.filter((mdata) => mdata._id === data.customer_id);
-                                                date = new Date(data.date)
-                                                allVariable.totalEntries = allVariable.totalEntries + 1
-                                                allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.receiptInfo.amount)
-                                                allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.paymentInfo.amount)
-                                                allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
-                                                return (<tr key={data._id}>
+                                {saleBill.length > 0 && members.length > 0 ?
 
-                                                    <><td className='border-end border-dark'>{index + 1}</td>
-                                                        <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
-                                                        <td className='border-end border-dark'>{Math.floor(data.customerLastBalance)}</td>
-                                                        <td className='border-end border-dark'>
-                                                            {data.itemsArray.map((data, index) => {
-                                                                amount = amount + parseFloat(data.amount)
-                                                                allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
-                                                                return <h6 key={index}> Item:{data.item}, Qt:{data.quentity}, Rate:{data.rate},
-                                                                    VNo:{data.vehicleNo}, RefNo:{data.refNo}, Other:{data.other},
-                                                                    Amount:{data.amount} </h6>
-                                                            })}
-                                                        </td>
-                                                        <td className='border-end border-dark'>{data.sellBillNumber}</td>
-                                                        <td className='border-end border-dark'>{data.receiptInfo.amount},{data.receiptInfo.naration === 'naration' ? '' : data.receiptInfo.naration}</td>
-                                                        <td className='border-end border-dark'>{data.paymentInfo.amount},{data.paymentInfo.naration === 'naration' ? '' : data.paymentInfo.naration}</td>
-                                                        <td className='border-end border-dark'>{data.discountInfo.amount},{data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                        <td className='border-end border-dark'>{Math.floor(parseFloat(amount) + parseFloat(data.customerLastBalance) + parseFloat(data.paymentInfo.amount) - parseFloat(data.receiptInfo.amount) - parseFloat(data.discountInfo.amount))}</td>
-                                                        <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
-                                                        {/* hidden re-initialise amount here */}
-                                                        <td className='d-none'>{amount = 0}</td></>
+                                    searchInput.textSearch === '' ?
+                                        saleBill.map((data, index) => {
+                                            customerData = members.filter((mdata) => mdata._id === data.customer_id);
+                                            date = new Date(data.date)
+                                            allVariable.totalEntries = allVariable.totalEntries + 1
+                                            allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.receiptInfo.amount)
+                                            allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.paymentInfo.amount)
+                                            allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
+                                            return (<tr key={data._id}>
 
-
-                                                </tr>)
-
-                                            })
-
-                                            : <>
+                                                <><td className='border-end border-dark'>{index + 1}</td>
+                                                    <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
+                                                    <td className='border-end border-dark'>{Math.floor(data.customerLastBalance)}</td>
+                                                    <td className='border-end border-dark'>
+                                                        {data.itemsArray.map((data, index) => {
+                                                            amount = amount + parseFloat(data.amount)
+                                                            allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
+                                                            return <h6 key={index}> Item:{data.item}, Qt:{data.quentity}, Rate:{data.rate},
+                                                                VNo:{data.vehicleNo}, RefNo:{data.refNo}, Other:{data.other},
+                                                                Amount:{data.amount} </h6>
+                                                        })}
+                                                    </td>
+                                                    <td className='border-end border-dark'>{data.sellBillNumber}</td>
+                                                    <td className='border-end border-dark'>{data.receiptInfo.amount},{data.receiptInfo.naration === 'naration' ? '' : data.receiptInfo.naration}</td>
+                                                    <td className='border-end border-dark'>{data.paymentInfo.amount},{data.paymentInfo.naration === 'naration' ? '' : data.paymentInfo.naration}</td>
+                                                    <td className='border-end border-dark'>{data.discountInfo.amount},{data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(amount) + parseFloat(data.customerLastBalance) + parseFloat(data.paymentInfo.amount) - parseFloat(data.receiptInfo.amount) - parseFloat(data.discountInfo.amount))}</td>
+                                                    <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
+                                                    {/* hidden re-initialise amount here */}
+                                                    <td className='d-none'>{amount = 0}</td></>
 
 
-                                                {
-                                                    sellBill.sellBillData.filter((data) => members.filter(getcustomerId).map((data) => data._id).includes(data.customer_id)).map((data, index) => {
-                                                        customerData = members.filter((mdata) => mdata._id === data.customer_id);
-                                                        date = new Date(data.date)
-                                                        allVariable.totalEntries = allVariable.totalEntries + 1
-                                                        allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.receiptInfo.amount)
-                                                        allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.paymentInfo.amount)
-                                                        allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
-                                                        return (<tr key={data._id}>
+                                            </tr>)
 
-                                                            <><td className='border-end border-dark'>{index + 1}</td>
-                                                                <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
-                                                                <td className='border-end border-dark'>{Math.floor(data.customerLastBalance)}</td>
-                                                                <td className='border-end border-dark'>
-                                                                    {data.itemsArray.map((data, index) => {
-                                                                        amount = amount + parseFloat(data.amount)
-                                                                        allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
-                                                                        return <h6 key={index}> Item:{data.item}, Qt:{data.quentity}, Rate:{data.rate},
-                                                                            VNo:{data.vehicleNo}, RefNo:{data.refNo}, Other:{data.other},
-                                                                            Amount:{data.amount} </h6>
-                                                                    })}
-                                                                </td>
-                                                                <td className='border-end border-dark'>{data.sellBillNumber}</td>
-                                                                <td className='border-end border-dark'>{data.receiptInfo.amount},{data.receiptInfo.naration === 'naration' ? '' : data.receiptInfo.naration}</td>
-                                                                <td className='border-end border-dark'>{data.paymentInfo.amount},{data.paymentInfo.naration === 'naration' ? '' : data.paymentInfo.naration}</td>
-                                                                <td className='border-end border-dark'>{data.discountInfo.amount},{data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                                <td className='border-end border-dark'>{Math.floor(parseFloat(amount) + parseFloat(data.customerLastBalance) + parseFloat(data.paymentInfo.amount) - parseFloat(data.receiptInfo.amount) - parseFloat(data.discountInfo.amount))}</td>
-                                                                <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
-                                                                {/* hidden re-initialise amount here */}
-                                                                <td className='d-none'>{amount = 0}</td></>
+                                        })
+
+                                        : <>
 
 
-                                                        </tr>)
+                                            {
+                                                saleBill.filter((data) => members.filter(getcustomerId).map((data) => data._id).includes(data.customer_id)).map((data, index) => {
+                                                    customerData = members.filter((mdata) => mdata._id === data.customer_id);
+                                                    date = new Date(data.date)
+                                                    allVariable.totalEntries = allVariable.totalEntries + 1
+                                                    allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.receiptInfo.amount)
+                                                    allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.paymentInfo.amount)
+                                                    allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
+                                                    return (<tr key={data._id}>
 
-                                                    })
-                                                }
-                                            </>
+                                                        <><td className='border-end border-dark'>{index + 1}</td>
+                                                            <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
+                                                            <td className='border-end border-dark'>{Math.floor(data.customerLastBalance)}</td>
+                                                            <td className='border-end border-dark'>
+                                                                {data.itemsArray.map((data, index) => {
+                                                                    amount = amount + parseFloat(data.amount)
+                                                                    allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
+                                                                    return <h6 key={index}> Item:{data.item}, Qt:{data.quentity}, Rate:{data.rate},
+                                                                        VNo:{data.vehicleNo}, RefNo:{data.refNo}, Other:{data.other},
+                                                                        Amount:{data.amount} </h6>
+                                                                })}
+                                                            </td>
+                                                            <td className='border-end border-dark'>{data.sellBillNumber}</td>
+                                                            <td className='border-end border-dark'>{data.receiptInfo.amount},{data.receiptInfo.naration === 'naration' ? '' : data.receiptInfo.naration}</td>
+                                                            <td className='border-end border-dark'>{data.paymentInfo.amount},{data.paymentInfo.naration === 'naration' ? '' : data.paymentInfo.naration}</td>
+                                                            <td className='border-end border-dark'>{data.discountInfo.amount},{data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                            <td className='border-end border-dark'>{Math.floor(parseFloat(amount) + parseFloat(data.customerLastBalance) + parseFloat(data.paymentInfo.amount) - parseFloat(data.receiptInfo.amount) - parseFloat(data.discountInfo.amount))}</td>
+                                                            <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
+                                                            {/* hidden re-initialise amount here */}
+                                                            <td className='d-none'>{amount = 0}</td></>
 
-                                        : <tr><td colSpan={10} className='text-center'>Data Will Display Here </td></tr>
-                                    : <tr><td colSpan={10} className='text-center'>Data Will Display Here </td></tr>}
+
+                                                    </tr>)
+
+                                                })
+                                            }
+                                        </>
+
+                                    : <tr><td colSpan={10} className='text-center'>Data Will Display Here </td></tr>
+                                }
                             </tbody>
-                            <tfoot className='sticky-bottom' style={{ backgroundColor: 'black' }}>
+                            <tfoot className='sticky-bottom'>
                                 <tr>
                                     <th colSpan={3}> Number Of Entries:{allVariable.totalEntries}</th>
-                                    <th> Total Sale's Amount:{allVariable.totalSaleAmount}</th>
-                                    <th colSpan={2}> T.Receive Amount:{allVariable.totalRecAmount}</th>
-                                    <th colSpan={2}> T.Pay Amount:{allVariable.totalPayAmount}</th>
-                                    <th colSpan={2}> T.Discount Amount:{allVariable.totalDisAmount}</th>
+                                    <th> T.Sale: {allVariable.totalSaleAmount} Rs.</th>
+                                    <th colSpan={2}> T.Receive: {allVariable.totalRecAmount} Rs.</th>
+                                    <th colSpan={2}> T.Pay: {allVariable.totalPayAmount} Rs.</th>
+                                    <th colSpan={2}> T.Discount: {allVariable.totalDisAmount} Rs.</th>
                                 </tr>
                             </tfoot>
                         </table>
