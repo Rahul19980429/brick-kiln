@@ -6,7 +6,7 @@ import { BrowserRouter,Route,Routes,Navigate} from "react-router-dom";
 import MemberAddPage from "./AllPages/create-item-member/MemberAddPage";
 import ItemAddPage from "./AllPages/create-item-member/ItemAddPage";
 import BalanceCheckPage from "./AllPages/BalanceCheckPage";
-import AllSaleEntryPage from "./AllPages/AllSaleEntryPage";
+import AllSaleEntryPage from "./AllPages/AllEntries/AllSaleEntryPage";
 import Menubtn from "./Components/MenuBtn";
 import LogIn from "./AllPages/login/LogIn";
 import ItemSaleNumbersCheck from "./AllPages/create-item-member/ItemSaleNumbersCheck";

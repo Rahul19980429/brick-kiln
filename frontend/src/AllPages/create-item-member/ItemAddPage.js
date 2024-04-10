@@ -182,7 +182,7 @@ const ItemAddPage = () => {
                                         )
 
                                     })}
-                        </div>
+                        </div>                        
                     </div>
                 </div>
 
