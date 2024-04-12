@@ -11,6 +11,7 @@ import Menubtn from "./Components/MenuBtn";
 import LogIn from "./AllPages/login/LogIn";
 import ItemSaleNumbersCheck from "./AllPages/create-item-member/ItemSaleNumbersCheck";
 import Purchasepage from "./AllPages/PurchasePageComponent/Purchasepage";
+import AllPurchaseEntry from "./AllPages/AllEntries/AllPurchaseEntryPage";
 
 
 
@@ -44,6 +45,9 @@ function App() {
         <Route exact path="/balance-check" element={ <BalanceCheckPage/>}/>
         {/* <AllSaleEntryPage/> */}
         <Route exact path="/sale-bill-check" element={ <AllSaleEntryPage/>}/>
+
+         {/* <AllPurchaseEntry/> */}
+         <Route exact path="/purchase-bill-check" element={ <AllPurchaseEntry/>}/>
         
        
          <Route path="*" element={<Navigate to="/login" />}/>

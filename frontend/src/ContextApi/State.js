@@ -157,7 +157,7 @@ const States = (props) => {
     let data = await response.json();
     if (data.success) {
       setItems(data.result);
-
+      return data.result
     }
     else {
       setError(data)
@@ -296,6 +296,7 @@ const States = (props) => {
       setSellBill({ sellBillData: data.result, SellBillNumber: number })
       setBillNumberForNextBtn(number)
       setSpinner(false)
+      return data;
     }
     else {
       setError(data)

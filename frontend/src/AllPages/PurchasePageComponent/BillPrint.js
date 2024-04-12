@@ -28,7 +28,7 @@ const BillPrint = (props) => {
                                     return <button className='btn btn-primary ms-5'>Print out!</button>;
                                 }}
                                 content={() => componentRef.current}
-                                documentTitle='new document'
+                                documentTitle={`Purchase-Bill-${Date.now()}`}
                                 pageStyle='print'
 
                             />

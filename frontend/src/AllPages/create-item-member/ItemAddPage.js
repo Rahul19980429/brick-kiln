@@ -45,7 +45,7 @@ const ItemAddPage = () => {
         clearInput()
     }
     const clearInput = () => {
-        setItemInput({ itemName: '', category: 'gold',itemRate: 0 })
+        setItemInput({ itemName: '', category: 'sale',itemRate: 0 })
         setItemId('')
 
 
@@ -96,7 +96,8 @@ const ItemAddPage = () => {
                                     </svg></span>
 
                                     <select className="form-select" aria-label="Default select example" name='category' id="category" value={itemInput.category} onChange={onChange}>
-                                        <option value="gold">Good</option>
+                                        <option value="sale">Sale</option>
+                                        <option value="good">Good</option>
                                     </select>
                                 </div>
                                 <div className="input-group mb-3  border border-white rounded-1 ">

@@ -234,7 +234,7 @@ const Sellpage = ({btnColor}) => {
         {/* part first bill search row */}
         <div className='row my-1'>
           <div className='col-lg-4 col-12'>
-            <h5 className='text-center py-2 bg-dark text-white'>Customer Bill</h5>
+            <h5 className='text-center py-2 bg-dark text-white'>Sale Bill</h5>
           </div>
           <div className='col-lg-5 col-12 text-center py-1'>
             <Link to="/member" className={`btn btn-${btnColor} btn-sm mx-1`}>Create New Member</Link>
@@ -389,7 +389,7 @@ const Sellpage = ({btnColor}) => {
         </div>
         <div className='row'>
           <CustomerNameList memberType="customer" />
-          <ItemNameList initalvalues={{ itemInput, setItemInput }} />
+          <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="sale"/>
           <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
             billitems={customerItems} recData={{ recAmount }}

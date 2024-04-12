@@ -383,7 +383,7 @@ const PurchasePage = ({ btnColor }) => {
         </div>
         <div className='row'>
           <CustomerNameList memberType="supplier" />
-          <ItemNameList initalvalues={{ itemInput, setItemInput }} />
+          <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="good" />
           <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
             billitems={customerItems} recData={{ recAmount}}

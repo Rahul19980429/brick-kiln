@@ -2,7 +2,7 @@ import React, { useContext,useEffect,useState} from 'react';
 import context from '../ContextApi/Context'
 
 const ItemNameList = (props) => {
-    const { initalvalues } = props;
+    const { initalvalues,itemType } = props;
     const {itemInput, setItemInput} = initalvalues
     const [search, setSearch] = useState('')
     const a = useContext(context);
@@ -40,10 +40,10 @@ const ItemNameList = (props) => {
                             <ul className='p-0'>
                                 {items.length>0?
                                  search===''?
-                                items.map((data) => {
+                                items.filter((Idata) => (itemType ? Idata.category === itemType : Idata)).map((data) => {
                                     return <li onClick={()=>handelClick(data)} className="dropdown-item py-1 ps-3 border-top fs-5 text-capitalize"  style={{cursor:'pointer'}} key={data._id} >{data.itemname} Rate: {data.itemrate}</li>
-                                }): items.filter((mdata) =>  mdata.itemname.toLowerCase().indexOf(search.toLowerCase()) !== -1 ).map((data) => {
-                                    return <li onClick={() => handelClick(data)} className="dropdown-item py-1 ps-3 border-top fs-6 text-capitalize" style={{ cursor: 'pointer' }} key={data._id} >{data.itemname} Rate: {data.itemrate}</li>
+                                }): items.filter((Idata) => (itemType ? Idata.category === itemType : Idata) && (Idata.itemname.toLowerCase().indexOf(search.toLowerCase()) !== -1 )).map((data) => {
+                                    return <li onClick={() => handelClick(data)} className="dropdown-item py-1 ps-3 border-top fs-5 text-capitalize" style={{ cursor: 'pointer' }} key={data._id} >{data.itemname} Rate: {data.itemrate}</li>
                                 })
                                 :<h5 className='text-center'>Not Found</h5>}
                             </ul>
