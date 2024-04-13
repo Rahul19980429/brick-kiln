@@ -12,6 +12,8 @@ import LogIn from "./AllPages/login/LogIn";
 import ItemSaleNumbersCheck from "./AllPages/create-item-member/ItemSaleNumbersCheck";
 import Purchasepage from "./AllPages/PurchasePageComponent/Purchasepage";
 import AllPurchaseEntry from "./AllPages/AllEntries/AllPurchaseEntryPage";
+import LaborPage from "./AllPages/LaborPageComponent/LaborPage";
+import Setting from "./AllPages/Setting";
 
 
 
@@ -31,15 +33,14 @@ function App() {
         <Route exact path="/member" element={ <MemberAddPage/>}/>
         {/* <ItemAddPage/> */}
         <Route exact path="/item" element={ <ItemAddPage/>}/>
-
-         {/* <ItemAddPage/> */}
-         <Route exact path="/item-sale-numbers" element={ <ItemSaleNumbersCheck/>}/>
-
+        {/* <ItemAddPage/> */}
+        <Route exact path="/item-sale-numbers" element={ <ItemSaleNumbersCheck/>}/>
         {/* <Sellpage/> */}
         <Route exact path="/sale-bill" element={ <Sellpage btnColor={'primary'}/>}/>
-
-        {/* <Sellpage/> */}
+        {/* <Purchasepage/> */}
         <Route exact path="/purchase-bill" element={ <Purchasepage btnColor={'success'}/>}/>
+        {/* <LaborPage/> */}
+        <Route exact path="/labor-bill" element={ <LaborPage btnColor={'danger'}/>}/>
 
         {/* <BalanceCheckPage/> */}
         <Route exact path="/balance-check" element={ <BalanceCheckPage/>}/>
@@ -49,7 +50,8 @@ function App() {
          {/* <AllPurchaseEntry/> */}
          <Route exact path="/purchase-bill-check" element={ <AllPurchaseEntry/>}/>
         
-       
+        {/* <Setting/> */}
+        <Route exact path="/setting" element={ <Setting/>}/>
          <Route path="*" element={<Navigate to="/login" />}/>
 
          <Route exact path='/login' element={<LogIn/>}/>
