@@ -6,7 +6,7 @@ const PaymentCashpage = (props) => {
   const { btnColor } = props;
   // destructuring of conetxt 
   const a = useContext(context);
-  const { setPayAmount } = a;
+  const { payAmount,setPayAmount } = a;
   // useState for receipt form 
   const [payment, setPayment] = useState({ amount: '', mode: 'cash', naration: '' })
 
@@ -21,7 +21,7 @@ const PaymentCashpage = (props) => {
   }
   const paymentClick = (e) => {
     e.preventDefault();
-    setPayAmount(payment);
+    setPayAmount(payAmount.concat(payment));
     setPayment({ amount: '', mode: 'cash', naration: '' });
     // close modal
     document.getElementById('paymentCloseBtn').click()

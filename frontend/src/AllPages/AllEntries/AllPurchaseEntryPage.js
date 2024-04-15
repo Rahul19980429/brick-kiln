@@ -10,6 +10,8 @@ const AllPurchaseEntry = () => {
     let date;
     let amount = 0;
     let allVariable = {
+        recAmountTotal:0,
+        payAmountTotal:0,
         totalEntries: 0,
         totalSaleAmount: 0,
         totalRecAmount: 0,
@@ -150,14 +152,13 @@ const AllPurchaseEntry = () => {
                                             customerData = members.filter((mdata) => mdata._id === data.supplier_id);
                                             date = new Date(data.date)
                                             allVariable.totalEntries = allVariable.totalEntries + 1
-                                            allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.receiptInfo.amount)
-                                            allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.paymentInfo.amount)
                                             allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
                                             return (<tr key={data._id}>
 
                                                 <><td className='border-end border-dark'>{index + 1}</td>
                                                     <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
                                                     <td className='border-end border-dark'>{Math.floor(data.supplierLastBalance)}</td>
+                                                    
                                                     <td className='border-end border-dark'>
                                                         {data.itemsArray.map((data, index) => {
                                                             amount = amount + parseFloat(data.amount)
@@ -167,13 +168,37 @@ const AllPurchaseEntry = () => {
                                                         })}
                                                     </td>
                                                     <td className='border-end border-dark'>{data.purchaseBillNumber}</td>
-                                                    <td className='border-end border-dark'>{data.receiptInfo.amount},{data.receiptInfo.naration === 'naration' ? '' : data.receiptInfo.naration}</td>
-                                                    <td className='border-end border-dark'>{data.paymentInfo.amount},{data.paymentInfo.naration === 'naration' ? '' : data.paymentInfo.naration}</td>
-                                                    <td className='border-end border-dark'>{data.discountInfo.amount},{data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.supplierLastBalance) + parseFloat(data.paymentInfo.amount) - parseFloat(data.receiptInfo.amount) + parseFloat(data.discountInfo.amount))}</td>
+                                                    <td className='border-end border-dark'>
+                                                        <table>
+                                                            <tbody>
+                                                            {data.receiptInfo.length>0? data.receiptInfo.map((data,index) => {
+                                                                allVariable.recAmountTotal=allVariable.recAmountTotal+parseInt(data.amount)
+                                                                allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
+                                                                return <tr key={index}>
+                                                                    <td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td>
+                                                                </tr>
+                                                            }):0}
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td className='border-end border-dark'><table>
+                                                            <tbody>
+                                                            {data.paymentInfo.length>0? data.paymentInfo.map((data,index) => {
+                                                                 allVariable.payAmountTotal=allVariable.payAmountTotal+parseInt(data.amount)
+                                                                 allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
+                                                                return <tr key={index}>
+                                                                <td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td>
+                                                            </tr>
+                                                            }):0}
+                                                            </tbody>
+                                                        </table></td>
+                                                    
+                                                   
+                                                    <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.supplierLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
                                                     <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                     {/* hidden re-initialise amount here */}
-                                                    <td className='d-none'>{amount = 0}</td></>
+                                                    <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></>
 
 
                                             </tr>)
@@ -188,8 +213,6 @@ const AllPurchaseEntry = () => {
                                                     customerData = members.filter((mdata) => mdata._id === data.supplier_id);
                                                     date = new Date(data.date)
                                                     allVariable.totalEntries = allVariable.totalEntries + 1
-                                                    allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.receiptInfo.amount)
-                                                    allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.paymentInfo.amount)
                                                     allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
                                                     return (<tr key={data._id}>
 
@@ -200,20 +223,44 @@ const AllPurchaseEntry = () => {
                                                                 {data.itemsArray.map((data, index) => {
                                                                     amount = amount + parseFloat(data.amount)
                                                                     allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
-                                                                    return <h6 key={index}> Item:{data.item}, Qt:{data.quentity}, Rate:{data.rate},
-                                                                       BillNo:{data.billNo} Other:{data.other}, Amount:{data.amount} </h6>
+                                                                    return <h6 key={index}> Item:{data.item}, Qt:{data.netWeight}, Rate:{data.rate},
+                                                                        BillNo:{data.billNo} Other:{data.other}, Amount:{data.amount} </h6>
                                                                 })}
                                                             </td>
                                                             <td className='border-end border-dark'>{data.purchaseBillNumber}</td>
-                                                            <td className='border-end border-dark'>{data.receiptInfo.amount},{data.receiptInfo.naration === 'naration' ? '' : data.receiptInfo.naration}</td>
-                                                            <td className='border-end border-dark'>{data.paymentInfo.amount},{data.paymentInfo.naration === 'naration' ? '' : data.paymentInfo.naration}</td>
-                                                            <td className='border-end border-dark'>{data.discountInfo.amount},{data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                            <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.supplierLastBalance) + parseFloat(data.paymentInfo.amount) - parseFloat(data.receiptInfo.amount) + parseFloat(data.discountInfo.amount))}</td>
+                                                            <td className='border-end border-dark'>
+                                                                <table>
+                                                                    <tbody>
+                                                                    {data.receiptInfo.length>0? data.receiptInfo.map((data,index) => {
+                                                                        allVariable.recAmountTotal=allVariable.recAmountTotal+parseInt(data.amount)
+                                                                        allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
+                                                                        return <tr key={index}>
+                                                                            <td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td>
+                                                                        </tr>
+                                                                    }):0}
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                            <td className='border-end border-dark'><table>
+                                                                    <tbody>
+                                                                    {data.paymentInfo.length>0? data.paymentInfo.map((data,index) => {
+                                                                         allVariable.payAmountTotal=allVariable.payAmountTotal+parseInt(data.amount)
+                                                                         allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
+                                                                        return <tr key={index}>
+                                                                        <td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td>
+                                                                    </tr>
+                                                                    }):0}
+                                                                    </tbody>
+                                                                </table></td>
+                                                            
+                                                           
+                                                            <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                            <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.supplierLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
                                                             <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                             {/* hidden re-initialise amount here */}
-                                                            <td className='d-none'>{amount = 0}</td></>
-
-
+                                                            <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></>
+        
+        
                                                     </tr>)
 
                                                 })
@@ -227,7 +274,7 @@ const AllPurchaseEntry = () => {
                                 <tr>
                                     <th colSpan={3}> Number Of Entries:{allVariable.totalEntries}</th>
                                     <th> T.Purchase: {allVariable.totalSaleAmount} Rs.</th>
-                                    <th colSpan={2}> T.Receive: {allVariable.totalRecAmount} Rs.</th>
+                                     <th colSpan={2}> T.Receive: {allVariable.totalRecAmount} Rs.</th>
                                     <th colSpan={2}> T.Pay: {allVariable.totalPayAmount} Rs.</th>
                                     <th colSpan={2}> T.Discount: {allVariable.totalDisAmount} Rs.</th>
                                 </tr>

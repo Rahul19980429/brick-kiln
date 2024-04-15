@@ -22,10 +22,10 @@ const States = (props) => {
   const [finalAmount, setFinalAmount] = useState(0)
 
   // useState for receipt amount
-  const [recAmount, setRecAmount] = useState(0)
+  const [recAmount, setRecAmount] = useState([])
 
   // useState for payment amount
-  const [payAmount, setPayAmount] = useState(0)
+  const [payAmount, setPayAmount] = useState([])
 
   // useState for payment amount
   const [discount, setDiscount] = useState(0)

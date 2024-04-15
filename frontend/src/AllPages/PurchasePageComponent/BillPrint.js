@@ -85,7 +85,7 @@ const BillPrint = (props) => {
                                     <tfoot>
                                         <tr className='table-dark text-start'>
                                             <th scope="col" colSpan={3}>T.Item: {billitems.length}</th>
-                                            <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th>
+                                            <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th> 
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -94,25 +94,43 @@ const BillPrint = (props) => {
                                <tbody>
                                     <tr className='table-light text-start'>
                                         <th scope="col" >Last Balance</th>
-                                        <th scope="col">{nameData.balance}</th>
+                                        <th scope="col" colSpan={2}>{nameData.balance}</th>
 
                                     </tr>
                                     <tr className='table-light text-start'>
                                         <th scope="col" >Final Amount</th>
-                                        <th scope="col">{ -parseInt(finalAmount?finalAmount:0) + parseInt(nameData.balance ? nameData.balance : 0)}</th>
+                                        <th scope="col" colSpan={2}>{ -parseInt(finalAmount?finalAmount:0) + parseInt(nameData.balance ? nameData.balance : 0)}</th>
 
                                     </tr>
-                                    <tr className='table-light text-start'>
-                                        <th scope="col">Receive</th>
-                                      
-                                        <th scope="col">{recData.recAmount.amount}</th>
+                                    {recData.recAmount.length > 0 ? recData.recAmount.map((recData,index) => {
+                                        return <tr className='table-light text-start' key={index}>
+                                            <th scope="col">Receive</th>
+                                            <th scope="col">{recData.amount}</th> 
+                                            <th scope="col">{recData.mode}</th> 
+                                             </tr>
+                                    }) :<tr className='table-light text-start'>
+                                            <th scope="col">Receive</th>
+                                            <th scope="col" colSpan={2}>{0}</th>
+                                         </tr>
 
-                                    </tr>
-                                    <tr className='table-light text-start'>
-                                        <th scope="col">Pay</th>
-                                      
-                                        <th scope="col">{payData.payAmount.amount}</th>
+                                    }
+                                    
 
+                                    {payData.payAmount.length > 0 ? payData.payAmount.map((payData,index) => {
+                                        return <tr className='table-light text-start' key={index}>
+                                            <th scope="col">pay</th>
+                                            <th scope="col">{payData.amount}</th> 
+                                            <th scope="col">{payData.mode}</th>  
+                                            </tr>
+                                    }) :<tr className='table-light text-start'>
+                                            <th scope="col">pay</th>
+                                            <th scope="col" colSpan={2}>{0}</th> 
+                                         </tr>
+
+                                    }
+                                     <tr className='table-light text-start'>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col" colSpan={2}>{discountData.discount.amount}</th>
                                     </tr>
                                     
 
