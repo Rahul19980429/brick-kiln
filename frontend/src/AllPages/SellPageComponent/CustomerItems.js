@@ -25,7 +25,6 @@ const CustomerItems = (props) => {
             {
                 Quantity: data.quantity,
                 Rate: data.rate,
-                VehicleNo: data.vehicleNo,
                 RefNo: data.refNo,
                 Other: data.other,
 
@@ -48,10 +47,11 @@ const CustomerItems = (props) => {
     const keypress = (e) => {
         if (isNaN(e.target.value) || e.target.value === " ") {
             e.target.value = "";
+            setItemInput({ ...itemInput, [e.target.name]: e.target.value });
         }
         else {
             if (itemInput.Rate && itemInput.Quantity) {
-                setItemAmount(parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseInt(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))
+                setItemAmount(parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))
             }
             else {
                 setItemAmount(0)
@@ -63,7 +63,7 @@ const CustomerItems = (props) => {
 
     // on clean button click
     const clearForm = () => {
-        setItemInput({ Quantity: '', Rate: '', VehicleNo: '', RefNo: '', Other: '' })
+        setItemInput({ Quantity: '', Rate: '',  RefNo: '', Other: '' })
         setItemName({ _id: '', iname: '', category: '' })
         setItemAmount(0)
 
@@ -78,7 +78,6 @@ const CustomerItems = (props) => {
             "itemCategory": itemName.category,
             "quantity": itemInput.Quantity ? itemInput.Quantity : 0,
             "rate": itemInput.Rate ? itemInput.Rate : 0,
-            "vehicleNo": itemInput.VehicleNo ? itemInput.VehicleNo : 0,
             "refNo": itemInput.RefNo ? itemInput.RefNo : 0,
             "other": itemInput.Other ? itemInput.Other : 0,
             "amount": itemAmount ? itemAmount : 0,
@@ -102,7 +101,6 @@ const CustomerItems = (props) => {
                                 <th scope="col">ITEM</th>
                                 <th scope="col">QTY/WT</th>
                                 <th scope="col">RATE</th>
-                                <th scope="col">VEHICLE</th>
                                 <th scope="col">REF NO.</th>
                                 <th scope="col">OTHER</th>
                                 <th scope="col">AMOUNT</th>
@@ -118,7 +116,6 @@ const CustomerItems = (props) => {
                                         <td>{data.item}</td>
                                         <td>{data.quantity}</td>
                                         <td>{data.rate}</td>
-                                        <td>{data.vehicleNo}</td>
                                         <td>{data.refNo}</td>
                                         <td>{data.other}</td>
                                         <td>{data.amount}</td>
@@ -133,7 +130,7 @@ const CustomerItems = (props) => {
                                         </td>
 
                                     </tr>
-                                }) : <tr><td colSpan={9}>Items Will Display Here </td></tr>}
+                                }) : <tr><td colSpan={8}>Items Will Display Here </td></tr>}
                         </tbody>
                     </table>
                 </div>
@@ -157,52 +154,54 @@ const CustomerItems = (props) => {
                                 <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
                             </div>
 
-                            <div className='col-lg-1 col-md-2 col-9 px-1'>
+                            <div className='col-lg-2 col-md-2 col-9 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />
+                                    <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Select Item' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
+                            <div className='col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>QTY/WT</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.Quantity} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Quantity" name="Quantity" placeholder='Qty/Wt' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
+                            <div className='col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>RATE</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.Rate} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Rate" name="Rate" placeholder='Rate' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>VEHICLE</h6>
-                                <div className=" input-group mb-3">
-                                    <input value={itemInput.VehicleNo} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="VehicleNo" name="VehicleNo" placeholder='XXXX' />
-                                </div>
-                            </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
+                            <div className='col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>REF NO.</h6>
                                 <div className=" input-group mb-3">
                                     <input value={itemInput.RefNo} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="RefNo" name="RefNo" placeholder='XXXX' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
+                            <div className='col-lg-2 col-md-2 col-3 '>
+                                <h6 className='fw-bold text-lg-center mb-1'>Transport</h6>
+                                <div className=" input-group mb-3  justify-content-center">
+                                    <button type='button' className={`btn  btn-${btnColor} `} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop6">Driver Transport</button>
+                                </div>
+                            </div>
+                            <div className='col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>OTHER</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.Other} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="Other" name="Other" placeholder='Other' />
                                 </div>
                             </div>
+
+
                             <hr className='border border-warning border-2 d-block d-lg-none' />
-                            <div className='col-lg-1 col col-md-4 px-1'>
+                            <div className='col-lg-1 col col-md-4 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
                                     <input autoComplete='off' type="none" className="form-control" id="itemAmount" name="itemAmount" value={itemAmount} readOnly />
                                 </div>
                             </div>
                             <div className='col-lg-2 col  d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.VehicleNo || !itemInput.RefNo ? true : false}>Add</button>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.VehicleNo && !itemInput.RefNo && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate  || !itemInput.RefNo ? true : false}>Add</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate &&  !itemInput.RefNo && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
                             </div>
                         </div>
                     </form>

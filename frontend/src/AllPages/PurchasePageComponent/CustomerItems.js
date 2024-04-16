@@ -48,6 +48,7 @@ const CustomerItems = (props) => {
     const keypress = (e) => {
         if (isNaN(e.target.value) || e.target.value === " ") {
             e.target.value = "";
+             setItemInput({ ...itemInput, [e.target.name]: e.target.value });
         }
         else {
             if (itemInput.Rate && itemInput.NetWeight) {

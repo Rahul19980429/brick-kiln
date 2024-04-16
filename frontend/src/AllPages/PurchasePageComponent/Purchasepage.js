@@ -318,7 +318,7 @@ const PurchasePage = ({ btnColor }) => {
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={() => NewbtnClick()}>New</button>
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
-              <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop7">Print</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop8">Print</button>
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={billSaveBtn}>Save</button>
             </div>
             <hr className='d-lg-none' />

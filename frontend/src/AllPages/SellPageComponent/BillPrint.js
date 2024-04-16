@@ -17,7 +17,7 @@ const BillPrint = (props) => {
 
             {/* <!-- Modal --> */}
 
-            <div className="modal fade" id="staticBackdrop6" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id="staticBackdrop7" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
                 <div className="modal-dialog">
                     <div ref={componentRef} className="modal-content">

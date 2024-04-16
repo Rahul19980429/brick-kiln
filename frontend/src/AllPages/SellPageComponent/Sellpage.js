@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import BillPrint from './BillPrint';
 import Discountpage from '../../Components/Discount';
 import { Link } from "react-router-dom"
+import DriverTransportRate from './DriverTransportRate';
 const Sellpage = ({btnColor}) => {
   let payAmountVariable=0;
   let recAmountVariable=0;
@@ -31,7 +32,7 @@ const Sellpage = ({btnColor}) => {
   const [inputBillNumber, setInputBillNumber] = useState('')
 
   // input field k liye useState initallize
-  const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '', VehicleNo: '', RefNo: '', Other: '' })
+  const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '',  RefNo: '', Other: '' })
 
   let fullYear = date.getFullYear();
   let month = date.getMonth() + 1;
@@ -60,7 +61,7 @@ const Sellpage = ({btnColor}) => {
   // cancel btn click function 
   const clearAll = () => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
-    setItemInput({  Quantity: '', Rate: '', VehicleNo: '', RefNo: '', Other: ''})
+    setItemInput({  Quantity: '', Rate: '', RefNo: '', Other: ''})
     setRecAmount([])
     setPayAmount([])
     setDiscount(0)
@@ -326,7 +327,7 @@ const Sellpage = ({btnColor}) => {
               <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billNumberForNextBtn < sellBill.SellBillNumber + 2 ? true : false} onClick={() => nextBtnClick()}>Next</button>
               <button className={`col me-2 btn btn-${btnColor} mt-2`} onClick={() => NewbtnClick()}>New</button>
               <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
-              <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop6">Print</button>
+              <button className={`col me-2 btn btn-${btnColor} mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop7">Print</button>
               <button className={`col me-2 btn btn-${btnColor} mt-2`} onClick={billSaveBtn}>Save</button>
             </div>
             <hr className='d-lg-none' />
@@ -425,6 +426,7 @@ const Sellpage = ({btnColor}) => {
         <div className='row'>
           <CustomerNameList memberType="customer" />
           <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="sale"/>
+          <DriverTransportRate btnColor={btnColor} quantity={itemInput.Quantity}/>
           <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
             billitems={customerItems} recData={{ recAmount ,recAmountVariable}}
