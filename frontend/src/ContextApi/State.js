@@ -42,6 +42,7 @@ const States = (props) => {
   // 
   const [billNumberForNextBtn, setBillNumberForNextBtn] = useState(0)
 
+
   
 
 
@@ -425,7 +426,6 @@ const States = (props) => {
       getAllPurchaseBill, ADDNewPurchaseBill, DeletePurchaseBill,
       getAllLaborBill,
      discount, setDiscount,
-
       spinner, error, setError, logInUser, logOutClick,
 
     }}>

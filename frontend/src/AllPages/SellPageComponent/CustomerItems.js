@@ -1,17 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import context from '../../ContextApi/Context'
 import "../../App.css"
 const CustomerItems = (props) => {
-    const { btnColor, initalvalues } = props;
+    const { btnColor, initalvalues,DriverAmount } = props;
     const { itemInput, setItemInput } = initalvalues;
+    const {driverAmount,setDriverAmount} =DriverAmount
 
-    // useState for Item Amount
-    const [itemAmount, setItemAmount] = useState(0)
 
     // context d-Structuring
     const a = useContext(context);
     const { itemName, setItemName, customerItems, setCustomerItems,
-        setFinalAmount, finalAmount } = a;
+        setFinalAmount, finalAmount, members } = a;
 
     // function for remove item from the customer items list
     const removeItemFromList = (item) => {
@@ -27,10 +26,13 @@ const CustomerItems = (props) => {
                 Rate: data.rate,
                 RefNo: data.refNo,
                 Other: data.other,
+                Driver: data.driverId,
+                TransportRate: data.transportRate,
+                Amount: data.amount,
+                TransportAmount: data.transportAmount
 
             })
 
-        setItemAmount(data.amount ? data.amount : 0)
         setItemName({ iname: data.item, category: data.itemCategory })
         removeItemFromList(index);
 
@@ -50,12 +52,15 @@ const CustomerItems = (props) => {
             setItemInput({ ...itemInput, [e.target.name]: e.target.value });
         }
         else {
-            if (itemInput.Rate && itemInput.Quantity) {
-                setItemAmount(parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))
+            if (itemInput.Quantity && (itemInput.Rate || itemInput.TransportRate)) {
+                setItemInput({ ...itemInput, Amount: parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0), TransportAmount: parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.TransportRate ? (parseFloat(itemInput.TransportRate) / 1000) : 0) })
             }
             else {
-                setItemAmount(0)
+
+                setItemInput({ ...itemInput, Amount: 0, TransportAmount: 0 })
             }
+
+
         }
 
     }
@@ -63,9 +68,9 @@ const CustomerItems = (props) => {
 
     // on clean button click
     const clearForm = () => {
-        setItemInput({ Quantity: '', Rate: '',  RefNo: '', Other: '' })
+        setItemInput({ Quantity: '', Rate: '', Driver: '', TransportRate: '', RefNo: '', Other: '', Amount: 0, TransportAmount: 0 })
         setItemName({ _id: '', iname: '', category: '' })
-        setItemAmount(0)
+
 
 
     }
@@ -79,10 +84,16 @@ const CustomerItems = (props) => {
             "quantity": itemInput.Quantity ? itemInput.Quantity : 0,
             "rate": itemInput.Rate ? itemInput.Rate : 0,
             "refNo": itemInput.RefNo ? itemInput.RefNo : 0,
+            "driverId": itemInput.Driver,
+            "driverName": members.find((driver) => driver._id === itemInput.Driver).name,
+            "vehicleNo": itemInput.vehicleNo ? itemInput.vehicleNo : 0,
+            "transportRate": itemInput.TransportRate ? itemInput.TransportRate : 0,
             "other": itemInput.Other ? itemInput.Other : 0,
-            "amount": itemAmount ? itemAmount : 0,
+            "amount": itemInput.Amount ? itemInput.Amount : 0,
+            "transportAmount": itemInput.TransportAmount ? itemInput.TransportAmount : 0
         }
-        setFinalAmount(parseFloat(finalAmount) + parseFloat(itemAmount ? itemAmount : 0));
+        setFinalAmount(parseFloat(finalAmount) + parseFloat(itemInput.Amount ? itemInput.Amount : 0));
+        setDriverAmount(driverAmount + parseFloat(itemInput.TransportAmount ? itemInput.TransportAmount : 0));
         setCustomerItems(customerItems.concat(newItemAdd).reverse());
         clearForm()
 
@@ -101,9 +112,12 @@ const CustomerItems = (props) => {
                                 <th scope="col">ITEM</th>
                                 <th scope="col">QTY/WT</th>
                                 <th scope="col">RATE</th>
+                                <th scope="col">TRANSPORT</th>
+                                <th scope="col">TP.RATE</th>
                                 <th scope="col">REF NO.</th>
                                 <th scope="col">OTHER</th>
                                 <th scope="col">AMOUNT</th>
+                                <th scope="col">TP.AMOUNT</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -116,9 +130,12 @@ const CustomerItems = (props) => {
                                         <td>{data.item}</td>
                                         <td>{data.quantity}</td>
                                         <td>{data.rate}</td>
+                                        <td>{data.driverName}</td>
+                                        <td>{data.transportRate}</td>
                                         <td>{data.refNo}</td>
                                         <td>{data.other}</td>
                                         <td>{data.amount}</td>
+                                        <td>{data.transportAmount}</td>
                                         <td>
                                             <button className='btn btn-sm btn-danger py-0 border-none' onClick={() => removeItemFromList(index)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
                                                 <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
@@ -130,7 +147,7 @@ const CustomerItems = (props) => {
                                         </td>
 
                                     </tr>
-                                }) : <tr><td colSpan={8}>Items Will Display Here </td></tr>}
+                                }) : <tr><td colSpan={11}>Items Will Display Here </td></tr>}
                         </tbody>
                     </table>
                 </div>
@@ -139,7 +156,8 @@ const CustomerItems = (props) => {
                         <tr className='table-dark text-start'>
                             <th scope="col" colSpan={4}>T.Items: {customerItems.length}</th>
 
-                            <th scope="col" colSpan={5}>T.Amount: {finalAmount}</th>
+                            <th scope="col" colSpan={6}>T.Amount: {finalAmount}</th>
+                            <th scope="col">Transport Amount: {driverAmount}</th>
 
                         </tr>
                     </tfoot>
@@ -150,58 +168,84 @@ const CustomerItems = (props) => {
                 <div className='col-12 border '>
                     <form onSubmit={AddItemToCustomer}>
                         <div className={`row  text-${btnColor} pt-2`}>
-                            <div className='col-lg-1 col-md-2 col-3 text-center d-flex d-lg-block align-items-center'>
+                            <div className='px-1 col-lg-1 col-md-2 col-3 text-center d-flex d-lg-block align-items-center'>
                                 <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
                             </div>
 
-                            <div className='col-lg-2 col-md-2 col-9 '>
+                            <div className='px-1 col-lg-1 col-md-2 col-9 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Select Item' />
+                                    <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Item' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 '>
+                            <div className='px-1 col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>QTY/WT</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.Quantity} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Quantity" name="Quantity" placeholder='Qty/Wt' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 '>
+                            <div className='px-1 col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>RATE</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.Rate} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Rate" name="Rate" placeholder='Rate' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 '>
+
+                            <div className='px-1 col-lg-2 col-md-2 col-3 '>
+                                <h6 className='fw-bold text-lg-center mb-1'>TRANSPORT</h6>
+                                <div className=" input-group mb-3  justify-content-center">
+                                    <select className="form-select" aria-label="Default select example" name='Driver' value={itemInput.Driver} onChange={inputValueChange}>
+                                        <option value=''>Select Driver</option>
+                                        {members.filter((drivers) => drivers.category === 'transport').map((driver) => {
+                                            return <option value={driver._id} key={driver._id} className='text-capitalize'>{driver.name}</option>
+                                        })}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className='px-1 col-lg-1 col-md-2 col-3 '>
+                                <h6 className='fw-bold text-lg-center mb-1'>T RATE</h6>
+                                <div className=" input-group mb-4">
+                                    <input value={itemInput.TransportRate} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="TransportRate" name="TransportRate" placeholder='T Rate' />
+                                </div>
+                            </div>
+                            <div className='px-1 col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>REF NO.</h6>
                                 <div className=" input-group mb-3">
                                     <input value={itemInput.RefNo} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="RefNo" name="RefNo" placeholder='XXXX' />
                                 </div>
                             </div>
-                            <div className='col-lg-2 col-md-2 col-3 '>
-                                <h6 className='fw-bold text-lg-center mb-1'>Transport</h6>
-                                <div className=" input-group mb-3  justify-content-center">
-                                    <button type='button' className={`btn  btn-${btnColor} `} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop6">Driver Transport</button>
-                                </div>
-                            </div>
-                            <div className='col-lg-1 col-md-2 col-3 '>
+
+
+                            <div className='px-1 col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>OTHER</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.Other} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="Other" name="Other" placeholder='Other' />
                                 </div>
                             </div>
-
-
                             <hr className='border border-warning border-2 d-block d-lg-none' />
-                            <div className='col-lg-1 col col-md-4 '>
+                            <div className='px-1 col-lg-1 col col-md-4 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
-                                    <input autoComplete='off' type="none" className="form-control" id="itemAmount" name="itemAmount" value={itemAmount} readOnly />
+                                    <input autoComplete='off' type="none" className="form-control" id="Amount" name="Amount" value={itemInput.Amount} readOnly />
                                 </div>
                             </div>
-                            <div className='col-lg-2 col  d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate  || !itemInput.RefNo ? true : false}>Add</button>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate &&  !itemInput.RefNo && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
+                            <div className='px-1 col-lg-1 col col-md-4 '>
+                                <h6 className='fw-bold text-lg-center mb-1'>T AMOUNT</h6>
+                                <div className=" input-group mb-3">
+                                    <input autoComplete='off' type="none" className="form-control" id="TransportAmount" name="TransportAmount" value={itemInput.TransportAmount} readOnly />
+                                </div>
+                            </div>
+
+                            <div className='col-lg-1 d-flex d-lg-block align-items-center'>
+                                <button className={`btn btn-${btnColor} mt-lg-4 me-2 btn-sm px-1`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.RefNo || !itemInput.Driver || !itemInput.TransportRate ? true : false}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
+                                        <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                                    </svg>
+                                </button>
+                                <button className={`btn btn-${btnColor} mt-lg-4 btn-sm px-1`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.RefNo && !itemInput.Other && !itemInput.Driver && !itemInput.TransportRate ? true : false} onClick={clearForm}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                </svg></button>
                             </div>
                         </div>
                     </form>

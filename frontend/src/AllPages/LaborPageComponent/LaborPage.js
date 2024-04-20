@@ -46,7 +46,6 @@ const LaborPage = ({ btnColor }) => {
     }
 
     else {
-      // console.log(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount,recMetal,payMetal,goldMetalBhav,silverMetalBhav,selectedCustomer.balance, balance)
       ADDNewPurchaseBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
       clearAll();
     }

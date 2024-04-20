@@ -9,11 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import BillPrint from './BillPrint';
 import Discountpage from '../../Components/Discount';
 import { Link } from "react-router-dom"
-import DriverTransportRate from './DriverTransportRate';
 const Sellpage = ({btnColor}) => {
   let payAmountVariable=0;
   let recAmountVariable=0;
   let customeKaBalanveAfterCalculation = 0;
+  
+  // useState for driver amount
+  const [driverAmount, setDriverAmount] = useState(0)
 
   // variables declaration
   let finalTotalAmount = 0;
@@ -32,7 +34,8 @@ const Sellpage = ({btnColor}) => {
   const [inputBillNumber, setInputBillNumber] = useState('')
 
   // input field k liye useState initallize
-  const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '',  RefNo: '', Other: '' })
+  const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '', Driver:'' , TransportRate:'', RefNo: '', Other: '',Amount:0,TransportAmount:0})
+
 
   let fullYear = date.getFullYear();
   let month = date.getMonth() + 1;
@@ -53,7 +56,9 @@ const Sellpage = ({btnColor}) => {
     }
 
     else {
-      ADDNewSellBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
+      // bill save pe driver ki amount send krni h    driverAmount
+      console.log(driverAmount)
+      // ADDNewSellBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
       clearAll();
     }
   }
@@ -61,7 +66,7 @@ const Sellpage = ({btnColor}) => {
   // cancel btn click function 
   const clearAll = () => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
-    setItemInput({  Quantity: '', Rate: '', RefNo: '', Other: ''})
+    setItemInput({ Quantity: '', Rate: '', Driver:'' , TransportRate:'', RefNo: '', Other: '',Amount:0,TransportAmount:0 })
     setRecAmount([])
     setPayAmount([])
     setDiscount(0)
@@ -310,7 +315,7 @@ const Sellpage = ({btnColor}) => {
         </div>
 
         {/* part three show customer's add items data and list component */}
-        <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }} />
+        <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }} DriverAmount={{driverAmount,setDriverAmount}} />
         {/* part forth rec,pay,discount and other functionality (all buttons) */}
         <div className='row mt-2'>
           <div className='col-lg-5'>
@@ -426,7 +431,6 @@ const Sellpage = ({btnColor}) => {
         <div className='row'>
           <CustomerNameList memberType="customer" />
           <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="sale"/>
-          <DriverTransportRate btnColor={btnColor} quantity={itemInput.Quantity}/>
           <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
             billitems={customerItems} recData={{ recAmount ,recAmountVariable}}
