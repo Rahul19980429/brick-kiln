@@ -14,8 +14,7 @@ const Sellpage = ({btnColor}) => {
   let recAmountVariable=0;
   let customeKaBalanveAfterCalculation = 0;
   
-  // useState for driver amount
-  const [driverAmount, setDriverAmount] = useState(0)
+ 
 
   // variables declaration
   let finalTotalAmount = 0;
@@ -57,8 +56,8 @@ const Sellpage = ({btnColor}) => {
 
     else {
       // bill save pe driver ki amount send krni h    driverAmount
-      console.log(driverAmount)
-      // ADDNewSellBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
+     
+      ADDNewSellBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
       clearAll();
     }
   }
@@ -315,7 +314,7 @@ const Sellpage = ({btnColor}) => {
         </div>
 
         {/* part three show customer's add items data and list component */}
-        <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }} DriverAmount={{driverAmount,setDriverAmount}} />
+        <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }}  />
         {/* part forth rec,pay,discount and other functionality (all buttons) */}
         <div className='row mt-2'>
           <div className='col-lg-5'>

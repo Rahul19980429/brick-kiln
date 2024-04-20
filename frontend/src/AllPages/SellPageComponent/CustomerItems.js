@@ -2,11 +2,9 @@ import React, { useContext } from 'react';
 import context from '../../ContextApi/Context'
 import "../../App.css"
 const CustomerItems = (props) => {
-    const { btnColor, initalvalues,DriverAmount } = props;
+    const { btnColor, initalvalues } = props;
     const { itemInput, setItemInput } = initalvalues;
-    const {driverAmount,setDriverAmount} =DriverAmount
-
-
+    
     // context d-Structuring
     const a = useContext(context);
     const { itemName, setItemName, customerItems, setCustomerItems,
@@ -86,14 +84,12 @@ const CustomerItems = (props) => {
             "refNo": itemInput.RefNo ? itemInput.RefNo : 0,
             "driverId": itemInput.Driver,
             "driverName": members.find((driver) => driver._id === itemInput.Driver).name,
-            "vehicleNo": itemInput.vehicleNo ? itemInput.vehicleNo : 0,
             "transportRate": itemInput.TransportRate ? itemInput.TransportRate : 0,
             "other": itemInput.Other ? itemInput.Other : 0,
             "amount": itemInput.Amount ? itemInput.Amount : 0,
             "transportAmount": itemInput.TransportAmount ? itemInput.TransportAmount : 0
         }
         setFinalAmount(parseFloat(finalAmount) + parseFloat(itemInput.Amount ? itemInput.Amount : 0));
-        setDriverAmount(driverAmount + parseFloat(itemInput.TransportAmount ? itemInput.TransportAmount : 0));
         setCustomerItems(customerItems.concat(newItemAdd).reverse());
         clearForm()
 
@@ -154,10 +150,10 @@ const CustomerItems = (props) => {
                 <table className="table table-success table-striped mb-2">
                     <tfoot>
                         <tr className='table-dark text-start'>
-                            <th scope="col" colSpan={4}>T.Items: {customerItems.length}</th>
+                            <th scope="col" colSpan={5}>T.Items: {customerItems.length}</th>
 
                             <th scope="col" colSpan={6}>T.Amount: {finalAmount}</th>
-                            <th scope="col">Transport Amount: {driverAmount}</th>
+                            
 
                         </tr>
                     </tfoot>

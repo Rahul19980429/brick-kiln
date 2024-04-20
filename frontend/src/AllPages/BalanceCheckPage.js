@@ -145,7 +145,7 @@ const BalanceCheckPage = () => {
                                                     <td className='border-end border-dark'>{setintDate(data.lastBalanceDate)}</td>
                                                 </tr>
                                             })
-                                            : balanceData.filter((data) => parseInt(data.lastBalance) !== 0 && (data.contact.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1 || data.name.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1)).map((data, index) => {
+                                            : balanceData.filter((data) => parseInt(data.lastBalance) !== 0 && (data.contact.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1 || data.name.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1 || data.category.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1)).map((data, index) => {
                                                 allVariable.totalEntries = allVariable.totalEntries + 1
                                                 allVariable.totalBalance = allVariable.totalBalance + parseInt(data.lastBalance)
                                                 return <tr key={data._id} >
