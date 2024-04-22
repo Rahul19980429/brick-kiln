@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import context from '../../ContextApi/Context'
-import CustomerItems from './CustomerItems';
+import CustomerItems from './DriverSalaryEntry';
 import ReceiptCashpage from '../../Components/Receiptpage';
 import PaymentCashpage from '../../Components/Paymentpage';
 import CustomerNameList from '../../Components/CustomerNameList';
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import BillPrint from './BillPrint';
 import Discountpage from '../../Components/Discount';
 import { Link } from "react-router-dom"
-const PurchasePage = ({ btnColor }) => {
+const TransportPage = ({ btnColor }) => {
 
   let navigate = useNavigate();
   const [lastBill, setLastBill] = useState('')
@@ -28,7 +28,7 @@ const PurchasePage = ({ btnColor }) => {
   const [inputBillNumber, setInputBillNumber] = useState('')
 
   // input field k liye useState initallize
-  const [itemInput, setItemInput] = useState({ NetWeight: '', Rate: '', BillNo: '', Other: '' ,Amount:0 })
+  const [itemInput, setItemInput] = useState({ From:'',To:'',Chuti:0,MonthSalary:'', NumberOfDays:0,Fuel:0, Other: '',Amount:0 })
 
   let fullYear = date.getFullYear();
   let month = date.getMonth() + 1;
@@ -56,8 +56,8 @@ const PurchasePage = ({ btnColor }) => {
 
   // cancel btn click function 
   const clearAll = () => {
-    setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: ''})
-    setItemInput({ NetWeight: '', Rate: '', BillNo: '', Other: '',Amount:0   })
+    setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
+    setItemInput({ From:'',To:'',Chuti:0,MonthSalary:'', NumberOfDays:0,Fuel:0, Other: '',Amount:0 })
     setRecAmount([])
     setPayAmount([])
     setDiscount(0)
@@ -239,7 +239,7 @@ const PurchasePage = ({ btnColor }) => {
         {/* part first bill search row */}
         <div className='row my-1'>
           <div className='col-lg-4 col-12'>
-            <h5 className='text-center py-2 bg-dark text-white'>Purchase Bill</h5>
+            <h5 className='text-center py-2 bg-dark text-white'>Transport Driver Bill</h5>
           </div>
           <div className='col-lg-5 col-12 text-center py-1'>
             <Link to="/member" className={`btn btn-${btnColor} btn-sm mx-1`}>Create New Member</Link>
@@ -262,13 +262,13 @@ const PurchasePage = ({ btnColor }) => {
           <div className='col-lg-6'>
             <div className="row g-3">
               <div className='d-flex '>
-                <div className='col-3'><h6 className='pt-2'>Supplier Name:</h6></div>
+                <div className='col-3'><h6 className='pt-2'>Driver Name:</h6></div>
                 <div className='col-9'>
                   <div className='d-flex'>
                     <button type="button" className={`btn btn-${btnColor} btn-sm mx-1`} id="HiddenBtnCustomer" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
-                      Supplier
+                      Driver
                     </button>
-                    <input type="text" value={selectedCustomer.name} placeholder='Supplier Name' className='form-control' name="supplierName" autoComplete='off' readOnly />
+                    <input type="text" value={selectedCustomer.name} placeholder='Driver Name' className='form-control' name="driverName" autoComplete='off' readOnly />
                   </div>
                 </div>
               </div>
@@ -276,11 +276,11 @@ const PurchasePage = ({ btnColor }) => {
                 {/* customer address and contact show */}
                 <div className='d-flex '>
                   <div className='col-3'>
-                    <h6 className='pt-2'>Supplier Detail:</h6>
+                    <h6 className='pt-2'>Driver Detail:</h6>
                   </div>
                   <div className='col-9'>
                     <input type="text" readOnly value={selectedCustomer.address && selectedCustomer.contact && selectedCustomer.category ?
-                      selectedCustomer.address + " #" + selectedCustomer.contact + " #" + selectedCustomer.category : ''} className='form-control' name="customerName" autoComplete='off' placeholder='Supplier Detail' />
+                      selectedCustomer.address + " #" + selectedCustomer.contact + " #" + selectedCustomer.category : ''} className='form-control' name="driverName" autoComplete='off' placeholder='Driver Detail' />
                   </div>
                 </div>
               </div>
@@ -414,7 +414,7 @@ const PurchasePage = ({ btnColor }) => {
           </div>
         </div>
         <div className='row'>
-          <CustomerNameList memberType="supplier" />
+          <CustomerNameList memberType="transport" />
           <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="good" />
           <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
@@ -428,4 +428,4 @@ const PurchasePage = ({ btnColor }) => {
   )
 }
 
-export default PurchasePage
+export default TransportPage

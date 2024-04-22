@@ -1,18 +1,19 @@
 
-import Sellpage from "./AllPages/SellPageComponent/Sellpage";
 import State from "./ContextApi/State"
-import Home from './AllPages/Home'
 import { BrowserRouter,Route,Routes,Navigate} from "react-router-dom";
+import LogIn from "./AllPages/login/LogIn";
+import Menubtn from "./Components/MenuBtn";
+import Home from './AllPages/Home'
 import MemberAddPage from "./AllPages/create-item-member/MemberAddPage";
 import ItemAddPage from "./AllPages/create-item-member/ItemAddPage";
-import BalanceCheckPage from "./AllPages/BalanceCheckPage";
-import AllSaleEntryPage from "./AllPages/AllEntries/AllSaleEntryPage";
-import Menubtn from "./Components/MenuBtn";
-import LogIn from "./AllPages/login/LogIn";
 import ItemSaleNumbersCheck from "./AllPages/create-item-member/ItemSaleNumbersCheck";
 import Purchasepage from "./AllPages/PurchasePageComponent/Purchasepage";
-import AllPurchaseEntry from "./AllPages/AllEntries/AllPurchaseEntryPage";
+import Sellpage from "./AllPages/SellPageComponent/Sellpage";
+import Transportpage from "./AllPages/TransportPageComponent/Transportpage";
 import LaborPage from "./AllPages/LaborPageComponent/LaborPage";
+import AllSaleEntryPage from "./AllPages/AllEntries/AllSaleEntryPage";
+import AllPurchaseEntry from "./AllPages/AllEntries/AllPurchaseEntryPage";
+import BalanceCheckPage from "./AllPages/BalanceCheckPage";
 import Setting from "./AllPages/Setting";
 
 
@@ -39,6 +40,10 @@ function App() {
         <Route exact path="/sale-bill" element={ <Sellpage btnColor={'primary'}/>}/>
         {/* <Purchasepage/> */}
         <Route exact path="/purchase-bill" element={ <Purchasepage btnColor={'success'}/>}/>
+
+        {/* <Transportpage/> */}
+        <Route exact path="/transport-bill" element={ <Transportpage btnColor={'dark'}/>}/>
+
         {/* <LaborPage/> */}
         <Route exact path="/labor-bill" element={ <LaborPage btnColor={'danger'}/>}/>
 
@@ -49,6 +54,8 @@ function App() {
 
          {/* <AllPurchaseEntry/> */}
          <Route exact path="/purchase-bill-check" element={ <AllPurchaseEntry/>}/>
+
+         
         
         {/* <Setting/> */}
         <Route exact path="/setting" element={ <Setting/>}/>

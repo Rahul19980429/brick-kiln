@@ -6,7 +6,6 @@ const CustomerItems = (props) => {
     const { itemInput, setItemInput } = initalvalues;
 
 
-
     // context d-Structuring
     const a = useContext(context);
     const { itemName, setItemName, customerItems, setCustomerItems,
@@ -14,23 +13,23 @@ const CustomerItems = (props) => {
 
     // function for remove item from the customer items list
     const removeItemFromList = (item) => {
-        setFinalAmount(finalAmount - customerItems[item].amount)
-        let result = customerItems.filter((data, index) => index !== item);
-        setCustomerItems(result);
+        // setFinalAmount(finalAmount - customerItems[item].amount)
+        // let result = customerItems.filter((data, index) => index !== item);
+        // setCustomerItems(result);
     }
 
     const editItemFromList = (data, index) => {
-        setItemInput(
-            {
-                NetWeight: data.NetWeight,
-                Rate: data.rate,
-                BillNo: data.BillNo,
-                Other: data.other,
-                Amount:data.amount
+        // setItemInput(
+        //     {
+        //         NetWeight: data.NetWeight,
+        //         Rate: data.rate,
+        //         BillNo: data.BillNo,
+        //         Other: data.other,
 
-            })
+        //     })
 
-        setItemName({ iname: data.item, category: data.itemCategory })
+        // setItemAmount(data.amount ? data.amount : 0)
+        // setItemName({ iname: data.item, category: data.itemCategory })
         removeItemFromList(index);
 
     }
@@ -46,14 +45,25 @@ const CustomerItems = (props) => {
     const keypress = (e) => {
         if (isNaN(e.target.value) || e.target.value === " ") {
             e.target.value = "";
-             setItemInput({ ...itemInput, [e.target.name]: e.target.value });
+            setItemInput({ ...itemInput, [e.target.name]: e.target.value });
         }
         else {
-            if (itemInput.Rate && itemInput.NetWeight) {
-                setItemInput({...itemInput,Amount:parseInt(itemInput.NetWeight ? itemInput.NetWeight : 0) * parseInt(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0)})
+            if (itemInput.From && itemInput.To) {
+
+                let date1 = new Date(itemInput.From);
+                let date2 = new Date(itemInput.To);
+
+                // Calculating the time difference of two dates
+                let Difference_In_Time = date2.getTime() - date1.getTime();
+
+                // Calculating the no. of days between
+                // two dates
+                let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+                alert(Difference_In_Days)
+                // setItemAmount(parseInt(itemInput.NetWeight ? itemInput.NetWeight : 0) * parseInt(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))
             }
             else {
-                setItemInput({...itemInput,Amount:0})
+                // setItemAmount(0)
             }
         }
 
@@ -62,8 +72,7 @@ const CustomerItems = (props) => {
 
     // on clean button click
     const clearForm = () => {
-        setItemInput({ NetWeight: '', Rate: '', BillNo: '', Other: '',Amount:0 })
-        setItemName({ _id: '', iname: '', category: '' })
+        setItemInput({ From: '', To: '', Chuti: 0, MonthSalary: '', NumberOfDays: 0, Fuel: 0, Other: '', Amount: 0 })
 
     }
 
@@ -71,16 +80,16 @@ const CustomerItems = (props) => {
     const AddItemToCustomer = (e) => {
         e.preventDefault();
         const newItemAdd = {
-            "item": itemName.iname,
-            "itemCategory": itemName.category,
-            "netWeight": itemInput.NetWeight ? itemInput.NetWeight : 0,
-            "rate": itemInput.Rate ? itemInput.Rate : 0,
-            "billNo": itemInput.BillNo ? itemInput.BillNo : 0,
-            "other": itemInput.Other ? itemInput.Other : 0,
-            "amount": itemInput.Amount ? itemInput.Amount : 0,
+            // "item": itemName.iname,
+            // "itemCategory": itemName.category,
+            // "netWeight": itemInput.NetWeight ? itemInput.NetWeight : 0,
+            // "rate": itemInput.Rate ? itemInput.Rate : 0,
+            // "billNo": itemInput.BillNo ? itemInput.BillNo : 0,
+            // "other": itemInput.Other ? itemInput.Other : 0,
+            // "amount": itemAmount ? itemAmount : 0,
         }
-        setFinalAmount(parseFloat(finalAmount) + parseFloat(itemInput.Amount ? itemInput.Amount : 0));
-        setCustomerItems(customerItems.concat(newItemAdd).reverse());
+        // setFinalAmount(parseFloat(finalAmount) + parseFloat(itemAmount ? itemAmount : 0));
+        // setCustomerItems(customerItems.concat(newItemAdd).reverse());
         clearForm()
 
     }
@@ -89,7 +98,7 @@ const CustomerItems = (props) => {
 
     return (
         <>
-            <div className='row'>
+            {/* <div className='row'>
                 <div className='col-12 border text-center  p-0 table-responsive' id="data" style={{ height: '22vh' }}>
                     <table className="table table-success table-striped mb-0" >
                         <thead className='sticky-top'>
@@ -141,38 +150,40 @@ const CustomerItems = (props) => {
                         </tr>
                     </tfoot>
                 </table>
-            </div>
+            </div> */}
 
             <div className='row'>
                 <div className='col-12 border '>
                     <form onSubmit={AddItemToCustomer}>
                         <div className={`row  text-${btnColor} pt-2`}>
-                            <div className='col-lg-1 col-md-2 col-3 text-center d-flex d-lg-block align-items-center'>
-                                <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
-                            </div>
-
-                            <div className='col-lg-1 col-md-2 col-9 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
+                            <div className='col-lg-2 col-md-2 col-9 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>FROM</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />
+                                    <input onChange={inputValueChange} onKeyUp={keypress} autoComplete="off" type="date" className="form-control" value={itemInput.From} name="From" id="From" />
                                 </div>
                             </div>
-                            <div className='col-lg-2 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>Net WT/LTR</h6>
+                            <div className='col-lg-2 col-md-2 col-9 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>TO</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemInput.NetWeight} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="NetWeight" name="NetWeight" placeholder='Qty/Wt' />
+                                    <input onChange={inputValueChange} onKeyUp={keypress} autoComplete="off" type="date" className="form-control" value={itemInput.o} name="To" id="To" />
                                 </div>
                             </div>
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>RATE</h6>
+                                <h6 className='fw-bold text-lg-center mb-1'>CHUTI</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemInput.Rate} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Rate" name="Rate" placeholder='Rate' />
+                                    <input value={itemInput.Chuti} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Chuti" name="Chuti" placeholder='Chuti' />
                                 </div>
                             </div>
                             <div className='col-lg-2 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>BILL NO.</h6>
+                                <h6 className='fw-bold text-lg-center mb-1'>SALARY</h6>
+                                <div className=" input-group mb-4">
+                                    <input value={itemInput.MonthSalary} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="MonthSalary" name="MonthSalary" placeholder='Month (30 Days) Salary' />
+                                </div>
+                            </div>
+                            <div className='col-lg-1 col-md-2 col-3 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>FUEL</h6>
                                 <div className=" input-group mb-3">
-                                    <input value={itemInput.BillNo} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="BillNo" name="BillNo" placeholder='XXXX' />
+                                    <input value={itemInput.Fuel} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="Fuel" name="Fuel" placeholder='Fuel' />
                                 </div>
                             </div>
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
@@ -189,8 +200,8 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
                             <div className='col-lg-2 col  d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.NetWeight || !itemInput.Rate ||  !itemInput.BillNo ? true : false}>Add</button>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.NetWeight && !itemInput.Rate &&  !itemInput.BillNo && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.From || !itemInput.To || !itemInput.Chuti || !itemInput.MonthSalary || !itemInput.Fuel ? true : false}>Add</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.From && !itemInput.To && !itemInput.Chuti && !itemInput.MonthSalary && !itemInput.Fuel && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
                             </div>
                         </div>
                     </form>

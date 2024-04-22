@@ -84,7 +84,7 @@ const Home = () => {
                     <div className='col-lg-6 col-6'>
                       <div className='d-grid'>
                         {/* Driver bill */}
-                        <Link to="/driver-bill" className='btn btn-danger btn-lg  mb-3'>Transport</Link>
+                        <Link to="/transport-bill" className='btn btn-danger btn-lg  mb-3'>Transport</Link>
                       </div>
                     </div>
 
