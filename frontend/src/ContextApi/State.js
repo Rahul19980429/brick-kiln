@@ -364,6 +364,32 @@ const States = (props) => {
 
   }
 
+  // api call to get all sells bill
+  const getAllDriverBill = async () => {
+    setSpinner(true)
+    const response = await fetch(`${host}/api/bill/getDriverBill`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+
+    });
+    let data = await response.json();
+    if (data.success) {
+      let number = data.result.length > 0 ? data.result[(data.result.length) - 1].transportBillNumber + 1 : 1;
+      setSellBill({ sellBillData: data.result, SellBillNumber: number })
+      setBillNumberForNextBtn(number)
+      setSpinner(false);
+      return data
+    }
+    // else{
+    //     setError(data)
+    // }
+  }
+
+
    // api call to get all Labor bill
    const getAllLaborBill = async () => {
     setSpinner(true)
@@ -426,6 +452,7 @@ const States = (props) => {
       getAllPurchaseBill, ADDNewPurchaseBill, DeletePurchaseBill,
       getAllLaborBill,
      discount, setDiscount,
+     getAllDriverBill,
       spinner, error, setError, logInUser, logOutClick,
 
     }}>

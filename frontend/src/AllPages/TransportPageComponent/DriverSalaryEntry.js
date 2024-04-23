@@ -1,40 +1,41 @@
 import React, { useContext, useState } from 'react';
 import context from '../../ContextApi/Context'
 import "../../App.css"
-const CustomerItems = (props) => {
+const DriverSalaryPage = (props) => {
     const { btnColor, initalvalues } = props;
-    const { itemInput, setItemInput } = initalvalues;
+    const { itemInput, setItemInput,transportFuel } = initalvalues;
 
 
     // context d-Structuring
     const a = useContext(context);
-    const { itemName, setItemName, customerItems, setCustomerItems,
+    const { customerItems, setCustomerItems,
         setFinalAmount, finalAmount } = a;
 
     // function for remove item from the customer items list
     const removeItemFromList = (item) => {
-        // setFinalAmount(finalAmount - customerItems[item].amount)
-        // let result = customerItems.filter((data, index) => index !== item);
-        // setCustomerItems(result);
+        setFinalAmount(finalAmount - customerItems[item].amount)
+        let result = customerItems.filter((data, index) => index !== item);
+        setCustomerItems(result);
     }
 
     const editItemFromList = (data, index) => {
-        // setItemInput(
-        //     {
-        //         NetWeight: data.NetWeight,
-        //         Rate: data.rate,
-        //         BillNo: data.BillNo,
-        //         Other: data.other,
+        setItemInput(
+            {
+                From: data.from,
+                To: data.to,
+                Chuti: data.chuti,
+                MonthSalary:data.monthSalary,
+                Other: data.other,
+                NumberOfDays:data.numberOfDays,
+                Amount:data.amount
 
-        //     })
+            })
 
-        // setItemAmount(data.amount ? data.amount : 0)
-        // setItemName({ iname: data.item, category: data.itemCategory })
         removeItemFromList(index);
 
     }
 
-    // salefrom Page functionality
+   
 
     // onchange function on Intput field
     const inputValueChange = (e) => {
@@ -48,23 +49,21 @@ const CustomerItems = (props) => {
             setItemInput({ ...itemInput, [e.target.name]: e.target.value });
         }
         else {
-            if (itemInput.From && itemInput.To) {
-
-                let date1 = new Date(itemInput.From);
-                let date2 = new Date(itemInput.To);
-
-                // Calculating the time difference of two dates
-                let Difference_In_Time = date2.getTime() - date1.getTime();
-
-                // Calculating the no. of days between
-                // two dates
+            if (itemInput.From && itemInput.To &&!itemInput.MumberOfDays) {
+                let date1 = new Date(itemInput.From).getTime();
+                let date2 = new Date(itemInput.To).getTime();
+                let Difference_In_Time = date2 - date1;
                 let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
-                alert(Difference_In_Days)
-                // setItemAmount(parseInt(itemInput.NetWeight ? itemInput.NetWeight : 0) * parseInt(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))
+                if (itemInput.Chuti !== 0) {
+                    Difference_In_Days = Difference_In_Days - parseInt(itemInput.Chuti?itemInput.Chuti:0)
+                    setItemInput({ ...itemInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(itemInput.MonthSalary?itemInput.MonthSalary:0)/30) })
+                }
+                else {
+                    setItemInput({ ...itemInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(itemInput.MonthSalary?itemInput.MonthSalary:0)/30) })
+                }
             }
-            else {
-                // setItemAmount(0)
-            }
+          
+
         }
 
     }
@@ -72,7 +71,7 @@ const CustomerItems = (props) => {
 
     // on clean button click
     const clearForm = () => {
-        setItemInput({ From: '', To: '', Chuti: 0, MonthSalary: '', NumberOfDays: 0, Fuel: 0, Other: '', Amount: 0 })
+        setItemInput({ From: '', To: '', Chuti: 0, MonthSalary: 0, NumberOfDays: 0, Other: 0, Amount: 0 })
 
     }
 
@@ -80,16 +79,16 @@ const CustomerItems = (props) => {
     const AddItemToCustomer = (e) => {
         e.preventDefault();
         const newItemAdd = {
-            // "item": itemName.iname,
-            // "itemCategory": itemName.category,
-            // "netWeight": itemInput.NetWeight ? itemInput.NetWeight : 0,
-            // "rate": itemInput.Rate ? itemInput.Rate : 0,
-            // "billNo": itemInput.BillNo ? itemInput.BillNo : 0,
-            // "other": itemInput.Other ? itemInput.Other : 0,
-            // "amount": itemAmount ? itemAmount : 0,
+            "from": itemInput.From,
+            "to": itemInput.To,
+            "chuti": itemInput.Chuti,
+            "monthSalary": itemInput.MonthSalary,
+            "numberOfDays": itemInput.NumberOfDays,
+            "other": itemInput.Other,
+            "amount": itemInput.Amount,
         }
-        // setFinalAmount(parseFloat(finalAmount) + parseFloat(itemAmount ? itemAmount : 0));
-        // setCustomerItems(customerItems.concat(newItemAdd).reverse());
+        setFinalAmount(parseFloat(finalAmount) + parseFloat(itemInput.Amount));
+        setCustomerItems(customerItems.concat(newItemAdd).reverse());
         clearForm()
 
     }
@@ -98,17 +97,18 @@ const CustomerItems = (props) => {
 
     return (
         <>
-            {/* <div className='row'>
+            <div className='row'>
                 <div className='col-12 border text-center  p-0 table-responsive' id="data" style={{ height: '22vh' }}>
                     <table className="table table-success table-striped mb-0" >
                         <thead className='sticky-top'>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">ITEM</th>
-                                <th scope="col">QTY/WT/LTR</th>
-                                <th scope="col">RATE</th>
-                                <th scope="col">BILL NO.</th>
+                                <th scope="col">STARTING</th>
+                                <th scope="col">CLOSEING</th>
+                                <th scope="col">CHUTI</th>
+                                <th scope="col">SALARY(30DAYS)</th>
                                 <th scope="col">OTHER</th>
+                                <th scope="col">NO.Of WORKING DAYS</th>
                                 <th scope="col">AMOUNT</th>
                                 <th scope="col"></th>
                             </tr>
@@ -119,11 +119,12 @@ const CustomerItems = (props) => {
 
                                     return <tr key={index}  >
                                         <td>{customerItems.length - index}</td>
-                                        <td>{data.item}</td>
-                                        <td>{data.netWeight}</td>
-                                        <td>{data.rate}</td>
-                                        <td>{data.billNo}</td>
+                                        <td>{data.from}</td>
+                                        <td>{data.to}</td>
+                                        <td>{data.chuti}</td>
+                                        <td>{data.monthSalary}</td>
                                         <td>{data.other}</td>
+                                        <td>{data.numberOfDays}</td>
                                         <td>{data.amount}</td>
                                         <td>
                                             <button className='btn btn-sm btn-danger py-0 border-none' onClick={() => removeItemFromList(index)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
@@ -136,7 +137,7 @@ const CustomerItems = (props) => {
                                         </td>
 
                                     </tr>
-                                }) : <tr><td colSpan={8}>Items Will Display Here </td></tr>}
+                                }) : <tr><td colSpan={9}>Items Will Display Here </td></tr>}
                         </tbody>
                     </table>
                 </div>
@@ -144,13 +145,13 @@ const CustomerItems = (props) => {
                     <tfoot>
                         <tr className='table-dark text-start'>
                             <th scope="col" colSpan={4}>T.Items: {customerItems.length}</th>
-
-                            <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th>
+                            <th scope="col" colSpan={3}>T.Amount: {finalAmount}</th>
+                            <th scope="col" colSpan={3}>Fuel: {transportFuel}</th>
 
                         </tr>
                     </tfoot>
                 </table>
-            </div> */}
+            </div>
 
             <div className='row'>
                 <div className='col-12 border '>
@@ -165,7 +166,7 @@ const CustomerItems = (props) => {
                             <div className='col-lg-2 col-md-2 col-9 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>TO</h6>
                                 <div className=" input-group mb-4">
-                                    <input onChange={inputValueChange} onKeyUp={keypress} autoComplete="off" type="date" className="form-control" value={itemInput.o} name="To" id="To" />
+                                    <input onChange={inputValueChange} onKeyUp={keypress} autoComplete="off" type="date" className="form-control" value={itemInput.To} name="To" id="To" />
                                 </div>
                             </div>
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
@@ -174,18 +175,13 @@ const CustomerItems = (props) => {
                                     <input value={itemInput.Chuti} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Chuti" name="Chuti" placeholder='Chuti' />
                                 </div>
                             </div>
-                            <div className='col-lg-2 col-md-2 col-3 px-1'>
+                            <div className='col-lg-1 col-md-2 col-3 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>SALARY</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemInput.MonthSalary} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="MonthSalary" name="MonthSalary" placeholder='Month (30 Days) Salary' />
+                                    <input value={itemInput.MonthSalary} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="MonthSalary" name="MonthSalary" placeholder='(30 Days) Salary' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>FUEL</h6>
-                                <div className=" input-group mb-3">
-                                    <input value={itemInput.Fuel} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="Fuel" name="Fuel" placeholder='Fuel' />
-                                </div>
-                            </div>
+
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>OTHER</h6>
                                 <div className=" input-group mb-4">
@@ -193,6 +189,12 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
                             <hr className='border border-warning border-2 d-block d-lg-none' />
+                            <div className='col-lg-1 col-md-2 col-3 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>WORKDAYS</h6>
+                                <div className=" input-group mb-3">
+                                    <input value={itemInput.NumberOfDays} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="NumberOfDays" name="NumberOfDays" placeholder='' />
+                                </div>
+                            </div>
                             <div className='col-lg-1 col col-md-4 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
@@ -200,8 +202,8 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
                             <div className='col-lg-2 col  d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.From || !itemInput.To || !itemInput.Chuti || !itemInput.MonthSalary || !itemInput.Fuel ? true : false}>Add</button>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.From && !itemInput.To && !itemInput.Chuti && !itemInput.MonthSalary && !itemInput.Fuel && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemInput.From || !itemInput.To || !itemInput.MonthSalary ? true : false}>Add</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemInput.From && !itemInput.To && !itemInput.Chuti && !itemInput.MonthSalary && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
                             </div>
                         </div>
                     </form>
@@ -211,4 +213,4 @@ const CustomerItems = (props) => {
     )
 }
 
-export default CustomerItems
+export default DriverSalaryPage

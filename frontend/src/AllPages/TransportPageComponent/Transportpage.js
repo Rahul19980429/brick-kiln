@@ -9,11 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import BillPrint from './BillPrint';
 import Discountpage from '../../Components/Discount';
 import { Link } from "react-router-dom"
+import FuelAddToTransport from './FuelAddToTransport';
 const TransportPage = ({ btnColor }) => {
 
   let navigate = useNavigate();
   const [lastBill, setLastBill] = useState('')
   const [billId, setBillId] = useState('')
+  const [transportFuel, setTransportFuel] = useState(0)
 
   let payAmountVariable = 0;
   let recAmountVariable = 0;
@@ -28,7 +30,7 @@ const TransportPage = ({ btnColor }) => {
   const [inputBillNumber, setInputBillNumber] = useState('')
 
   // input field k liye useState initallize
-  const [itemInput, setItemInput] = useState({ From:'',To:'',Chuti:0,MonthSalary:'', NumberOfDays:0,Fuel:0, Other: '',Amount:0 })
+  const [itemInput, setItemInput] = useState({ From:'',To:'', Chuti:0 , MonthSalary:0, NumberOfDays:0, Other:0 ,Amount:0 })
 
   let fullYear = date.getFullYear();
   let month = date.getMonth() + 1;
@@ -36,7 +38,7 @@ const TransportPage = ({ btnColor }) => {
 
   // context d-Structuring
   const a = useContext(context);
-  const { recAmount, setRecAmount, payAmount, setPayAmount, discount, setDiscount, getAllPurchaseBill,
+  const { recAmount, setRecAmount, payAmount, setPayAmount, discount, setDiscount, getAllDriverBill,
     customerItems, setCustomerItems, selectedCustomer, setSelectedCustomer, sellBill,
     setSellBill, ADDNewPurchaseBill, members, billNumberForNextBtn, setItemName, setFinalAmount,
     DeletePurchaseBill, setError, logOutClick, finalAmount, spinner } = a;
@@ -48,16 +50,17 @@ const TransportPage = ({ btnColor }) => {
     }
 
     else {
+      console.log(transportFuel)
       // console.log(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount,recMetal,payMetal,goldMetalBhav,silverMetalBhav,selectedCustomer.balance, balance)
-      ADDNewPurchaseBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
-      clearAll();
+      // ADDNewPurchaseBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation,transportFuel);
+      // clearAll();
     }
   }
 
   // cancel btn click function 
   const clearAll = () => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
-    setItemInput({ From:'',To:'',Chuti:0,MonthSalary:'', NumberOfDays:0,Fuel:0, Other: '',Amount:0 })
+    setItemInput({ From:'',To:'',Chuti:0,MonthSalary:0, NumberOfDays:0, Other:0,Amount:0 })
     setRecAmount([])
     setPayAmount([])
     setDiscount(0)
@@ -66,6 +69,7 @@ const TransportPage = ({ btnColor }) => {
     setFinalAmount(0)
     setLastBill('')
     setBillId('')
+    setTransportFuel(0)
   }
 
   // previous btn click function
@@ -88,6 +92,7 @@ const TransportPage = ({ btnColor }) => {
         setDiscount(result[0].discountInfo)
         setCustomerItems(result[0].itemsArray)
         setLastBill(result[0].lastPurchaseBillNumber)
+        setTransportFuel(result[0].fuel)
         result[0].itemsArray.map((data) => {
           return (
             setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
@@ -119,6 +124,7 @@ const TransportPage = ({ btnColor }) => {
         setDiscount(result[0].discountInfo)
         setCustomerItems(result[0].itemsArray)
         setLastBill(result[0].lastPurchaseBillNumber)
+        setTransportFuel(result[0].fuel)
         result[0].itemsArray.map((data) => {
           return (
             setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
@@ -174,6 +180,7 @@ const TransportPage = ({ btnColor }) => {
         setDiscount(result[0].discountInfo)
         setCustomerItems(result[0].itemsArray)
         setLastBill(result[0].lastPurchaseBillNumber)
+        setTransportFuel(result[0].fuel)
         result[0].itemsArray.map((data) => {
           return (
             setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
@@ -218,7 +225,7 @@ const TransportPage = ({ btnColor }) => {
     }
     else {
       // api call function get all customer
-      getAllPurchaseBill()
+      getAllDriverBill()
 
       //clear page first
       clearAll()
@@ -301,7 +308,7 @@ const TransportPage = ({ btnColor }) => {
         </div>
 
         {/* part three show customer's add items data and list component */}
-        <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }} />
+        <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput ,transportFuel}} />
         {/* part forth rec,pay,discount and other functionality (all buttons) */}
 
         <div className='row mt-2'>
@@ -310,6 +317,7 @@ const TransportPage = ({ btnColor }) => {
               <ReceiptCashpage btnColor={btnColor} />
               <PaymentCashpage btnColor={btnColor} />
               <Discountpage btnColor={btnColor} />
+             <FuelAddToTransport  btnColor={btnColor} fuelValue={{ setTransportFuel}} />
             </div>
             <hr className='mt-2 mb-1' />
             <div className='d-flex' style={{ flexWrap: 'wrap' }}>
