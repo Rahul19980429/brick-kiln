@@ -38,9 +38,9 @@ const TransportPage = ({ btnColor }) => {
 
   // context d-Structuring
   const a = useContext(context);
-  const { recAmount, setRecAmount, payAmount, setPayAmount, discount, setDiscount, getAllDriverBill,
+  const { recAmount, setRecAmount, payAmount, setPayAmount, discount, setDiscount, getAllTransportBill,
     customerItems, setCustomerItems, selectedCustomer, setSelectedCustomer, sellBill,
-    setSellBill, ADDNewPurchaseBill, members, billNumberForNextBtn, setItemName, setFinalAmount,
+    setSellBill, ADDNewTransportBill, members, billNumberForNextBtn, setItemName, setFinalAmount,
     DeletePurchaseBill, setError, logOutClick, finalAmount, spinner } = a;
 
   //  save btn click function
@@ -50,10 +50,9 @@ const TransportPage = ({ btnColor }) => {
     }
 
     else {
-      console.log(transportFuel)
-      // console.log(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount,recMetal,payMetal,goldMetalBhav,silverMetalBhav,selectedCustomer.balance, balance)
-      // ADDNewPurchaseBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation,transportFuel);
-      // clearAll();
+     
+      ADDNewTransportBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount,transportFuel, selectedCustomer.balance, customeKaBalanveAfterCalculation);
+      clearAll();
     }
   }
 
@@ -81,18 +80,18 @@ const TransportPage = ({ btnColor }) => {
         document.getElementById('preBtn').disabled = true;
       }
       setSellBill({ ...sellBill, SellBillNumber: number })
-      let result = sellBill.sellBillData.filter((data) => data.purchaseBillNumber === number);
+      let result = sellBill.sellBillData.filter((data) => data.transportBillNumber === number);
       if (result.length > 0) {
-        let customerData = members.filter((cdata) => cdata._id === result[0].supplier_id)
+        let customerData = members.filter((cdata) => cdata._id === result[0].transport_id)
         setDate(new Date(result[0].date))
         setBillId(result[0]._id)
-        setSelectedCustomer({ _id: result[0].supplier_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].supplierLastBalance, category: customerData[0].category })
+        setSelectedCustomer({ _id: result[0].transport_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].transportLastBalance, category: customerData[0].category })
         setRecAmount(result[0].receiptInfo)
         setPayAmount(result[0].paymentInfo)
         setDiscount(result[0].discountInfo)
-        setCustomerItems(result[0].itemsArray)
-        setLastBill(result[0].lastPurchaseBillNumber)
         setTransportFuel(result[0].fuel)
+        setCustomerItems(result[0].itemsArray)
+        setLastBill(result[0].lastTransportBillNumber)
         result[0].itemsArray.map((data) => {
           return (
             setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
@@ -113,18 +112,18 @@ const TransportPage = ({ btnColor }) => {
     let number = sellBill.SellBillNumber + 1;
     if (number < billNumberForNextBtn) {
       setSellBill({ ...sellBill, SellBillNumber: number })
-      let result = sellBill.sellBillData.filter((data) => data.purchaseBillNumber === number);
+      let result = sellBill.sellBillData.filter((data) => data.transportBillNumber === number);
       if (result.length > 0) {
-        let customerData = members.filter((cdata) => cdata._id === result[0].supplier_id)
+        let customerData = members.filter((cdata) => cdata._id === result[0].transport_id)
         setDate(new Date(result[0].date))
         setBillId(result[0]._id)
-        setSelectedCustomer({ _id: result[0].supplier_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].supplierLastBalance, category: customerData[0].category })
+        setSelectedCustomer({ _id: result[0].transport_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].transportLastBalance, category: customerData[0].category })
         setRecAmount(result[0].receiptInfo)
         setPayAmount(result[0].paymentInfo)
         setDiscount(result[0].discountInfo)
-        setCustomerItems(result[0].itemsArray)
-        setLastBill(result[0].lastPurchaseBillNumber)
         setTransportFuel(result[0].fuel)
+        setCustomerItems(result[0].itemsArray)
+        setLastBill(result[0].lastTransportBillNumber)
         result[0].itemsArray.map((data) => {
           return (
             setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
@@ -167,20 +166,20 @@ const TransportPage = ({ btnColor }) => {
         document.getElementById('preBtn').disabled = true;
       }
 
-      let result = sellBill.sellBillData.filter((data) => data.purchaseBillNumber === number);
+      let result = sellBill.sellBillData.filter((data) => data.transportBillNumber === number);
       if (result.length > 0) {
         clearAll()
         setSellBill({ ...sellBill, SellBillNumber: number })
-        let customerData = members.filter((cdata) => cdata._id === result[0].supplier_id)
+        let customerData = members.filter((cdata) => cdata._id === result[0].transport_id)
         setDate(new Date(result[0].date))
         setBillId(result[0]._id)
-        setSelectedCustomer({ _id: result[0].supplier_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].supplierLastBalance, category: customerData[0].category })
+        setSelectedCustomer({ _id: result[0].transport_id, name: customerData[0].name, address: customerData[0].address, contact: customerData[0].contact, balance: result[0].transportLastBalance, category: customerData[0].category })
         setRecAmount(result[0].receiptInfo)
         setPayAmount(result[0].paymentInfo)
         setDiscount(result[0].discountInfo)
-        setCustomerItems(result[0].itemsArray)
-        setLastBill(result[0].lastPurchaseBillNumber)
         setTransportFuel(result[0].fuel)
+        setCustomerItems(result[0].itemsArray)
+        setLastBill(result[0].lastTransportBillNumber)
         result[0].itemsArray.map((data) => {
           return (
             setFinalAmount(finalTotalAmount = parseFloat(finalTotalAmount) + (parseFloat(data.amount)))
@@ -190,7 +189,7 @@ const TransportPage = ({ btnColor }) => {
       else {
         setDate(new Date())
         clearAll()
-        setSellBill({ ...sellBill, SellBillNumber: parseInt(sellBill.sellBillData[sellBill.sellBillData.length - 1].purchaseBillNumber) + 1 })
+        setSellBill({ ...sellBill, SellBillNumber: parseInt(sellBill.sellBillData[sellBill.sellBillData.length - 1].transportBillNumber) + 1 })
       }
     }
   }
@@ -198,7 +197,7 @@ const TransportPage = ({ btnColor }) => {
   const DeleteBill = (billId) => {
     let bool = window.confirm("Are You Sure?")
     if (bool) {
-      DeletePurchaseBill(billId);
+      // DeletePurchaseBill(billId);
       clearAll();
     }
   }
@@ -225,7 +224,7 @@ const TransportPage = ({ btnColor }) => {
     }
     else {
       // api call function get all customer
-      getAllDriverBill()
+      getAllTransportBill()
 
       //clear page first
       clearAll()

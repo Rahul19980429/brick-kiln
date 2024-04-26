@@ -364,10 +364,10 @@ const States = (props) => {
 
   }
 
-  // api call to get all sells bill
-  const getAllDriverBill = async () => {
+  // api call to get all Transport bill
+  const getAllTransportBill = async () => {
     setSpinner(true)
-    const response = await fetch(`${host}/api/bill/getDriverBill`, {
+    const response = await fetch(`${host}/api/bill/getTransportBill`, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -389,7 +389,33 @@ const States = (props) => {
     // }
   }
 
+// api call for creating new transport bill
+const ADDNewTransportBill = async (transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,fuel,transportLastBalance,balance) => {
+  setSpinner(true)
+  // console.log(transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,transportLastBalance,balance)
+  const response = await fetch(`${host}/api/bill/createTransportBill`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token': localStorage.getItem('Jwt_token')
+    },
+    body: JSON.stringify({transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,fuel, transportLastBalance,balance})
 
+  });
+  let data = await response.json();
+  if (data.success) {
+    getAllTransportBill();
+    getAllMember();
+    setError(data.msg)
+    setSpinner(false)
+
+  }
+  else {
+    setError(data)
+    setSpinner(false)
+  }
+}
    // api call to get all Labor bill
    const getAllLaborBill = async () => {
     setSpinner(true)
@@ -452,7 +478,7 @@ const States = (props) => {
       getAllPurchaseBill, ADDNewPurchaseBill, DeletePurchaseBill,
       getAllLaborBill,
      discount, setDiscount,
-     getAllDriverBill,
+     getAllTransportBill,ADDNewTransportBill,
       spinner, error, setError, logInUser, logOutClick,
 
     }}>
