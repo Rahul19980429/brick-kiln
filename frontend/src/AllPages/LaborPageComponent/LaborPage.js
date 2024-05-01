@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import context from '../../ContextApi/Context'
-import CustomerItems from './CustomerItems';
+import PCustomerItems from './Production/CustomerItems';
+import SCustomerItems from './Salary/CustomerItems';
 import ReceiptCashpage from '../../Components/Receiptpage';
 import PaymentCashpage from '../../Components/Paymentpage';
 import CustomerNameList from '../../Components/CustomerNameList';
@@ -27,7 +28,7 @@ const LaborPage = ({ btnColor }) => {
 
   // input field k liye useState initallize
   const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '', Other: '' })
-
+  const [salaryInput, setSalaryInput] = useState({ From:'',To:'', Chuti:0 , MonthSalary:0, NumberOfDays:0, Other:0 ,Amount:0 })
   let fullYear = date.getFullYear();
   let month = date.getMonth() + 1;
   let day = date.getDate();
@@ -55,6 +56,7 @@ const LaborPage = ({ btnColor }) => {
   const clearAll = () => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
     setItemInput({ NetWeight: '', Rate: '', BillNo: '', Other: '' })
+    setSalaryInput({ From:'',To:'', Chuti:0 , MonthSalary:0, NumberOfDays:0, Other:0 ,Amount:0 });
     setRecAmount(0)
     setPayAmount(0)
     setDiscount(0)
@@ -203,7 +205,7 @@ const LaborPage = ({ btnColor }) => {
     }
     else {
       // api call function get all customer
-      getAllLaborBill().then((data)=>console.log(data))
+      getAllLaborBill().then((data) => console.log(data))
 
       //clear page first
       clearAll()
@@ -286,8 +288,10 @@ const LaborPage = ({ btnColor }) => {
         </div>
 
         {/* part three show customer's add items data and list component */}
-        <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }} />
-        {/* part forth rec,pay,discount and other functionality (all buttons) */}
+        {selectedCustomer.category !== 'production-labor' ?
+          <PCustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }} />
+          : <SCustomerItems btnColor={btnColor} initalvalues={{ salaryInput, setSalaryInput }} />}
+
 
         <div className='row mt-2'>
           <div className='col-lg-5'>
@@ -304,7 +308,7 @@ const LaborPage = ({ btnColor }) => {
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={() => NewbtnClick()}>New</button>
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} onClick={() => DeleteBill(billId)}>Delete</button>
               <button className={`col me-2 btn btn-${btnColor}  mt-2`} disabled={billId ? false : true} id="HiddenBtnPrint" data-bs-toggle="modal" data-bs-target="#staticBackdrop7">Print</button>
-              <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={billSaveBtn} disabled='true'>Save</button>
+              <button className={`col me-2 btn btn-${btnColor}  mt-2`} onClick={billSaveBtn} >Save</button>
             </div>
             <hr className='d-lg-none' />
           </div>
@@ -366,12 +370,12 @@ const LaborPage = ({ btnColor }) => {
               <table className="table table-btnColor table-striped mb-2">
                 <tfoot>
                   <tr className='table-dark text-start'>
-                    <th scope="col" >Left Balance: 
-                       { customeKaBalanveAfterCalculation = - parseInt(finalAmount)
+                    <th scope="col" >Left Balance:
+                      {customeKaBalanveAfterCalculation = - parseInt(finalAmount)
                         + parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)
-                          - parseInt(recAmount.amount ? recAmount.amount : 0)
-                          + parseInt(payAmount.amount ? payAmount.amount : 0)
-                          + parseInt(discount.amount ? discount.amount : 0)}</th>
+                        - parseInt(recAmount.amount ? recAmount.amount : 0)
+                        + parseInt(payAmount.amount ? payAmount.amount : 0)
+                        + parseInt(discount.amount ? discount.amount : 0)}</th>
 
 
                   </tr>
@@ -385,9 +389,9 @@ const LaborPage = ({ btnColor }) => {
           <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="sale" />
           <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
-            billitems={customerItems} recData={{ recAmount}}
-            payData={{ payAmount}}
-            discountData={{discount}}
+            billitems={customerItems} recData={{ recAmount }}
+            payData={{ payAmount }}
+            discountData={{ discount }}
             finalAmount={finalAmount}
           />
         </div>

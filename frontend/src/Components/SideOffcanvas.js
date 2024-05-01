@@ -32,7 +32,7 @@ const SideOffcanvas = () => {
                     </ul>
                     <Link to="/sale-bill" className='btn btn-danger btn-lg  mb-2' onClick={() => menuBtnClick()}>Sale</Link>
                     <Link to="/purchase-bill" className='btn btn-danger btn-lg  mb-2' onClick={() => menuBtnClick()}>Purchase</Link>
-                    <Link to="/driver-bill" className='btn btn-danger btn-lg  mb-2' onClick={() => menuBtnClick()}>Transport</Link>
+                    <Link to="/transport-bill" className='btn btn-danger btn-lg  mb-2' onClick={() => menuBtnClick()}>Transport</Link>
                     <Link to="/labor-bill" className='btn btn-danger btn-lg mb-2' onClick={() => menuBtnClick()}>Labor</Link>
                     <button className="btn btn-danger btn-lg dropdown-toggle mb-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                        All Entries

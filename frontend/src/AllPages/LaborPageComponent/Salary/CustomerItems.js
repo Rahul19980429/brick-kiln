@@ -1,16 +1,14 @@
 import React, { useContext, useState } from 'react';
-import context from '../../ContextApi/Context'
-import "../../App.css"
+import context from '../../../ContextApi/Context'
+import "../../../App.css"
 const CustomerItems = (props) => {
     const { btnColor, initalvalues } = props;
-    const { itemInput, setItemInput } = initalvalues;
+    const { salaryInput, setSalaryInput} = initalvalues;
 
-    // useState for Item Amount
-    const [itemAmount, setItemAmount] = useState(0)
 
     // context d-Structuring
     const a = useContext(context);
-    const { itemName, setItemName, customerItems, setCustomerItems,
+    const { customerItems, setCustomerItems,
         setFinalAmount, finalAmount } = a;
 
     // function for remove item from the customer items list
@@ -21,40 +19,51 @@ const CustomerItems = (props) => {
     }
 
     const editItemFromList = (data, index) => {
-        console.log(data)
-        setItemInput(
+        setSalaryInput(
             {
-                Quantity: data.quantity,
-                Rate: data.rate,
+                From: data.from,
+                To: data.to,
+                Chuti: data.chuti,
+                MonthSalary:data.monthSalary,
                 Other: data.other,
+                NumberOfDays:data.numberOfDays,
+                Amount:data.amount
 
             })
 
-        setItemAmount(data.amount ? data.amount : 0)
-        setItemName({ iname: data.item, category: data.itemCategory })
         removeItemFromList(index);
 
     }
 
-    // salefrom Page functionality
+   
 
     // onchange function on Intput field
     const inputValueChange = (e) => {
-        setItemInput({ ...itemInput, [e.target.name]: e.target.value });
+        setSalaryInput({ ...salaryInput, [e.target.name]: e.target.value });
     }
 
     // check input value is interger 
     const keypress = (e) => {
         if (isNaN(e.target.value) || e.target.value === " ") {
             e.target.value = "";
+            setSalaryInput({ ...salaryInput, [e.target.name]: e.target.value });
         }
         else {
-            if (itemInput.Rate && itemInput.Quantity) {
-                setItemAmount(parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))
+            if (salaryInput.From && salaryInput.To &&!salaryInput.MumberOfDays) {
+                let date1 = new Date(salaryInput.From).getTime();
+                let date2 = new Date(salaryInput.To).getTime();
+                let Difference_In_Time = date2 - date1;
+                let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+                if (salaryInput.Chuti !== 0) {
+                    Difference_In_Days = Difference_In_Days - parseInt(salaryInput.Chuti?salaryInput.Chuti:0)
+                    setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30) })
+                }
+                else {
+                    setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30) })
+                }
             }
-            else {
-                setItemAmount(0)
-            }
+          
+
         }
 
     }
@@ -62,10 +71,7 @@ const CustomerItems = (props) => {
 
     // on clean button click
     const clearForm = () => {
-        setItemInput({ Quantity: '', Rate: '',  Other: '' })
-        setItemName({ _id: '', iname: '', category: '' })
-        setItemAmount(0)
-
+        setSalaryInput({ From: '', To: '', Chuti: 0, MonthSalary: 0, NumberOfDays: 0, Other: 0, Amount: 0 })
 
     }
 
@@ -73,14 +79,15 @@ const CustomerItems = (props) => {
     const AddItemToCustomer = (e) => {
         e.preventDefault();
         const newItemAdd = {
-            "item": itemName.iname,
-            "itemCategory": itemName.category,
-            "quantity": itemInput.Quantity ? itemInput.Quantity : 0,
-            "rate": itemInput.Rate ? itemInput.Rate : 0,
-            "other": itemInput.Other ? itemInput.Other : 0,
-            "amount": itemAmount ? itemAmount : 0,
+            "from": salaryInput.From,
+            "to": salaryInput.To,
+            "chuti": salaryInput.Chuti,
+            "monthSalary": salaryInput.MonthSalary,
+            "numberOfDays": salaryInput.NumberOfDays,
+            "other": salaryInput.Other,
+            "amount": salaryInput.Amount,
         }
-        setFinalAmount(parseFloat(finalAmount) + parseFloat(itemAmount ? itemAmount : 0));
+        setFinalAmount(parseFloat(finalAmount) + parseFloat(salaryInput.Amount));
         setCustomerItems(customerItems.concat(newItemAdd).reverse());
         clearForm()
 
@@ -96,10 +103,12 @@ const CustomerItems = (props) => {
                         <thead className='sticky-top'>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">ITEM</th>
-                                <th scope="col">QTY/WT</th>
-                                <th scope="col">RATE</th>
+                                <th scope="col">STARTING</th>
+                                <th scope="col">CLOSEING</th>
+                                <th scope="col">CHUTI</th>
+                                <th scope="col">SALARY(30DAYS)</th>
                                 <th scope="col">OTHER</th>
+                                <th scope="col">NO.Of WORKING DAYS</th>
                                 <th scope="col">AMOUNT</th>
                                 <th scope="col"></th>
                             </tr>
@@ -110,10 +119,12 @@ const CustomerItems = (props) => {
 
                                     return <tr key={index}  >
                                         <td>{customerItems.length - index}</td>
-                                        <td>{data.item}</td>
-                                        <td>{data.quantity}</td>
-                                        <td>{data.rate}</td>
+                                        <td>{data.from}</td>
+                                        <td>{data.to}</td>
+                                        <td>{data.chuti}</td>
+                                        <td>{data.monthSalary}</td>
                                         <td>{data.other}</td>
+                                        <td>{data.numberOfDays}</td>
                                         <td>{data.amount}</td>
                                         <td>
                                             <button className='btn btn-sm btn-danger py-0 border-none' onClick={() => removeItemFromList(index)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
@@ -126,16 +137,16 @@ const CustomerItems = (props) => {
                                         </td>
 
                                     </tr>
-                                }) : <tr><td colSpan={7}>Items Will Display Here </td></tr>}
+                                }) : <tr><td colSpan={9}>Items Will Display Here </td></tr>}
                         </tbody>
                     </table>
                 </div>
                 <table className="table table-success table-striped mb-2">
                     <tfoot>
                         <tr className='table-dark text-start'>
-                            <th scope="col" colSpan={3}>T.Items: {customerItems.length}</th>
-
-                            <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th>
+                            <th scope="col" colSpan={4}>T.Items: {customerItems.length}</th>
+                            <th scope="col" colSpan={3}>T.Amount: {finalAmount}</th>
+                           
 
                         </tr>
                     </tfoot>
@@ -146,50 +157,53 @@ const CustomerItems = (props) => {
                 <div className='col-12 border '>
                     <form onSubmit={AddItemToCustomer}>
                         <div className={`row  text-${btnColor} pt-2`}>
-                            <div className='col-lg-1 col-md-2 col-3 text-center d-flex d-lg-block align-items-center'>
-                                <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
-                            </div>
-
-                            <div className='col-lg-1 col-md-2 col-9 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
+                            <div className='col-lg-2 col-md-2 col-9 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>FROM</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />
+                                    <input onChange={inputValueChange} onKeyUp={keypress} autoComplete="off" type="date" className="form-control" value={salaryInput.From} name="From" id="From" />
                                 </div>
                             </div>
-                            <div className='col-lg-2 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>Net QTY/WT</h6>
+                            <div className='col-lg-2 col-md-2 col-9 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>TO</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemInput.Quantity} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Quantity" name="Quantity" placeholder='Qty/Wt' />
+                                    <input onChange={inputValueChange} onKeyUp={keypress} autoComplete="off" type="date" className="form-control" value={salaryInput.To} name="To" id="To" />
                                 </div>
                             </div>
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>RATE</h6>
+                                <h6 className='fw-bold text-lg-center mb-1'>CHUTI</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemInput.Rate} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Rate" name="Rate" placeholder='Rate' />
+                                    <input value={salaryInput.Chuti} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Chuti" name="Chuti" placeholder='Chuti' />
                                 </div>
                             </div>
-                            {/* <div className='col-lg-2 col-md-2 col-3 px-1'>
-                                <h6 className='fw-bold text-lg-center mb-1'>BILL NO.</h6>
-                                <div className=" input-group mb-3">
-                                    <input value={itemInput.BillNo} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="BillNo" name="BillNo" placeholder='XXXX' />
+                            <div className='col-lg-1 col-md-2 col-3 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>SALARY</h6>
+                                <div className=" input-group mb-4">
+                                    <input value={salaryInput.MonthSalary} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="MonthSalary" name="MonthSalary" placeholder='(30 Days) Salary' />
                                 </div>
-                            </div> */}
+                            </div>
+
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>OTHER</h6>
                                 <div className=" input-group mb-4">
-                                    <input value={itemInput.Other} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="Other" name="Other" placeholder='Other' />
+                                    <input value={salaryInput.Other} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="Other" name="Other" placeholder='Other' />
                                 </div>
                             </div>
                             <hr className='border border-warning border-2 d-block d-lg-none' />
+                            <div className='col-lg-1 col-md-2 col-3 px-1'>
+                                <h6 className='fw-bold text-lg-center mb-1'>WORKDAYS</h6>
+                                <div className=" input-group mb-3">
+                                    <input value={salaryInput.NumberOfDays} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="NumberOfDays" name="NumberOfDays" placeholder='' />
+                                </div>
+                            </div>
                             <div className='col-lg-1 col col-md-4 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
-                                    <input autoComplete='off' type="none" className="form-control" id="itemAmount" name="itemAmount" value={itemAmount} readOnly />
+                                    <input autoComplete='off' type="none" className="form-control" id="Amount" name="Amount" value={salaryInput.Amount} readOnly />
                                 </div>
                             </div>
                             <div className='col-lg-2 col  d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate ? true : false}>Add</button>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!salaryInput.From || !salaryInput.To || !salaryInput.MonthSalary ? true : false}>Add</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!salaryInput.From && !salaryInput.To && !salaryInput.Chuti && !salaryInput.MonthSalary && !salaryInput.Other ? true : false} onClick={clearForm}>Clear</button>
                             </div>
                         </div>
                     </form>

@@ -23,7 +23,7 @@ const MemberAddPage = () => {
     const a = useContext(context);
     const { members, getAllMember, AddNewMember, DeleteMember, error, setError, logOutClick, UpdateMember } = a;
     // useState for inputs
-    const [input, setInput] = useState({ name: '', category: 'customer', address: '', contact: '', initialBalance: '',subCategory:'' });
+    const [input, setInput] = useState({ name: '', category: 'customer', address: '', contact: '', initialBalance: ''});
     // useState for Member's Balance
     const [memberBalance, setMemberBalance] = useState(0)
     //useState for balance date
@@ -77,13 +77,10 @@ const MemberAddPage = () => {
             setError({ error: "Required 10 digit Number " })
         }
         else {
-            // AddNewMember(input.name.toLowerCase(), input.category, input.contact, input.address, memberBalance, balanceDate)
-            // setHandleUseEffect(handleUseEffect === false ? true : false)
-            // clearInput()
-            console.log(input)
-
+            AddNewMember(input.name.toLowerCase(), input.category, input.contact, input.address, memberBalance, balanceDate)
+            setHandleUseEffect(handleUseEffect === false ? true : false)
+            clearInput()
         }
-
     }
 
     const updateMember = (id, data) => {
@@ -102,7 +99,7 @@ const MemberAddPage = () => {
     }
 
     const clearInput = () => {
-        setInput({ name: '', address: '', contact: '', initialBalance: '', category: 'customer',subCategory:'' })
+        setInput({ name: '', address: '', contact: '', initialBalance: '', category: 'customer' })
         setBalanceDate(setDateFunc(new Date()));
         setMemberBalance(0)
         setMemberId('')
@@ -128,8 +125,17 @@ const MemberAddPage = () => {
             setAllmembers(members)
         }
         else {
-            let result = members.filter((data) => { return data.category === category });
-            setAllmembers(result)
+            if(category==='labor'){
+                let result = members.filter((data) => { return data.category.split('-')[1] === category });
+                setAllmembers(result)
+            }
+            else{
+
+                let result = members.filter((data) => { return data.category === category });
+                setAllmembers(result)
+            }
+            
+           
         }
 
     }
@@ -191,24 +197,12 @@ const MemberAddPage = () => {
                                         <option value="customer">Customer</option>
                                         <option value="supplier">Supplier</option>
                                         <option value="transport">Transport</option>
-                                        <option value="labor">Labor</option>
+                                        <option value="production-labor">Production Labor</option>
+                                        <option value="salary-labor">Salary Labor</option>
                                     </select>
                                 </div>
                                 
-                                <div className={`input-group mb-3 border border-white rounded-1 ${input.category!=='labor'?'d-none':''}`}>
-                                    <span className=" input-group-text  border-0 rounded-0" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-bounding-box text-primary" viewBox="0 0 16 16">
-                                        <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z" />
-                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                    </svg></span>
-
-                                    <select className="form-select" aria-label="Default select example" name='subCategory' value={input.subCategory} onChange={onChange}>
-                                        <option value="">Select One</option>
-                                        <option value="pather">Pather</option>
-                                        <option value="bharai">Bharai</option>
-                                        <option value="jhalai">Jhalai</option>
-                                        <option value="nikasi">Nikasi</option>
-                                    </select>
-                                </div>
+                               
                                 <div className="input-group mb-3 border border-white rounded-1">
                                     <span className=" input-group-text  border-0 rounded-0" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-telephone-fill text-primary" viewBox="0 0 16 16">
                                         <path fillRule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
