@@ -7,17 +7,17 @@ const ItemSaleNumbersCheck = () => {
     let SalesNumbers;
     let navigate = useNavigate();
     const a = useContext(context);
-    const { getAllItem, getAllSellBill, getAllPurchaseBill, setError, logOutClick } = a;
+    const { getAllItem, getAllSellBill, getAllPurchaseBill,getAllLaborBill, setError, logOutClick } = a;
 
     const [itemData, setItemData] = useState([])
-
     const [saleBillData, setSaleBillData] = useState([])
     const [purchaseBillData, setPurchaseBillData] = useState([])
+    const [laborBillData, setLaborBillData] = useState([])
 
     
 
     const itemSaleNumbers = (ItemName) => {
-        let ItemSalesNumber = {
+        let ItemNumber = {
             TAmount: 0,
             TQuantity: 0
         };
@@ -26,16 +26,16 @@ const ItemSaleNumbersCheck = () => {
         ItemArray.map((data) => {
             if (data.length > 0) {
                 data.map((data) => {
-                    ItemSalesNumber.TQuantity = ItemSalesNumber.TQuantity + parseFloat(data.quantity);
-                    ItemSalesNumber.TAmount = ItemSalesNumber.TAmount + parseFloat(data.amount)-parseInt(data.other);
+                    ItemNumber.TQuantity = ItemNumber.TQuantity + parseFloat(data.quantity);
+                    ItemNumber.TAmount = ItemNumber.TAmount + parseFloat(data.amount)-parseInt(data.other);
                 })
             }
         })
-        return (ItemSalesNumber)
+        return (ItemNumber)
     }
 
     const itemPurchaseNumbers = (ItemName) => {
-        let ItemSalesNumber = {
+        let ItemNumber = {
             TAmount: 0,
             TQuantity: 0
         };
@@ -44,12 +44,28 @@ const ItemSaleNumbersCheck = () => {
         ItemArray.map((data) => {
             if (data.length > 0) {
                 data.map((data) => {
-                    ItemSalesNumber.TQuantity = ItemSalesNumber.TQuantity + parseFloat(data.netWeight);
-                    ItemSalesNumber.TAmount = ItemSalesNumber.TAmount + parseFloat(data.amount)-parseInt(data.other);
+                    ItemNumber.TQuantity = ItemNumber.TQuantity + parseFloat(data.netWeight);
+                    ItemNumber.TAmount = ItemNumber.TAmount + parseFloat(data.amount)-parseInt(data.other);
                 })
             }
         })
-        return (ItemSalesNumber)
+        return (ItemNumber)
+    }
+
+    const itemProductionNumbers = (ItemName) => {
+        let ItemNumber = {
+            TProduction: 0,
+        };
+        let ItemArray = [];
+        ItemArray = laborBillData.map((data) => data.itemsArray.filter(arr => arr.item === ItemName));
+        ItemArray.map((data) => {
+            if (data.length > 0) {
+                data.map((data) => {
+                    ItemNumber.TProduction = ItemNumber.TProduction + parseFloat(data.quantity);
+                })
+            }
+        })
+        return (ItemNumber)
     }
 
     useEffect(() => {
@@ -64,6 +80,7 @@ const ItemSaleNumbersCheck = () => {
             getAllItem().then((data) => setItemData(data))
             getAllSellBill().then((data) => setSaleBillData(data.result))
             getAllPurchaseBill().then((data) => setPurchaseBillData(data.result))
+            getAllLaborBill().then((data) => setLaborBillData(data.result))
         }
     }, [])
 
@@ -149,21 +166,19 @@ const ItemSaleNumbersCheck = () => {
                                 <tr>
                                     <th scope="col" className='border-end border-dark'>#</th>
                                     <th scope="col" className='border-end border-dark'>Item Name</th>
-                                    <th scope="col" className='border-end border-dark'>Total Quantity Of Item Sale</th>
-                                    <th scope="col" className='border-end border-dark'>Total Amount Of Item Sale</th>
+                                    <th scope="col" className='border-end border-dark'>Total Item Production</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 {itemData.length > 0 ?
                                     itemData.filter((item) => item.category === 'sale').map((data, index) => {
-                                        SalesNumbers = false ? itemSaleNumbers(data.itemname) : '' 
+                                        SalesNumbers = laborBillData ? laborBillData.length > 0 ? itemProductionNumbers(data.itemname) : '' : ''
                                         return (
                                             <tr key={data._id}  >
                                                 <td className='border-end border-dark'>{index + 1}</td>
                                                 <td className='border-end border-dark'>{data.itemname}</td>
-                                                <td className='border-end border-dark'>{SalesNumbers.TQuantity}</td>
-                                                <td className='border-end border-dark'>{SalesNumbers.TAmount}</td>
+                                                <td className='border-end border-dark'>{SalesNumbers.TProduction}</td>
                                             </tr>
                                         )
 

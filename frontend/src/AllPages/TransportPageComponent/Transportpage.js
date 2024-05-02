@@ -41,7 +41,7 @@ const TransportPage = ({ btnColor }) => {
   const { recAmount, setRecAmount, payAmount, setPayAmount, discount, setDiscount, getAllTransportBill,
     customerItems, setCustomerItems, selectedCustomer, setSelectedCustomer, sellBill,
     setSellBill, ADDNewTransportBill, members, billNumberForNextBtn, setItemName, setFinalAmount,
-    DeletePurchaseBill, setError, logOutClick, finalAmount, spinner } = a;
+    DeleteTransportBill, setError, logOutClick, finalAmount, spinner } = a;
 
   //  save btn click function
   const billSaveBtn = () => {
@@ -197,7 +197,7 @@ const TransportPage = ({ btnColor }) => {
   const DeleteBill = (billId) => {
     let bool = window.confirm("Are You Sure?")
     if (bool) {
-      // DeletePurchaseBill(billId);
+      DeleteTransportBill(billId);
       clearAll();
     }
   }

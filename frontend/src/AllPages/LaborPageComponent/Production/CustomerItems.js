@@ -21,7 +21,6 @@ const CustomerItems = (props) => {
     }
 
     const editItemFromList = (data, index) => {
-        console.log(data)
         setItemInput(
             {
                 Quantity: data.quantity,

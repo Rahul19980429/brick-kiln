@@ -6,13 +6,13 @@ import Menubtn from "./Components/MenuBtn";
 import Home from './AllPages/Home'
 import MemberAddPage from "./AllPages/create-item-member/MemberAddPage";
 import ItemAddPage from "./AllPages/create-item-member/ItemAddPage";
-import ItemSaleNumbersCheck from "./AllPages/create-item-member/ItemSaleNumbersCheck";
 import Purchasepage from "./AllPages/PurchasePageComponent/Purchasepage";
 import Sellpage from "./AllPages/SellPageComponent/Sellpage";
 import Transportpage from "./AllPages/TransportPageComponent/Transportpage";
 import LaborPage from "./AllPages/LaborPageComponent/LaborPage";
 import AllSaleEntryPage from "./AllPages/AllEntries/AllSaleEntryPage";
 import AllPurchaseEntry from "./AllPages/AllEntries/AllPurchaseEntryPage";
+import ItemSaleNumbersCheck from "./AllPages/AllEntries/ItemSaleNumbersCheck";
 import BalanceCheckPage from "./AllPages/BalanceCheckPage";
 import Setting from "./AllPages/Setting";
 

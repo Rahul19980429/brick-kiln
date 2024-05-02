@@ -1,5 +1,5 @@
 import React, { useContext, useEffect ,useState} from 'react';
-import context from '../ContextApi/Context'
+import context from '../../ContextApi/Context'
 
 const CustomerNameList = (props) => {
     const [search, setSearch] = useState('')
@@ -38,9 +38,9 @@ const CustomerNameList = (props) => {
                                 {members.length > 0 ?
                                     search===''?
                                     //get all customers from members
-                                    members.filter((mdata) => (props.memberType ? mdata.category === props.memberType : mdata)).map((data) => {
+                                    members.filter((mdata) => (props.memberType ? mdata.category.split('-')[1] === props.memberType : mdata)).map((data) => {
                                         return <li onClick={() => handelClick(data)} className="dropdown-item py-1  ps-3 border-top fs-6 text-capitalize" style={{ cursor: 'pointer' }} key={data._id} ><small>{data.name}</small> # {data.contact}</li>
-                                    }) :  members.filter((mdata) => (props.memberType ? mdata.category === props.memberType && (mdata.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 || mdata.contact.toLowerCase().indexOf(search.toLowerCase()) !== -1) : mdata)).map((data) => {
+                                    }) :  members.filter((mdata) => (props.memberType ? mdata.category.split('-')[1] === props.memberType && (mdata.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 || mdata.contact.toLowerCase().indexOf(search.toLowerCase()) !== -1) : mdata)).map((data) => {
                                         return <li onClick={() => handelClick(data)} className="dropdown-item py-1 ps-3 border-top fs-6 text-capitalize" style={{ cursor: 'pointer' }} key={data._id} ><small>{data.name}</small> # {data.contact}</li>
                                     })
                                 :<h5 className='text-center'>Not Found</h5>}

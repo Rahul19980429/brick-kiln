@@ -340,7 +340,7 @@ const States = (props) => {
     }
   }
 
-  // delete sale Bill
+  // delete Purchase Bill
   const DeletePurchaseBill = async (billId) => {
     setSpinner(true)
     const response = await fetch(`${host}/api/bill/deletePurchaseBill/${billId}`, {
@@ -416,30 +416,107 @@ const ADDNewTransportBill = async (transport_id,transportBillNumber,itemsArray,r
     setSpinner(false)
   }
 }
-   // api call to get all Labor bill
-   const getAllLaborBill = async () => {
-    setSpinner(true)
-    const response = await fetch(`${host}/api/bill/getLaborBill`, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('Jwt_token')
-      },
-    });
-    let data = await response.json();
-    if (data.success) {
-      let number = data.result.length > 0 ? data.result[(data.result.length) - 1].purchaseBillNumber + 1 : 1;
-      setSellBill({ sellBillData: data.result, SellBillNumber: number })
-      setBillNumberForNextBtn(number)
-      setSpinner(false)
-      return data;
-    }
-    else {
-      setError(data)
-      setSpinner(false)
-    }
+
+ // delete Transport Bill
+ const DeleteTransportBill = async (billId) => {
+  setSpinner(true)
+  const response = await fetch(`${host}/api/bill/deleteTransportBill/${billId}`, {
+    method: 'DELETE',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token': localStorage.getItem('Jwt_token')
+    },
+  });
+  let data = await response.json();
+  if (data.success) {
+    getAllTransportBill();
+    setError(data.msg);
+    setSpinner(false)
   }
+  else {
+    setError(data)
+    setSpinner(false)
+  }
+
+}
+
+// api call to get all Labor bill
+const getAllLaborBill = async () => {
+  setSpinner(true)
+  const response = await fetch(`${host}/api/bill/getLaborBill`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token': localStorage.getItem('Jwt_token')
+    },
+  });
+  let data = await response.json();
+  if (data.success) {
+    let number = data.result.length > 0 ? data.result[(data.result.length) - 1].laborBillNumber + 1 : 1;
+    setSellBill({ sellBillData: data.result, SellBillNumber: number })
+    setBillNumberForNextBtn(number)
+    setSpinner(false)
+    return data;
+  }
+  else {
+    setError(data)
+    setSpinner(false)
+  }
+}
+
+// api call for creating new Labor bill
+const ADDNewLaborBill = async (labor_id,laborBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,laborLastBalance,balance) => {
+  setSpinner(true)
+  // console.log(transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,transportLastBalance,balance)
+  const response = await fetch(`${host}/api/bill/createLaborBill`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token': localStorage.getItem('Jwt_token')
+    },
+    body: JSON.stringify({labor_id,laborBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo, laborLastBalance,balance})
+
+  });
+  let data = await response.json();
+  if (data.success) {
+    getAllLaborBill();
+    getAllMember();
+    setError(data.msg)
+    setSpinner(false)
+
+  }
+  else {
+    setError(data)
+    setSpinner(false)
+  }
+}
+
+ // delete Labor Bill
+ const DeleteLaborBill = async (billId) => {
+  setSpinner(true)
+  const response = await fetch(`${host}/api/bill/deleteLaborBill/${billId}`, {
+    method: 'DELETE',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token': localStorage.getItem('Jwt_token')
+    },
+  });
+  let data = await response.json();
+  if (data.success) {
+    getAllLaborBill();
+    setError(data.msg);
+    setSpinner(false)
+  }
+  else {
+    setError(data)
+    setSpinner(false)
+  }
+
+}
 
 
 
@@ -468,18 +545,20 @@ const ADDNewTransportBill = async (transport_id,transportBillNumber,itemsArray,r
 
   return (
     <context.Provider value={{
-      members, setMembers, getAllMember, AddNewMember, UpdateMember,DeleteMember,
-      items, setItems, getAllItem, AddNewItem, UpdateItem,
-      customerItems, finalAmount, recAmount,
+     
+      members,items,customerItems, finalAmount, recAmount,
       payAmount, selectedCustomer, itemName,
-      sellBill, billNumberForNextBtn, setSellBill, setItemName,
+      sellBill, billNumberForNextBtn,discount,spinner, error,
+      setItems, getAllItem, AddNewItem, UpdateItem,
+      setMembers, getAllMember, AddNewMember, UpdateMember,DeleteMember,
+      setDiscount, setSellBill, setItemName,
       setSelectedCustomer, setPayAmount, setRecAmount,
-      setFinalAmount, setCustomerItems, getAllSellBill, ADDNewSellBill, DeleteSaleBill,
+      setFinalAmount, setCustomerItems,
+      getAllSellBill, ADDNewSellBill, DeleteSaleBill,
       getAllPurchaseBill, ADDNewPurchaseBill, DeletePurchaseBill,
-      getAllLaborBill,
-     discount, setDiscount,
-     getAllTransportBill,ADDNewTransportBill,
-      spinner, error, setError, logInUser, logOutClick,
+      getAllTransportBill,ADDNewTransportBill,DeleteTransportBill,
+      getAllLaborBill,ADDNewLaborBill,DeleteLaborBill,
+      setError, logInUser, logOutClick,
 
     }}>
 
