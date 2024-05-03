@@ -3,7 +3,7 @@ import context from '../../ContextApi/Context'
 import { useNavigate } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
 
-const AllPurchaseEntry = () => {
+const AllLaborEntry = () => {
     const componentRef = useRef()
     let navigate = useNavigate();
     let customerData;
@@ -20,10 +20,10 @@ const AllPurchaseEntry = () => {
 
     }
     const a = useContext(context);
-    const { getAllTransportBill, members, getAllMember, setError, logOutClick, spinner } = a;
+    const { getAllLaborBill, members, getAllMember, setError, logOutClick, spinner } = a;
 
     // useState 
-    const [transportBill, setTransportBill] = useState([])
+    const [laborBill, setLaborBill] = useState([])
     const [searchInput, setSearchInput] = useState({ textSearch: '', from: '', to: '' })
 
     const onChange = (e) => {
@@ -32,7 +32,7 @@ const AllPurchaseEntry = () => {
     }
 
     function getcustomerId(data) {
-        if (data.category === 'transport' && ( data.contact.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1|| data.name.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1)) {
+        if ((data.category === 'product-labor' ||data.category === 'salary-labor') && ( data.contact.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1|| data.name.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1)) {
             return data._id
         }
     }
@@ -48,18 +48,18 @@ const AllPurchaseEntry = () => {
 
     const SubmitDateButton = () => {
         if (!searchInput.from || !searchInput.to) {
-            document.getElementById('transportBillFilterBtn').disabled = true;
+            document.getElementById('laborBillFilterBtn').disabled = true;
         }
         else {
-            let data = DateFilterFunction(searchInput.from, searchInput.to, transportBill);
-            setTransportBill(data)
+            let data = DateFilterFunction(searchInput.from, searchInput.to, laborBill);
+            setLaborBill(data)
 
         }
 
     }
     const RefreshBtn = () => {
         setSearchInput({ textSearch: '', from: '', to: '' })
-        getAllTransportBill().then((data) => setTransportBill(data.result))
+        getAllLaborBill().then((data) => setLaborBill(data.result))
 
     }
 
@@ -72,7 +72,7 @@ const AllPurchaseEntry = () => {
             navigate('/login')
         }
         else {
-            getAllTransportBill().then((data) => setTransportBill(data.result))
+            getAllLaborBill().then((data) => setLaborBill(data.result))
             getAllMember()
 
         }
@@ -92,7 +92,7 @@ const AllPurchaseEntry = () => {
                 <div className='row mt-3'>
                     {/* text */}
                     <div className='col-lg-3 col-12'>
-                        <h5 className='text-center bg-dark text-white mb-0 py-2'>Driver Salary Entry</h5>
+                        <h5 className='text-center bg-dark text-white mb-0 py-2'>Purchase Bill Entry</h5>
                     </div>
                     {/* search */}
                     <div className='col-lg-2 '>
@@ -109,7 +109,7 @@ const AllPurchaseEntry = () => {
                             <input onChange={(e) => onChange(e)} autoComplete="off" type="date" className="form-control" value={searchInput.to} name="to" id="to" />
                         </div>
                         <div className="d-flex gap-2 justify-content-center">
-                            <button className="btn btn-dark fw-bold" onClick={() => SubmitDateButton()} id="transportBillFilterBtn" disabled={!searchInput.from || !searchInput.to ? true : false}>OK</button>
+                            <button className="btn btn-dark fw-bold" onClick={() => SubmitDateButton()} id="laborBillFilterBtn" disabled={!searchInput.from || !searchInput.to ? true : false}>OK</button>
                             <button className="btn btn-dark fw-bold" onClick={() => RefreshBtn()}>REFRESH</button>
                         </div>
                         <ReactToPrint
@@ -117,7 +117,7 @@ const AllPurchaseEntry = () => {
                                 return <button className="btn btn-dark fw-bold">Print</button>;
                             }}
                             content={() => componentRef.current}
-                            documentTitle={`Transport-Bill-Entry-${Date.now()}`}
+                            documentTitle={`Purchase-Bill-Entry-${Date.now()}`}
                             pageStyle='print'
 
                         />
@@ -131,7 +131,7 @@ const AllPurchaseEntry = () => {
                             <thead className='sticky-top'>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Transport</th>
+                                    <th scope="col">labor</th>
                                     <th scope="col">last Bal.</th>
                                     <th scope="col" className='w-25'>Item Detail</th>
                                     <th scope="col">Bill No.</th>
@@ -145,30 +145,30 @@ const AllPurchaseEntry = () => {
                             </thead>
                             <tbody>
 
-                                {transportBill.length > 0 && members.length > 0 ?
+                                {laborBill.length > 0 && members.length > 0 ?
 
                                     searchInput.textSearch === '' ?
-                                        transportBill.map((data, index) => {
-                                            customerData = members.filter((mdata) => mdata._id === data.transport_id);
+                                        laborBill.map((data, index) => {
+                                            customerData = members.filter((mdata) => mdata._id === data.labor_id);
                                             date = new Date(data.date)
                                             allVariable.totalEntries = allVariable.totalEntries + 1
                                             allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
+                                            console.log(data)
                                             return (<tr key={data._id}>
 
                                                 <><td className='border-end border-dark'>{index + 1}</td>
                                                     <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
-                                                    <td className='border-end border-dark'>{Math.floor(data.transportLastBalance)}</td>
+                                                    <td className='border-end border-dark'>{Math.floor(data.laborLastBalance)}</td>
                                                     
                                                     <td className='border-end border-dark'>
                                                         {data.itemsArray.map((data, index) => {
                                                             amount = amount + parseFloat(data.amount)
-                                                            allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount;
-                                                            return <h6 key={index}> from:{data.from}, to:{data.to}, chuti:{data.chuti},
-                                                                monthSalary:{data.monthSalary} numberOfDays:{data.numberOfDays}  Other:{data.other}, Amount:{data.amount} </h6>
-                                                                
+                                                            allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
+                                                            return <h6 key={index}> Item:{data.item}, Qt:{data.netWeight}, Rate:{data.rate},
+                                                                BillNo:{data.billNo} Other:{data.other}, Amount:{data.amount} </h6>
                                                         })}
                                                     </td>
-                                                    <td className='border-end border-dark'>{data.transportBillNumber}</td>
+                                                    <td className='border-end border-dark'>{data.laborBillNumber}</td>
                                                     <td className='border-end border-dark'>
                                                         <table>
                                                             <tbody>
@@ -196,7 +196,7 @@ const AllPurchaseEntry = () => {
                                                     
                                                    
                                                     <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.transportLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
+                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.laborLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
                                                     <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                     {/* hidden re-initialise amount here */}
                                                     <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></>
@@ -210,8 +210,8 @@ const AllPurchaseEntry = () => {
 
 
                                             {
-                                                transportBill.filter((data) => members.filter(getcustomerId).map((data) => data._id).includes(data.transport_id)).map((data, index) => {
-                                                    customerData = members.filter((mdata) => mdata._id === data.transport_id);
+                                                laborBill.filter((data) => members.filter(getcustomerId).map((data) => data._id).includes(data.labor_id)).map((data, index) => {
+                                                    customerData = members.filter((mdata) => mdata._id === data.labor_id);
                                                     date = new Date(data.date)
                                                     allVariable.totalEntries = allVariable.totalEntries + 1
                                                     allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
@@ -219,17 +219,16 @@ const AllPurchaseEntry = () => {
 
                                                         <><td className='border-end border-dark'>{index + 1}</td>
                                                             <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
-                                                            <td className='border-end border-dark'>{Math.floor(data.transportLastBalance)}</td>
+                                                            <td className='border-end border-dark'>{Math.floor(data.laborLastBalance)}</td>
                                                             <td className='border-end border-dark'>
                                                                 {data.itemsArray.map((data, index) => {
                                                                     amount = amount + parseFloat(data.amount)
                                                                     allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
-                                                                    return <h6 key={index}> from:{data.from}, to:{data.to}, chuti:{data.chuti},
-                                                                    monthSalary:{data.monthSalary} numberOfDays:{data.numberOfDays}  Other:{data.other}, Amount:{data.amount} </h6>
-    
+                                                                    return <h6 key={index}> Item:{data.item}, Qt:{data.netWeight}, Rate:{data.rate},
+                                                                        BillNo:{data.billNo} Other:{data.other}, Amount:{data.amount} </h6>
                                                                 })}
                                                             </td>
-                                                            <td className='border-end border-dark'>{data.transportBillNumber}</td>
+                                                            <td className='border-end border-dark'>{data.laborBillNumber}</td>
                                                             <td className='border-end border-dark'>
                                                                 <table>
                                                                     <tbody>
@@ -257,7 +256,7 @@ const AllPurchaseEntry = () => {
                                                             
                                                            
                                                             <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                            <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.transportLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
+                                                            <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.laborLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
                                                             <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                             {/* hidden re-initialise amount here */}
                                                             <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></>
@@ -292,4 +291,4 @@ const AllPurchaseEntry = () => {
     )
 }
 
-export default AllPurchaseEntry
+export default AllLaborEntry

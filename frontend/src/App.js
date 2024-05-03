@@ -12,6 +12,8 @@ import Transportpage from "./AllPages/TransportPageComponent/Transportpage";
 import LaborPage from "./AllPages/LaborPageComponent/LaborPage";
 import AllSaleEntryPage from "./AllPages/AllEntries/AllSaleEntryPage";
 import AllPurchaseEntry from "./AllPages/AllEntries/AllPurchaseEntryPage";
+import AllTransportEntry from "./AllPages/AllEntries/AllTransportEntryPage";
+import AllLaborEntry from "./AllPages/AllEntries/AllLaborEntryPage";
 import ItemSaleNumbersCheck from "./AllPages/AllEntries/ItemSaleNumbersCheck";
 import BalanceCheckPage from "./AllPages/BalanceCheckPage";
 import Setting from "./AllPages/Setting";
@@ -54,6 +56,10 @@ function App() {
 
          {/* <AllPurchaseEntry/> */}
          <Route exact path="/purchase-bill-check" element={ <AllPurchaseEntry/>}/>
+           {/* <AllTransportEntry/> */}
+           <Route exact path="/transport-bill-check" element={ <AllTransportEntry/>}/>
+              {/* <AllLaborEntry/> */}
+              <Route exact path="/labor-bill-check" element={ <AllLaborEntry/>}/>
 
          
         

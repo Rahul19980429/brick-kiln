@@ -40,7 +40,7 @@ const SideOffcanvas = () => {
                     <ul className="dropdown-menu dropdown-menu-dark px-2">
                         <li className='mb-2'><Link to="/sale-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Sale Entry</Link></li>
                         <li className='mb-2'><Link to="/purchase-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Purchase Entry</Link></li>
-                        <li className='mb-2'><Link to="/driver-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Transport Entry</Link></li>
+                        <li className='mb-2'><Link to="/transport-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Transport Entry</Link></li>
                         <li className='mb-2'><Link to="/labor-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Labor Entry</Link></li>
                         <li className='mb-2'><Link to="/bank-transection" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Bank Entry</Link></li>
                         <li className='mb-2'><Link to="/item-sale-numbers" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Item's Sale Numbers</Link></li>
