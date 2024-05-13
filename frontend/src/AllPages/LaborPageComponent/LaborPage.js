@@ -57,8 +57,8 @@ const LaborPage = ({ btnColor }) => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
     setItemInput({ Quantity: '', Rate: '', Other: ''  })
     setSalaryInput({ From:'',To:'', Chuti:0 , MonthSalary:0, NumberOfDays:0, Other:0 ,Amount:0 });
-    setRecAmount(0)
-    setPayAmount(0)
+    setRecAmount([])
+    setPayAmount([])
     setDiscount(0)
     setCustomerItems([])
     setItemName('')
@@ -316,7 +316,7 @@ const LaborPage = ({ btnColor }) => {
           {/* billing table part */}
           <div className='col-lg-7'>
             <div className='row border rounded-2'>
-              <div className='col-lg-12'>
+            <div className='col-lg-12 table-responsive' id="data" style={{ height: '20vh' }}>
                 <table className="table mb-0">
                   <tbody>
                     <tr>

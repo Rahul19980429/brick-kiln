@@ -92,7 +92,7 @@ const AllLaborEntry = () => {
                 <div className='row mt-3'>
                     {/* text */}
                     <div className='col-lg-3 col-12'>
-                        <h5 className='text-center bg-dark text-white mb-0 py-2'>Purchase Bill Entry</h5>
+                        <h5 className='text-center bg-dark text-white mb-0 py-2'>Labor Bill Entry</h5>
                     </div>
                     {/* search */}
                     <div className='col-lg-2 '>
@@ -144,19 +144,14 @@ const AllLaborEntry = () => {
                                 </tr>
                             </thead>
                             <tbody>
-
                                 {laborBill.length > 0 && members.length > 0 ?
-
                                     searchInput.textSearch === '' ?
                                         laborBill.map((data, index) => {
                                             customerData = members.filter((mdata) => mdata._id === data.labor_id);
                                             date = new Date(data.date)
                                             allVariable.totalEntries = allVariable.totalEntries + 1
                                             allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
-                                            console.log(data)
-                                            return (<tr key={data._id}>
-
-                                                <><td className='border-end border-dark'>{index + 1}</td>
+                                            return (<tr key={data._id}><td className='border-end border-dark'>{index + 1}</td>
                                                     <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
                                                     <td className='border-end border-dark'>{Math.floor(data.laborLastBalance)}</td>
                                                     
@@ -164,8 +159,15 @@ const AllLaborEntry = () => {
                                                         {data.itemsArray.map((data, index) => {
                                                             amount = amount + parseFloat(data.amount)
                                                             allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
-                                                            return <h6 key={index}> Item:{data.item}, Qt:{data.netWeight}, Rate:{data.rate},
-                                                                BillNo:{data.billNo} Other:{data.other}, Amount:{data.amount} </h6>
+                                                            return <h6 key={index}> {data.from?'from: '+data.from+', ':'Item: '+data.item+', '}
+                                                            {data.to?'to: '+data.to+', ':'Quantity: '+data.quantity+', '} 
+                                                            {data.chuti?'Chuti: '+data.chuti+', ':''}
+                                                            {data.rate?'Rate: '+data.rate+', ':''}
+                                                            {data.monthSalary?'MonthSalary: '+data.monthSalary+', ':''}
+                                                            {data.numberOfDays?'NumberOfDays: '+data.numberOfDays+', ':''} 
+                                                            {data.other?'other: '+data.other+', ':''}                                                                   
+                                                            {data.amount?'amount: '+data.amount+', ':''} 
+                                                        </h6>
                                                         })}
                                                     </td>
                                                     <td className='border-end border-dark'>{data.laborBillNumber}</td>
@@ -175,9 +177,7 @@ const AllLaborEntry = () => {
                                                             {data.receiptInfo.length>0? data.receiptInfo.map((data,index) => {
                                                                 allVariable.recAmountTotal=allVariable.recAmountTotal+parseInt(data.amount)
                                                                 allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
-                                                                return <tr key={index}>
-                                                                    <td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td>
-                                                                </tr>
+                                                                return <tr key={index}><td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td></tr>
                                                             }):0}
                                                             </tbody>
                                                         </table>
@@ -187,9 +187,7 @@ const AllLaborEntry = () => {
                                                             {data.paymentInfo.length>0? data.paymentInfo.map((data,index) => {
                                                                  allVariable.payAmountTotal=allVariable.payAmountTotal+parseInt(data.amount)
                                                                  allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
-                                                                return <tr key={index}>
-                                                                <td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td>
-                                                            </tr>
+                                                                return <tr key={index}><td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td></tr>
                                                             }):0}
                                                             </tbody>
                                                         </table></td>
@@ -199,10 +197,7 @@ const AllLaborEntry = () => {
                                                     <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.laborLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
                                                     <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                     {/* hidden re-initialise amount here */}
-                                                    <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></>
-
-
-                                            </tr>)
+                                                    <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></tr>)
 
                                         })
 
@@ -215,9 +210,7 @@ const AllLaborEntry = () => {
                                                     date = new Date(data.date)
                                                     allVariable.totalEntries = allVariable.totalEntries + 1
                                                     allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
-                                                    return (<tr key={data._id}>
-
-                                                        <><td className='border-end border-dark'>{index + 1}</td>
+                                                    return (<tr key={data._id}><td className='border-end border-dark'>{index + 1}</td>
                                                             <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
                                                             <td className='border-end border-dark'>{Math.floor(data.laborLastBalance)}</td>
                                                             <td className='border-end border-dark'>
@@ -235,9 +228,7 @@ const AllLaborEntry = () => {
                                                                     {data.receiptInfo.length>0? data.receiptInfo.map((data,index) => {
                                                                         allVariable.recAmountTotal=allVariable.recAmountTotal+parseInt(data.amount)
                                                                         allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
-                                                                        return <tr key={index}>
-                                                                            <td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td>
-                                                                        </tr>
+                                                                        return <tr key={index}><td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td></tr>
                                                                     }):0}
                                                                     </tbody>
                                                                 </table>
@@ -247,9 +238,7 @@ const AllLaborEntry = () => {
                                                                     {data.paymentInfo.length>0? data.paymentInfo.map((data,index) => {
                                                                          allVariable.payAmountTotal=allVariable.payAmountTotal+parseInt(data.amount)
                                                                          allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
-                                                                        return <tr key={index}>
-                                                                        <td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td>
-                                                                    </tr>
+                                                                        return <tr key={index}><td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td></tr>
                                                                     }):0}
                                                                     </tbody>
                                                                 </table></td>
@@ -259,10 +248,7 @@ const AllLaborEntry = () => {
                                                             <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.laborLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
                                                             <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                             {/* hidden re-initialise amount here */}
-                                                            <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></>
-        
-        
-                                                    </tr>)
+                                                            <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></tr>)
 
                                                 })
                                             }

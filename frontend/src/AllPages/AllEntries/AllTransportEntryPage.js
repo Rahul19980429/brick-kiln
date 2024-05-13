@@ -163,8 +163,15 @@ const AllPurchaseEntry = () => {
                                                         {data.itemsArray.map((data, index) => {
                                                             amount = amount + parseFloat(data.amount)
                                                             allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount;
-                                                            return <h6 key={index}> from:{data.from}, to:{data.to}, chuti:{data.chuti},
-                                                                monthSalary:{data.monthSalary} numberOfDays:{data.numberOfDays}  Other:{data.other}, Amount:{data.amount} </h6>
+                                                            return <h6 key={index}> {data.from?'from: '+data.from+', ':'Item: '+data.item+', '}
+                                                                    {data.to?'to: '+data.to+', ':'Quantity: '+data.quantity+', '} 
+                                                                    {data.chuti?'Chuti: '+data.chuti+', ':''}
+                                                                    {data.rate?'Rate: '+data.rate+', ':''}
+                                                                    {data.monthSalary?'MonthSalary: '+data.monthSalary+', ':'RefNo: '+data.refNo+', '}
+                                                                    {data.numberOfDays?'NumberOfDays: '+data.numberOfDays+', ':''} 
+                                                                    {data.other?'other: '+data.other+', ':''}                                                                   
+                                                                    {data.amount?'amount: '+data.amount+', ':''} 
+                                                                </h6>
                                                                 
                                                         })}
                                                     </td>
@@ -224,8 +231,15 @@ const AllPurchaseEntry = () => {
                                                                 {data.itemsArray.map((data, index) => {
                                                                     amount = amount + parseFloat(data.amount)
                                                                     allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
-                                                                    return <h6 key={index}> from:{data.from}, to:{data.to}, chuti:{data.chuti},
-                                                                    monthSalary:{data.monthSalary} numberOfDays:{data.numberOfDays}  Other:{data.other}, Amount:{data.amount} </h6>
+                                                                    return <h6 key={index}> {data.from?'from: '+data.from+', ':'Item: '+data.item+', '}
+                                                                    {data.to?'to: '+data.to+', ':'Quantity: '+data.quantity+', '} 
+                                                                    {data.chuti?'Chuti: '+data.chuti+', ':''}
+                                                                    {data.rate?'Rate: '+data.rate+', ':''}
+                                                                    {data.monthSalary?'MonthSalary: '+data.monthSalary+', ':'RefNo: '+data.refNo+', '}
+                                                                    {data.numberOfDays?'NumberOfDays: '+data.numberOfDays+', ':''} 
+                                                                    {data.other?'other: '+data.other+', ':''}                                                                   
+                                                                    {data.amount?'amount: '+data.amount+', ':''} 
+                                                                </h6>
     
                                                                 })}
                                                             </td>

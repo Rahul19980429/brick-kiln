@@ -13,8 +13,7 @@ const Sellpage = ({btnColor}) => {
   let payAmountVariable=0;
   let recAmountVariable=0;
   let customeKaBalanveAfterCalculation = 0;
-  
- 
+
 
   // variables declaration
   let finalTotalAmount = 0;
@@ -32,6 +31,7 @@ const Sellpage = ({btnColor}) => {
   // useState for bill number Input
   const [inputBillNumber, setInputBillNumber] = useState('')
 
+  const [driverBillNumber,setDriverBillNumber] = useState(0)
   // input field k liye useState initallize
   const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '', Driver:'' , TransportRate:'', RefNo: '', Other: '',Amount:0,TransportAmount:0})
 
@@ -45,7 +45,8 @@ const Sellpage = ({btnColor}) => {
   const {recAmount,setRecAmount,payAmount,setPayAmount,discount,setDiscount,getAllSellBill, 
         customerItems,setCustomerItems,selectedCustomer,setSelectedCustomer,sellBill,
         setSellBill,ADDNewSellBill,members,billNumberForNextBtn,setItemName,setFinalAmount,
-        DeleteSaleBill, setError, logOutClick, finalAmount, spinner } = a;
+        DeleteSaleBill, setError, logOutClick, finalAmount, spinner ,
+      getAllTransportBill,ADDNewTransportBill} = a;
 
 
   //  save btn click function
@@ -56,7 +57,16 @@ const Sellpage = ({btnColor}) => {
 
     else {
       // bill save pe driver ki amount send krni h    driverAmount
-     
+     if(customerItems.length>0){
+       customerItems.map((data,index)=>{
+        let BillNumber = driverBillNumber+(index+1);
+        let DriverLastBalance =  members.find((driver)=>driver._id===data.driverId).lastBalance;
+        let DriverBalanceNow = parseInt(DriverLastBalance) - parseInt(data.transportAmount)
+        let DriverItemArray= [{'item':data.item,'itemCategory':data.itemCategory,'quantity':data.quantity,'rate':data.transportRate,'refNo':data.refNo,'amount':data.transportAmount}]
+        ADDNewTransportBill(data.driverId,BillNumber,DriverItemArray,[],[],0,0,DriverLastBalance,DriverBalanceNow);
+        
+    })
+     }
       ADDNewSellBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, selectedCustomer.balance, customeKaBalanveAfterCalculation);
       clearAll();
     }
@@ -233,7 +243,8 @@ const Sellpage = ({btnColor}) => {
     else {
       // api call function get all customer
       getAllSellBill()
-
+     getAllTransportBill().then((data)=> setDriverBillNumber(data.result.length > 0 ? data.result[(data.result.length) - 1].transportBillNumber  : 0))
+    //  DriverBillNumber = DriverBillNumber.length> 0 ? DriverBillNumber[(DriverBillNumber.length) - 1].transportBillNumber + 1 : 1;
       //clear page first
       clearAll()
     }

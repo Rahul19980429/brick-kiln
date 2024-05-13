@@ -469,7 +469,7 @@ const getAllLaborBill = async () => {
 // api call for creating new Labor bill
 const ADDNewLaborBill = async (labor_id,laborBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,laborLastBalance,balance) => {
   setSpinner(true)
-  // console.log(transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,transportLastBalance,balance)
+  // console.log(labor_id,laborBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,laborLastBalance,balance)
   const response = await fetch(`${host}/api/bill/createLaborBill`, {
     method: 'POST',
     mode: 'cors',

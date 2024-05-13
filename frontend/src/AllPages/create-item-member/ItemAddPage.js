@@ -134,7 +134,7 @@ const ItemAddPage = () => {
 
 
                         <hr className='mb-0' />
-                        <div className=' px-1 px-lg-3 py-2' style={{ overflowY: 'scroll', maxHeight: '40vh' }}>
+                        <div className=' px-1 px-lg-3 py-2' style={{ overflowY: 'scroll', maxHeight: '75vh' }}>
 
                             {items.length === 0 ? <h5 className='text-primary text-center'>NOT FOUND</h5> :
                                 search === '' ?
