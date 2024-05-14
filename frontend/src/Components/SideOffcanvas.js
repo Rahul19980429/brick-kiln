@@ -43,10 +43,11 @@ const SideOffcanvas = () => {
                         <li className='mb-2'><Link to="/transport-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Transport Entry</Link></li>
                         <li className='mb-2'><Link to="/labor-bill-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Labor Entry</Link></li>
                         <li className='mb-2'><Link to="/bank-transection" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Bank Entry</Link></li>
+                        <li className='mb-2'><Link to="/fuel-check" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Fuel Entry</Link></li>
                         <li className='mb-2'><Link to="/item-sale-numbers" className="dropdown-item bg-danger" onClick={() => menuBtnClick()}>Item's Sale Numbers</Link></li>
                     </ul>
                     <Link to="/balance-check" className='btn btn-danger btn-lg  mb-2' onClick={() => menuBtnClick()}>Balance</Link>
-                    <Link to="/setting" className='btn btn-danger btn-lg  mb-2' onClick={() => menuBtnClick()}>Setting</Link>
+                    {/* <Link to="/setting" className='btn btn-danger btn-lg  mb-2' onClick={() => menuBtnClick()}>Setting</Link> */}
                     <Link to="/login" className='btn btn-danger btn-lg  ' onClick={() => logOutClick()}>Log Out</Link>
                 </div>
             </div>
