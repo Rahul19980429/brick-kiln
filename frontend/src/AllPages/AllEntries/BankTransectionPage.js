@@ -113,7 +113,7 @@ const BankTransectionEntry = () => {
                                 return <button className="btn btn-dark fw-bold">Print</button>;
                             }}
                             content={() => componentRef.current}
-                            documentTitle={`Sale-Bill-Entry-${Date.now()}`}
+                            documentTitle={`Bank-Transection-Entry-${Date.now()}`}
                             pageStyle='print'
 
                         />

@@ -117,7 +117,7 @@ const AllLaborEntry = () => {
                                 return <button className="btn btn-dark fw-bold">Print</button>;
                             }}
                             content={() => componentRef.current}
-                            documentTitle={`Purchase-Bill-Entry-${Date.now()}`}
+                            documentTitle={`Labor-Bill-Entry-${Date.now()}`}
                             pageStyle='print'
 
                         />
