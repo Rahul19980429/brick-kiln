@@ -22,9 +22,9 @@ const CustomerItems = (props) => {
     const editItemFromList = (data, index) => {
         setItemInput(
             {
-                NetWeight: data.NetWeight,
+                NetWeight: data.netWeight,
                 Rate: data.rate,
-                BillNo: data.BillNo,
+                BillNo: data.billNo,
                 Other: data.other,
                 Amount:data.amount
 
