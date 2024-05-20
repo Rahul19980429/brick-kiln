@@ -260,7 +260,7 @@ const AllLaborEntry = () => {
                             <tfoot className='sticky-bottom'>
                                 <tr>
                                     <th colSpan={3}> Number Of Entries:{allVariable.totalEntries}</th>
-                                    <th> T.Purchase: {allVariable.totalSaleAmount} Rs.</th>
+                                    <th> T.Labor Amount: {allVariable.totalSaleAmount} Rs.</th>
                                      <th colSpan={2}> T.Receive: {allVariable.totalRecAmount} Rs.</th>
                                     <th colSpan={2}> T.Pay: {allVariable.totalPayAmount} Rs.</th>
                                     <th colSpan={2}> T.Discount: {allVariable.totalDisAmount} Rs.</th>

@@ -8,7 +8,7 @@ const CustomerItems = (props) => {
     // context d-Structuring
     const a = useContext(context);
     const { itemName, setItemName, customerItems, setCustomerItems,
-        setFinalAmount, finalAmount, members } = a;
+        setFinalAmount, finalAmount } = a;
 
     // function for remove item from the customer items list
     const removeItemFromList = (item) => {
@@ -24,10 +24,10 @@ const CustomerItems = (props) => {
                 Rate: data.rate,
                 RefNo: data.refNo,
                 Other: data.other,
-                Driver: data.driverId,
-                TransportRate: data.transportRate,
+                // Driver: data.driverId,
+                // TransportRate: data.transportRate,
                 Amount: data.amount,
-                TransportAmount: data.transportAmount
+                // TransportAmount: data.transportAmount
 
             })
 
@@ -50,12 +50,12 @@ const CustomerItems = (props) => {
             setItemInput({ ...itemInput, [e.target.name]: e.target.value });
         }
         else {
-            if (itemInput.Quantity && (itemInput.Rate || itemInput.TransportRate)) {
-                setItemInput({ ...itemInput, Amount: parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0), TransportAmount: parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.TransportRate ? (parseFloat(itemInput.TransportRate) / 1000) : 0) })
+            if (itemInput.Quantity && itemInput.Rate) {
+                setItemInput({ ...itemInput, Amount: parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0)})
             }
             else {
 
-                setItemInput({ ...itemInput, Amount: 0, TransportAmount: 0 })
+                setItemInput({ ...itemInput, Amount: 0 })
             }
 
 
@@ -84,10 +84,10 @@ const CustomerItems = (props) => {
             "refNo": itemInput.RefNo ? itemInput.RefNo : 0,
             "other": itemInput.Other ? itemInput.Other : 0,
             "amount": itemInput.Amount ? itemInput.Amount : 0,
-            "driverId": itemInput.Driver,
-            "driverName": members.find((driver) => driver._id === itemInput.Driver).name,
-            "transportRate": itemInput.TransportRate ? itemInput.TransportRate : 0,
-            "transportAmount": itemInput.TransportAmount ? itemInput.TransportAmount : 0,
+            // "driverId": itemInput.Driver,
+            // "driverName": members.find((driver) => driver._id === itemInput.Driver).name,
+            // "transportRate": itemInput.TransportRate ? itemInput.TransportRate : 0,
+            // "transportAmount": itemInput.TransportAmount ? itemInput.TransportAmount : 0,
            
         }
         setFinalAmount(parseFloat(finalAmount) + parseFloat(itemInput.Amount ? itemInput.Amount : 0));
@@ -109,12 +109,12 @@ const CustomerItems = (props) => {
                                 <th scope="col">ITEM</th>
                                 <th scope="col">QTY/WT</th>
                                 <th scope="col">RATE</th>
-                                <th scope="col">TRANSPORT</th>
-                                <th scope="col">TP.RATE</th>
+                                {/* <th scope="col">TRANSPORT</th> */}
+                                {/* <th scope="col">TP.RATE</th> */}
                                 <th scope="col">REF NO.</th>
                                 <th scope="col">OTHER</th>
                                 <th scope="col">AMOUNT</th>
-                                <th scope="col">TP.AMOUNT</th>
+                                {/* <th scope="col">TP.AMOUNT</th> */}
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -127,12 +127,12 @@ const CustomerItems = (props) => {
                                         <td>{data.item}</td>
                                         <td>{data.quantity}</td>
                                         <td>{data.rate}</td>
-                                        <td>{data.driverName}</td>
-                                        <td>{data.transportRate}</td>
+                                        {/* <td>{data.driverName}</td> */}
+                                        {/* <td>{data.transportRate}</td> */}
                                         <td>{data.refNo}</td>
                                         <td>{data.other}</td>
                                         <td>{data.amount}</td>
-                                        <td>{data.transportAmount}</td>
+                                        {/* <td>{data.transportAmount}</td> */}
                                         <td>
                                             <button className='btn btn-sm btn-danger py-0 border-none' onClick={() => removeItemFromList(index)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill" viewBox="0 0 16 16">
                                                 <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
@@ -144,16 +144,16 @@ const CustomerItems = (props) => {
                                         </td>
 
                                     </tr>
-                                }) : <tr><td colSpan={11}>Items Will Display Here </td></tr>}
+                                }) : <tr><td colSpan={8}>Items Will Display Here </td></tr>}
                         </tbody>
                     </table>
                 </div>
                 <table className="table table-success table-striped mb-2">
                     <tfoot>
                         <tr className='table-dark text-start'>
-                            <th scope="col" colSpan={5}>T.Items: {customerItems.length}</th>
+                            <th scope="col" colSpan={4}>T.Items: {customerItems.length}</th>
 
-                            <th scope="col" colSpan={6}>T.Amount: {finalAmount}</th>
+                            <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th>
                             
 
                         </tr>
@@ -188,7 +188,7 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
 
-                            <div className='px-1 col-lg-2 col-md-2 col-3 '>
+                            {/* <div className='px-1 col-lg-2 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>TRANSPORT</h6>
                                 <div className=" input-group mb-3  justify-content-center">
                                     <select className="form-select" aria-label="Default select example" name='Driver' value={itemInput.Driver} onChange={inputValueChange}>
@@ -204,7 +204,7 @@ const CustomerItems = (props) => {
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.TransportRate} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="TransportRate" name="TransportRate" placeholder='T Rate' />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='px-1 col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>REF NO.</h6>
                                 <div className=" input-group mb-3">
@@ -226,20 +226,20 @@ const CustomerItems = (props) => {
                                     <input autoComplete='off' type="none" className="form-control" id="Amount" name="Amount" value={itemInput.Amount} readOnly />
                                 </div>
                             </div>
-                            <div className='px-1 col-lg-1 col col-md-4 '>
+                            {/* <div className='px-1 col-lg-1 col col-md-4 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>T AMOUNT</h6>
                                 <div className=" input-group mb-3">
                                     <input autoComplete='off' type="none" className="form-control" id="TransportAmount" name="TransportAmount" value={itemInput.TransportAmount} readOnly />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className='col-lg-1 d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor} mt-lg-4 me-2 btn-sm px-1`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.RefNo || !itemInput.Driver || !itemInput.TransportRate ? true : false}>
+                                <button className={`btn btn-${btnColor} mt-lg-4 me-2 btn-sm px-1`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.RefNo ? true : false}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
                                         <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
                                     </svg>
                                 </button>
-                                <button className={`btn btn-${btnColor} mt-lg-4 btn-sm px-1`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.RefNo && !itemInput.Other && !itemInput.Driver && !itemInput.TransportRate ? true : false} onClick={clearForm}>
+                                <button className={`btn btn-${btnColor} mt-lg-4 btn-sm px-1`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.RefNo && !itemInput.Other ? true : false} onClick={clearForm}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
                                     <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
                                 </svg></button>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import context from '../../../ContextApi/Context'
 import "../../../App.css"
 const CustomerItems = (props) => {
@@ -48,24 +48,7 @@ const CustomerItems = (props) => {
             e.target.value = "";
             setSalaryInput({ ...salaryInput, [e.target.name]: e.target.value });
         }
-        else {
-            if (salaryInput.From && salaryInput.To &&!salaryInput.MumberOfDays) {
-                let date1 = new Date(salaryInput.From).getTime();
-                let date2 = new Date(salaryInput.To).getTime();
-                let Difference_In_Time = date2 - date1;
-                let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24));
-                if (salaryInput.Chuti !== 0) {
-                    Difference_In_Days = Difference_In_Days - parseInt(salaryInput.Chuti?salaryInput.Chuti:0)
-                    setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30) })
-                }
-                else {
-                    setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30) })
-                }
-            }
-          
-
-        }
-
+       
     }
 
 
@@ -93,7 +76,25 @@ const CustomerItems = (props) => {
 
     }
 
-
+    useEffect(() => {
+        if (salaryInput.From && salaryInput.To ) {
+            let date1 = new Date(salaryInput.From).getTime();
+            let date2 = new Date(salaryInput.To).getTime();
+            let Difference_In_Time = date2 - date1;
+            let Difference_In_Days = Math.round(Difference_In_Time / (1000 * 3600 * 24))+1;
+            if (salaryInput.Chuti !== 0) {
+                Difference_In_Days = Difference_In_Days - parseInt(salaryInput.Chuti?salaryInput.Chuti:0)
+                if( Difference_In_Days>0){
+                setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30) })
+                }
+            }
+            else {
+                if( Difference_In_Days>0){
+                setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30) })
+                }
+            }
+        }
+    }, [salaryInput.From,salaryInput.To,salaryInput.Chuti,salaryInput.MonthSalary,salaryInput.Other])
 
     return (
         <>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import context from '../../ContextApi/Context'
-import CustomerItems from './DriverSalaryEntry';
+import SalaryData from './Salary/DriverSalaryEntry';
+import TransportData from './Transportation/TransportItems';
 import ReceiptCashpage from '../../Components/Receiptpage';
 import PaymentCashpage from '../../Components/Paymentpage';
 import CustomerNameList from '../../Components/CustomerNameList';
@@ -26,11 +27,15 @@ const TransportPage = ({ btnColor }) => {
   //useState for date
   const [date, setDate] = useState(new Date())
 
+  //useState for date
+  const [mode, setMode] = useState('Transport')
+
   // useState for bill number Input
   const [inputBillNumber, setInputBillNumber] = useState('')
 
   // input field k liye useState initallize
-  const [itemInput, setItemInput] = useState({ From:'',To:'', Chuti:0 , MonthSalary:0, NumberOfDays:0, Other:0 ,Amount:0 })
+  const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '',RefNo:'', Other: '',Amount:0 })
+  const [salaryInput, setSalaryInput] = useState({ From:'',To:'', Chuti:0 , MonthSalary:0, NumberOfDays:0, Other:0 ,Amount:0 })
 
   let fullYear = date.getFullYear();
   let month = date.getMonth() + 1;
@@ -59,7 +64,8 @@ const TransportPage = ({ btnColor }) => {
   // cancel btn click function 
   const clearAll = () => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
-    setItemInput({ From:'',To:'',Chuti:0,MonthSalary:0, NumberOfDays:0, Other:0,Amount:0 })
+    setSalaryInput({ From:'',To:'',Chuti:0,MonthSalary:0, NumberOfDays:0, Other:0,Amount:0 })
+    setItemInput({ Quantity: '', Rate: '',RefNo:'', Other: '',Amount:0 })
     setRecAmount([])
     setPayAmount([])
     setDiscount(0)
@@ -302,12 +308,15 @@ const TransportPage = ({ btnColor }) => {
           <div className='col-3 d-lg-block d-none'>
             <h6>Last Bill No:{lastBill ? lastBill : 'XXXX'}</h6>
             <h6>Last Balance: {selectedCustomer.balance ? selectedCustomer.balance : 0}</h6>
+            <button className={`btn btn-${btnColor} btn-sm mx-1`} onClick={()=>setMode('Transport')}> Transport</button>
+            <button className={`btn btn-${btnColor} btn-sm mx-1`} onClick={()=>setMode('Salary')}> Salary</button>
           </div>
 
         </div>
-
+        
         {/* part three show customer's add items data and list component */}
-        <CustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput ,transportFuel}} />
+        {mode==='Salary' || (customerItems.length>0 && customerItems[0].from)?<SalaryData btnColor={btnColor} initalvalues={{salaryInput, setSalaryInput  ,transportFuel}} />
+        :<TransportData btnColor={btnColor} initalvalues={{itemInput, setItemInput  ,transportFuel}} />}
         {/* part forth rec,pay,discount and other functionality (all buttons) */}
 
         <div className='row mt-2'>
@@ -422,12 +431,13 @@ const TransportPage = ({ btnColor }) => {
         </div>
         <div className='row'>
           <CustomerNameList memberType="transport" />
-          <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="good" />
+          <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="sale" />
           <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
             billitems={customerItems} recData={{ recAmount,recAmountVariable }}
             payData={{ payAmount,payAmountVariable }}
             discountData={{ discount }}
+            fuel ={{transportFuel}}
             finalAmount={finalAmount}
           />
         </div>

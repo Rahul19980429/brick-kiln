@@ -28,7 +28,7 @@ const BillPrint = (props) => {
                                     return <button className='btn btn-primary ms-5'>Print out!</button>;
                                 }}
                                 content={() => componentRef.current}
-                                documentTitle={`Sale-Bill-${Date.now()}`}
+                                documentTitle={`Sale-Bill-${nameData.name}-${Date.now()}`}
                                 pageStyle='print'
 
                             />
@@ -59,7 +59,7 @@ const BillPrint = (props) => {
                                             <th scope="col">Item</th>
                                             <th scope="col">Qty/Wt</th>
                                             <th scope="col">Rate</th>
-                                            <th scope="col">Driver</th>
+                                            {/* <th scope="col">Driver</th> */}
                                             <th scope="col">RefNo.</th>
                                             <th scope="col">Other</th>
                                             <th scope="col">Amount</th>
@@ -76,7 +76,7 @@ const BillPrint = (props) => {
                                                     <td><small>{data.item}</small></td>
                                                     <td>{data.quantity}</td>
                                                     <td>{data.rate}</td>
-                                                    <td>{data.driverName}</td>
+                                                    {/* <td>{data.driverName}</td> */}
                                                     <td>{data.refNo}</td>
                                                     <td>{data.other}</td>
                                                     <td>{data.amount}</td>

@@ -28,9 +28,9 @@ const BillPrint = (props) => {
                                     return <button className='btn btn-primary ms-5'>Print out!</button>;
                                 }}
                                 content={() => componentRef.current}
-                                documentTitle={`Purchase-Bill-${Date.now()}`}
+                                documentTitle={`Labor-Bill-${nameData.name}-${Date.now()}`}
                                 pageStyle='print'
-
+ 
                             />
                             <button type="button" className="btn-close" id="NameModalClose" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
@@ -54,32 +54,55 @@ const BillPrint = (props) => {
                             <div className=' p-0 table-responsive' >
                                 <table className="table table-success table-striped mb-0" >
                                     <thead>
+                                    {billitems.length > 0 && billitems[0].item?
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Item</th>
                                             <th scope="col">Qty/Wt/Ltr</th>
                                             <th scope="col">Rate</th>
-                                            <th scope="col">BillNo.</th>
                                             <th scope="col">Other</th>
                                             <th scope="col">Amount</th>
 
-                                        </tr>
+                                        </tr>:<tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Starting</th>
+                                            <th scope="col">Closing</th>
+                                            <th scope="col">Chuti</th>
+                                            <th scope="col">Salary</th>
+                                            <th scope="col">Other</th>
+                                            <th scope="col">No.of WD</th>
+                                            <th scope="col">Amount</th>
+
+                                        </tr>}
                                     </thead>
                                     <tbody>
 
                                         {billitems.length > 0 ?
-                                            //get all customers from billitems
-                                            billitems.map((data, index) => {
-                                                return <tr key={index}  >
-                                                    <td>{index + 1}</td>
-                                                    <td><small>{data.item}</small></td>
-                                                    <td>{data.netWeight}</td>
-                                                    <td>{data.rate}</td>
-                                                    <td>{data.billNo}</td>
-                                                    <td>{data.other}</td>
-                                                    <td>{data.amount}</td>
-                                                </tr>
-                                            }) : null}
+                                           billitems[0].item?
+                                           //get all customers from billitems
+                                           billitems.map((data, index) => {
+                                               return <tr key={index}  >
+                                                   <td>{index + 1}</td>
+                                                   <td><small>{data.item}</small></td>
+                                                   <td>{data.quantity}</td>
+                                                   <td>{data.rate}</td>
+                                                   <td>{data.other}</td>
+                                                   <td>{data.amount}</td>
+                                               </tr>
+                                           }): 
+                                           //get all customers from billitems
+                                           billitems.map((data, index) => {
+                                               return <tr key={index}  >
+                                                   <td>{index + 1}</td>
+                                                   <td>{data.from}</td>
+                                                   <td>{data.to}</td>
+                                                   <td>{data.chuti}</td>
+                                                   <td>{data.monthSalary}</td>
+                                                   <td>{data.other}</td>
+                                                   <td>{data.numberOfDays}</td>
+                                                   <td>{data.amount}</td>
+                                               </tr>
+                                           }) : null}
                                     </tbody>
 
                                     <tfoot>
@@ -102,22 +125,37 @@ const BillPrint = (props) => {
                                         <th scope="col">{ -parseInt(finalAmount?finalAmount:0) + parseInt(nameData.balance ? nameData.balance : 0)}</th>
 
                                     </tr>
-                                    <tr className='table-light text-start'>
-                                        <th scope="col">Receive</th>
-                                      
-                                        <th scope="col">{recData.recAmount.amount}</th>
+                                    {recData.recAmount.length > 0 ? recData.recAmount.map((recData,index) => {
+                                        return <tr className='table-light text-start' key={index}>
+                                            <th scope="col">Receive</th>
+                                            <th scope="col">{recData.amount}</th> 
+                                            <th scope="col">{recData.mode}</th> 
+                                             </tr>
+                                    }) :<tr className='table-light text-start'>
+                                            <th scope="col">Receive</th>
+                                            <th scope="col" colSpan={2}>{0}</th>
+                                         </tr>
 
-                                    </tr>
-                                    <tr className='table-light text-start'>
-                                        <th scope="col">Pay</th>
-                                      
-                                        <th scope="col">{payData.payAmount.amount}</th>
-
-                                    </tr>
+                                    }
                                     
 
+                                    {payData.payAmount.length > 0 ? payData.payAmount.map((payData,index) => {
+                                        return <tr className='table-light text-start' key={index}>
+                                            <th scope="col">pay</th>
+                                            <th scope="col">{payData.amount}</th> 
+                                            <th scope="col">{payData.mode}</th>  
+                                            </tr>
+                                    }) :<tr className='table-light text-start'>
+                                            <th scope="col">pay</th>
+                                            <th scope="col" colSpan={2}>{0}</th> 
+                                         </tr>
 
-
+                                    }
+                                     <tr className='table-light text-start'>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col" colSpan={2}>{discountData.discount.amount}</th>
+                                    </tr>
+                                    
 
                                 </tbody>
                             </table>
@@ -130,8 +168,8 @@ const BillPrint = (props) => {
                                         <th scope="col">{
                                             - parseInt(finalAmount?finalAmount:0)
                                             + parseInt(nameData.balance ? nameData.balance : 0)
-                                              - parseInt(recData.recAmount.amount ? recData.recAmount.amount : 0)
-                                              + parseInt(payData.payAmount.amount ?payData. payAmount.amount : 0)
+                                              - parseInt(recData.recAmountVariable ? recData.recAmountVariable : 0)
+                                              + parseInt(payData.payAmountVariable ?payData.payAmountVariable : 0)
                                               + parseInt(discountData.discount.amount ? discountData.discount.amount : 0)
                                               }
                                         </th>

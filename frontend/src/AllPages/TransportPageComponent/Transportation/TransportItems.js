@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import context from '../../../ContextApi/Context'
 import "../../../App.css"
-const CustomerItems = (props) => {
+const TransportItems = (props) => {
     const { btnColor, initalvalues } = props;
-    const { itemInput, setItemInput } = initalvalues;
+    const { itemInput, setItemInput,transportFuel } = initalvalues;
 
-   
+  
+
     // context d-Structuring
     const a = useContext(context);
     const { itemName, setItemName, customerItems, setCustomerItems,
@@ -23,9 +24,12 @@ const CustomerItems = (props) => {
             {
                 Quantity: data.quantity,
                 Rate: data.rate,
+                RefNo:data.refNo,
                 Other: data.other,
                 Amount:data.amount
+
             })
+
         setItemName({ iname: data.item, category: data.itemCategory })
         removeItemFromList(index);
 
@@ -42,13 +46,14 @@ const CustomerItems = (props) => {
     const keypress = (e) => {
         if (isNaN(e.target.value) || e.target.value === " ") {
             e.target.value = "";
+            setItemInput({ ...itemInput, [e.target.name]: e.target.value });
         }
         else {
             if (itemInput.Rate && itemInput.Quantity) {
-                setItemInput({ ...itemInput, Amount:parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0)})
+                setItemInput({ ...itemInput, Amount:parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? (parseFloat(itemInput.Rate) / 1000) : 0) + parseInt(itemInput.Other ? itemInput.Other : 0)})
             }
             else {
-                setItemInput({ ...itemInput, Amount: 0 }) 
+                setItemInput({ ...itemInput, Amount: 0});
             }
         }
 
@@ -57,7 +62,7 @@ const CustomerItems = (props) => {
 
     // on clean button click
     const clearForm = () => {
-        setItemInput({ Quantity: '', Rate: '',  Other: '' ,Amount:0})
+        setItemInput({ Quantity: '', Rate: '', RefNo:'', Other: '',Amount:0})
         setItemName({ _id: '', iname: '', category: '' })
     }
 
@@ -69,6 +74,7 @@ const CustomerItems = (props) => {
             "itemCategory": itemName.category,
             "quantity": itemInput.Quantity ? itemInput.Quantity : 0,
             "rate": itemInput.Rate ? itemInput.Rate : 0,
+            "refNo": itemInput.RefNo ? itemInput.RefNo : 0,
             "other": itemInput.Other ? itemInput.Other : 0,
             "amount": itemInput.Amount ? itemInput.Amount : 0,
         }
@@ -91,6 +97,7 @@ const CustomerItems = (props) => {
                                 <th scope="col">ITEM</th>
                                 <th scope="col">QTY/WT</th>
                                 <th scope="col">RATE</th>
+                                <th scope="col">REF No.</th>
                                 <th scope="col">OTHER</th>
                                 <th scope="col">AMOUNT</th>
                                 <th scope="col"></th>
@@ -105,6 +112,7 @@ const CustomerItems = (props) => {
                                         <td>{data.item}</td>
                                         <td>{data.quantity}</td>
                                         <td>{data.rate}</td>
+                                        <td>{data.refNo}</td>
                                         <td>{data.other}</td>
                                         <td>{data.amount}</td>
                                         <td>
@@ -118,17 +126,16 @@ const CustomerItems = (props) => {
                                         </td>
 
                                     </tr>
-                                }) : <tr><td colSpan={7}>Items Will Display Here </td></tr>}
+                                }) : <tr><td colSpan={8}>Items Will Display Here </td></tr>}
                         </tbody>
                     </table>
                 </div>
                 <table className="table table-success table-striped mb-2">
                     <tfoot>
                         <tr className='table-dark text-start'>
-                            <th scope="col" colSpan={3}>T.Items: {customerItems.length}</th>
-
+                            <th scope="col" colSpan={4}>T.Items: {customerItems.length}</th>
                             <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th>
-
+                            <th scope="col" colSpan={3}>Fuel: {transportFuel}</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -160,7 +167,12 @@ const CustomerItems = (props) => {
                                     <input value={itemInput.Rate} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Rate" name="Rate" placeholder='Rate' />
                                 </div>
                             </div>
-                           
+                            <div className='px-1 col-lg-1 col-md-2 col-3 '>
+                                <h6 className='fw-bold text-lg-center mb-1'>REF NO.</h6>
+                                <div className=" input-group mb-3">
+                                    <input value={itemInput.RefNo} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="RefNo" name="RefNo" placeholder='XXXX' />
+                                </div>
+                            </div>
                             <div className='col-lg-1 col-md-2 col-3 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>OTHER</h6>
                                 <div className=" input-group mb-4">
@@ -171,12 +183,12 @@ const CustomerItems = (props) => {
                             <div className='col-lg-1 col col-md-4 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
-                                    <input autoComplete='off' type="none" className="form-control" id="Amount" name="Amount" value={itemInput.Amount} readOnly />
+                                    <input autoComplete='off' type="none" className="form-control"id="Amount" name="Amount" value={itemInput.Amount} readOnly />
                                 </div>
                             </div>
                             <div className='col-lg-2 col  d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate ? true : false}>Add</button>
-                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 me-2 btn-sm`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.RefNo ? true : false}>Add</button>
+                                <button className={`btn btn-${btnColor}  fw-bold  mt-lg-4 btn-sm`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.RefNo  && !itemInput.Other ? true : false} onClick={clearForm}>Clear</button>
                             </div>
                         </div>
                     </form>
@@ -186,4 +198,4 @@ const CustomerItems = (props) => {
     )
 }
 
-export default CustomerItems
+export default TransportItems

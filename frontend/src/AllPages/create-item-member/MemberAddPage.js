@@ -80,15 +80,22 @@ const MemberAddPage = () => {
             AddNewMember(input.name.toLowerCase(), input.category, input.contact, input.address, memberBalance, balanceDate)
             setHandleUseEffect(handleUseEffect === false ? true : false)
             clearInput()
+            getCategory('all')
         }
     }
 
     const updateMember = (id, data) => {
+        let memberKadata = Allmembers.filter((mData)=>mData._id===id)
+        let IBDate =new Date(memberKadata[0].initialBalanceDate);
+        let LBDate =new Date(memberKadata[0].lastBalanceDate);
         if (!input.name || !input.address || !input.contact) {
             setError({ error: "Empty field is not allowed" })
         }
         else if (input.contact.length !== 10) {
             setError({ error: "Required 10 digit Number " })
+        }
+        else if(IBDate.getTime()!==LBDate.getTime()){
+            setError({ error: "Member has Bill Entery. Can't change balance directly" })
         }
         else {
             const { name, category, contact, address } = data;

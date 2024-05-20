@@ -5,7 +5,7 @@ import ReactToPrint from 'react-to-print';
 const BillPrint = (props) => {
 
     const componentRef = useRef()
-    const { nameData, bno, bdate, billitems, recData, payData, finalAmount, discountData } = props;
+    const { nameData, bno, bdate, billitems, recData, payData, finalAmount, discountData,fuel } = props;
 
     const setDateFormat = (intdate) => {
         let date = new Date(intdate)
@@ -28,7 +28,7 @@ const BillPrint = (props) => {
                                     return <button className='btn btn-primary ms-5'>Print out!</button>;
                                 }}
                                 content={() => componentRef.current}
-                                documentTitle={`Purchase-Bill-${Date.now()}`}
+                                documentTitle={`Transport-Bill-${nameData.name}-${Date.now()}`}
                                 pageStyle='print'
 
                             />
@@ -54,6 +54,7 @@ const BillPrint = (props) => {
                             <div className=' p-0 table-responsive' >
                                 <table className="table table-success table-striped mb-0" >
                                     <thead>
+                                    {billitems.length > 0 && billitems[0].item?
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Item</th>
@@ -63,20 +64,44 @@ const BillPrint = (props) => {
                                             <th scope="col">Other</th>
                                             <th scope="col">Amount</th>
 
-                                        </tr>
+                                        </tr>:<tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Starting</th>
+                                            <th scope="col">Closing</th>
+                                            <th scope="col">Chuti</th>
+                                            <th scope="col">Salary</th>
+                                            <th scope="col">Other</th>
+                                            <th scope="col">No.of WD</th>
+                                            <th scope="col">Amount</th>
+
+                                        </tr>}
                                     </thead>
                                     <tbody>
 
                                         {billitems.length > 0 ?
+                                        billitems[0].item?
                                             //get all customers from billitems
                                             billitems.map((data, index) => {
                                                 return <tr key={index}  >
                                                     <td>{index + 1}</td>
                                                     <td><small>{data.item}</small></td>
-                                                    <td>{data.netWeight}</td>
+                                                    <td>{data.quantity}</td>
                                                     <td>{data.rate}</td>
-                                                    <td>{data.billNo}</td>
+                                                    <td>{data.refNo}</td>
                                                     <td>{data.other}</td>
+                                                    <td>{data.amount}</td>
+                                                </tr>
+                                            }): 
+                                            //get all customers from billitems
+                                            billitems.map((data, index) => {
+                                                return <tr key={index}  >
+                                                    <td>{index + 1}</td>
+                                                    <td>{data.from}</td>
+                                                    <td>{data.to}</td>
+                                                    <td>{data.chuti}</td>
+                                                    <td>{data.monthSalary}</td>
+                                                    <td>{data.other}</td>
+                                                    <td>{data.numberOfDays}</td>
                                                     <td>{data.amount}</td>
                                                 </tr>
                                             }) : null}
@@ -85,7 +110,8 @@ const BillPrint = (props) => {
                                     <tfoot>
                                         <tr className='table-dark text-start'>
                                             <th scope="col" colSpan={3}>T.Item: {billitems.length}</th>
-                                            <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th> 
+                                            <th scope="col" colSpan={3}>T.Amount: {finalAmount}</th> 
+                                            <th scope="col" colSpan={3}>Fuel: {fuel.transportFuel?fuel.transportFuel:0}</th> 
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -148,8 +174,8 @@ const BillPrint = (props) => {
                                         <th scope="col">{
                                             - parseInt(finalAmount?finalAmount:0)
                                             + parseInt(nameData.balance ? nameData.balance : 0)
-                                              - parseInt(recData.recAmount.amount ? recData.recAmount.amount : 0)
-                                              + parseInt(payData.payAmount.amount ?payData. payAmount.amount : 0)
+                                              - parseInt(recData.recAmountVariable  ? recData.recAmountVariable : 0)
+                                              + parseInt(payData.payAmountVariable ?payData.payAmountVariable : 0)
                                               + parseInt(discountData.discount.amount ? discountData.discount.amount : 0)
                                               }
                                         </th>

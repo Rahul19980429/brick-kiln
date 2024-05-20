@@ -163,7 +163,7 @@ const AllSaleEntry = () => {
                                                             amount = amount + parseFloat(data.amount)
                                                             allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
                                                             return <h6 key={index}> Item:{data.item}, Qt:{data.quentity}, Rate:{data.rate},
-                                                                VNo:{data.vehicleNo}, RefNo:{data.refNo}, Other:{data.other},
+                                                                RefNo:{data.refNo}, Other:{data.other},
                                                                 Amount:{data.amount} </h6>
                                                         })}
                                                     </td>
@@ -222,7 +222,7 @@ const AllSaleEntry = () => {
                                                                     amount = amount + parseFloat(data.amount)
                                                                     allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
                                                                     return <h6 key={index}> Item:{data.item}, Qt:{data.quentity}, Rate:{data.rate},
-                                                                        VNo:{data.vehicleNo}, RefNo:{data.refNo}, Other:{data.other},
+                                                                        RefNo:{data.refNo}, Other:{data.other},
                                                                         Amount:{data.amount} </h6>
                                                                 })}
                                                             </td>

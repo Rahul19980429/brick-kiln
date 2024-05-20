@@ -16,7 +16,8 @@ const AllPurchaseEntry = () => {
         totalSaleAmount: 0,
         totalRecAmount: 0,
         totalPayAmount: 0,
-        totalDisAmount: 0
+        totalDisAmount: 0,
+        totalFuel: 0
 
     }
     const a = useContext(context);
@@ -138,6 +139,7 @@ const AllPurchaseEntry = () => {
                                     <th scope="col">Rec.Info.</th>
                                     <th scope="col">Pay.Info.</th>
                                     <th scope="col">Discount</th>
+                                    <th scope="col">Fuel</th>
                                     <th scope="col">Bal. Now</th>
                                     <th scope="col">Date</th>
 
@@ -152,6 +154,7 @@ const AllPurchaseEntry = () => {
                                             customerData = members.filter((mdata) => mdata._id === data.transport_id);
                                             date = new Date(data.date)
                                             allVariable.totalEntries = allVariable.totalEntries + 1
+                                            allVariable.totalFuel = allVariable.totalFuel + parseInt(data.fuel)
                                             allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
                                             return (<tr key={data._id}>
 
@@ -203,6 +206,7 @@ const AllPurchaseEntry = () => {
                                                     
                                                    
                                                     <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                    <td className='border-end border-dark'>{data.fuel} </td>
                                                     <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.transportLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
                                                     <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                     {/* hidden re-initialise amount here */}
@@ -221,6 +225,7 @@ const AllPurchaseEntry = () => {
                                                     customerData = members.filter((mdata) => mdata._id === data.transport_id);
                                                     date = new Date(data.date)
                                                     allVariable.totalEntries = allVariable.totalEntries + 1
+                                                    allVariable.totalFuel = allVariable.totalFuel + parseInt(data.fuel)
                                                     allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
                                                     return (<tr key={data._id}>
 
@@ -271,6 +276,7 @@ const AllPurchaseEntry = () => {
                                                             
                                                            
                                                             <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                            <td className='border-end border-dark'>{data.fuel} </td>
                                                             <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.transportLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
                                                             <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                             {/* hidden re-initialise amount here */}
@@ -283,15 +289,16 @@ const AllPurchaseEntry = () => {
                                             }
                                         </>
 
-                                    : <tr><td colSpan={10} className='text-center'>Data Will Display Here </td></tr>
+                                    : <tr><td colSpan={11} className='text-center'>Data Will Display Here </td></tr>
                                 }
                             </tbody>
                             <tfoot className='sticky-bottom'>
                                 <tr>
                                     <th colSpan={3}> Number Of Entries:{allVariable.totalEntries}</th>
-                                    <th> T.Purchase: {allVariable.totalSaleAmount} Rs.</th>
+                                    <th> T.Transport Amount: {allVariable.totalSaleAmount} Rs.</th>
                                      <th colSpan={2}> T.Receive: {allVariable.totalRecAmount} Rs.</th>
                                     <th colSpan={2}> T.Pay: {allVariable.totalPayAmount} Rs.</th>
+                                    <th > T.Fuel: {allVariable.totalFuel} Ltr.</th>
                                     <th colSpan={2}> T.Discount: {allVariable.totalDisAmount} Rs.</th>
                                 </tr>
                             </tfoot>

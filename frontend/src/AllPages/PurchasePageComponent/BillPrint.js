@@ -28,7 +28,7 @@ const BillPrint = (props) => {
                                     return <button className='btn btn-primary ms-5'>Print out!</button>;
                                 }}
                                 content={() => componentRef.current}
-                                documentTitle={`Purchase-Bill-${Date.now()}`}
+                                documentTitle={`Purchase-Bill-${nameData.name}-${Date.now()}`}
                                 pageStyle='print'
 
                             />
@@ -148,8 +148,8 @@ const BillPrint = (props) => {
                                         <th scope="col">{
                                             - parseInt(finalAmount?finalAmount:0)
                                             + parseInt(nameData.balance ? nameData.balance : 0)
-                                              - parseInt(recData.recAmount.amount ? recData.recAmount.amount : 0)
-                                              + parseInt(payData.payAmount.amount ?payData. payAmount.amount : 0)
+                                              - parseInt(recData.recAmountVariable ? recData.recAmountVariable : 0)
+                                              + parseInt(payData.payAmountVariable ? payData.payAmountVariable : 0)
                                               + parseInt(discountData.discount.amount ? discountData.discount.amount : 0)
                                               }
                                         </th>
