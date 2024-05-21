@@ -10,8 +10,8 @@ const AllLaborEntry = () => {
     let date;
     let amount = 0;
     let allVariable = {
-        recAmountTotal:0,
-        payAmountTotal:0,
+        recAmountTotal: 0,
+        payAmountTotal: 0,
         totalEntries: 0,
         totalSaleAmount: 0,
         totalRecAmount: 0,
@@ -32,7 +32,7 @@ const AllLaborEntry = () => {
     }
 
     function getcustomerId(data) {
-        if ((data.category === 'product-labor' ||data.category === 'salary-labor') && ( data.contact.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1|| data.name.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1)) {
+        if ((data.category === 'product-labor' || data.category === 'salary-labor') && (data.contact.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1 || data.name.toLowerCase().indexOf(searchInput.textSearch.toLowerCase()) !== -1)) {
             return data._id
         }
     }
@@ -152,52 +152,47 @@ const AllLaborEntry = () => {
                                             allVariable.totalEntries = allVariable.totalEntries + 1
                                             allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
                                             return (<tr key={data._id}><td className='border-end border-dark'>{index + 1}</td>
-                                                    <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
-                                                    <td className='border-end border-dark'>{Math.floor(data.laborLastBalance)}</td>
-                                                    
-                                                    <td className='border-end border-dark'>
-                                                        {data.itemsArray.map((data, index) => {
-                                                            amount = amount + parseFloat(data.amount)
-                                                            allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
-                                                            return <h6 key={index}> {data.from?'from: '+data.from+', ':'Item: '+data.item+', '}
-                                                            {data.to?'to: '+data.to+', ':'Quantity: '+data.quantity+', '} 
-                                                            {data.chuti?'Chuti: '+data.chuti+', ':''}
-                                                            {data.rate?'Rate: '+data.rate+', ':''}
-                                                            {data.monthSalary?'MonthSalary: '+data.monthSalary+', ':''}
-                                                            {data.numberOfDays?'NumberOfDays: '+data.numberOfDays+', ':''} 
-                                                            {data.other?'other: '+data.other+', ':''}                                                                   
-                                                            {data.amount?'amount: '+data.amount+', ':''} 
+                                                <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
+                                                <td className='border-end border-dark'>{Math.floor(data.laborLastBalance)}</td>
+
+                                                <td className='border-end border-dark'>
+                                                    {data.itemsArray.map((data, index) => {
+                                                        amount = amount + parseFloat(data.amount)
+                                                        allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
+                                                        return <h6 key={index}> {data.from ? 'from: ' + data.from + ', ' : 'Item: ' + data.item + ', '}
+                                                            {data.to ? 'to: ' + data.to + ', ' : 'Quantity: ' + data.quantity + ', '}
+                                                            {data.chuti ? 'Chuti: ' + data.chuti + ', ' : ''}
+                                                            {data.rate ? 'Rate: ' + data.rate + ', ' : ''}
+                                                            {data.monthSalary ? 'MonthSalary: ' + data.monthSalary + ', ' : ''}
+                                                            {data.numberOfDays ? 'NumberOfDays: ' + data.numberOfDays + ', ' : ''}
+                                                            {data.other ? 'other: ' + data.other + ', ' : ''}
+                                                            {data.amount ? 'amount: ' + data.amount + ', ' : ''}
                                                         </h6>
-                                                        })}
-                                                    </td>
-                                                    <td className='border-end border-dark'>{data.laborBillNumber}</td>
-                                                    <td className='border-end border-dark'>
-                                                        <table>
-                                                            <tbody>
-                                                            {data.receiptInfo.length>0? data.receiptInfo.map((data,index) => {
-                                                                allVariable.recAmountTotal=allVariable.recAmountTotal+parseInt(data.amount)
-                                                                allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
-                                                                return <tr key={index}><td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td></tr>
-                                                            }):0}
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td className='border-end border-dark'><table>
-                                                            <tbody>
-                                                            {data.paymentInfo.length>0? data.paymentInfo.map((data,index) => {
-                                                                 allVariable.payAmountTotal=allVariable.payAmountTotal+parseInt(data.amount)
-                                                                 allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
-                                                                return <tr key={index}><td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td></tr>
-                                                            }):0}
-                                                            </tbody>
-                                                        </table></td>
-                                                    
-                                                   
-                                                    <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.laborLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
-                                                    <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
-                                                    {/* hidden re-initialise amount here */}
-                                                    <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></tr>)
+                                                    })}
+                                                </td>
+                                                <td className='border-end border-dark'>{data.laborBillNumber}</td>
+                                                <td className='border-end border-dark'>
+
+                                                    {data.receiptInfo.length > 0 ? data.receiptInfo.map((data, index) => {
+                                                        allVariable.recAmountTotal = allVariable.recAmountTotal + parseInt(data.amount)
+                                                        allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
+                                                        return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
+                                                    }) : 0}
+
+                                                </td>
+                                                <td className='border-end border-dark'>
+                                                    {data.paymentInfo.length > 0 ? data.paymentInfo.map((data, index) => {
+                                                        allVariable.payAmountTotal = allVariable.payAmountTotal + parseInt(data.amount)
+                                                        allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
+                                                        return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
+                                                    }) : 0}
+                                                </td>
+
+                                                <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.laborLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
+                                                <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
+                                                {/* hidden re-initialise amount here */}
+                                                <td className='d-none'>{amount = 0} {allVariable.payAmountTotal = 0} {allVariable.recAmountTotal = 0}</td></tr>)
 
                                         })
 
@@ -211,44 +206,40 @@ const AllLaborEntry = () => {
                                                     allVariable.totalEntries = allVariable.totalEntries + 1
                                                     allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
                                                     return (<tr key={data._id}><td className='border-end border-dark'>{index + 1}</td>
-                                                            <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
-                                                            <td className='border-end border-dark'>{Math.floor(data.laborLastBalance)}</td>
-                                                            <td className='border-end border-dark'>
-                                                                {data.itemsArray.map((data, index) => {
-                                                                    amount = amount + parseFloat(data.amount)
-                                                                    allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
-                                                                    return <h6 key={index}> Item:{data.item}, Qt:{data.netWeight}, Rate:{data.rate},
-                                                                        BillNo:{data.billNo} Other:{data.other}, Amount:{data.amount} </h6>
-                                                                })}
-                                                            </td>
-                                                            <td className='border-end border-dark'>{data.laborBillNumber}</td>
-                                                            <td className='border-end border-dark'>
-                                                                <table>
-                                                                    <tbody>
-                                                                    {data.receiptInfo.length>0? data.receiptInfo.map((data,index) => {
-                                                                        allVariable.recAmountTotal=allVariable.recAmountTotal+parseInt(data.amount)
-                                                                        allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
-                                                                        return <tr key={index}><td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td></tr>
-                                                                    }):0}
-                                                                    </tbody>
-                                                                </table>
-                                                            </td>
-                                                            <td className='border-end border-dark'><table>
-                                                                    <tbody>
-                                                                    {data.paymentInfo.length>0? data.paymentInfo.map((data,index) => {
-                                                                         allVariable.payAmountTotal=allVariable.payAmountTotal+parseInt(data.amount)
-                                                                         allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
-                                                                        return <tr key={index}><td>{data.amount?data.amount:0} {data.mode?data.mode:''} {data.naration?data.naration:''}</td></tr>
-                                                                    }):0}
-                                                                    </tbody>
-                                                                </table></td>
-                                                            
-                                                           
-                                                            <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                            <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.laborLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
-                                                            <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
-                                                            {/* hidden re-initialise amount here */}
-                                                            <td className='d-none'>{amount = 0} {allVariable.payAmountTotal=0} {allVariable.recAmountTotal=0}</td></tr>)
+                                                        <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
+                                                        <td className='border-end border-dark'>{Math.floor(data.laborLastBalance)}</td>
+                                                        <td className='border-end border-dark'>
+                                                            {data.itemsArray.map((data, index) => {
+                                                                amount = amount + parseFloat(data.amount)
+                                                                allVariable.totalSaleAmount = allVariable.totalSaleAmount + data.amount
+                                                                return <h6 key={index}> Item:{data.item}, Qt:{data.netWeight}, Rate:{data.rate},
+                                                                    BillNo:{data.billNo} Other:{data.other}, Amount:{data.amount} </h6>
+                                                            })}
+                                                        </td>
+                                                        <td className='border-end border-dark'>{data.laborBillNumber}</td>
+                                                        <td className='border-end border-dark'>
+
+                                                            {data.receiptInfo.length > 0 ? data.receiptInfo.map((data, index) => {
+                                                                allVariable.recAmountTotal = allVariable.recAmountTotal + parseInt(data.amount)
+                                                                allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
+                                                                return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
+                                                            }) : 0}
+
+                                                        </td>
+                                                        <td className='border-end border-dark'>
+                                                            {data.paymentInfo.length > 0 ? data.paymentInfo.map((data, index) => {
+                                                                allVariable.payAmountTotal = allVariable.payAmountTotal + parseInt(data.amount)
+                                                                allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
+                                                                return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
+                                                            }) : 0}
+                                                        </td>
+
+
+                                                        <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                        <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.laborLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount))}</td>
+                                                        <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
+                                                        {/* hidden re-initialise amount here */}
+                                                        <td className='d-none'>{amount = 0} {allVariable.payAmountTotal = 0} {allVariable.recAmountTotal = 0}</td></tr>)
 
                                                 })
                                             }
@@ -261,7 +252,7 @@ const AllLaborEntry = () => {
                                 <tr>
                                     <th colSpan={3}> Number Of Entries:{allVariable.totalEntries}</th>
                                     <th> T.Labor Amount: {allVariable.totalSaleAmount} Rs.</th>
-                                     <th colSpan={2}> T.Receive: {allVariable.totalRecAmount} Rs.</th>
+                                    <th colSpan={2}> T.Receive: {allVariable.totalRecAmount} Rs.</th>
                                     <th colSpan={2}> T.Pay: {allVariable.totalPayAmount} Rs.</th>
                                     <th colSpan={2}> T.Discount: {allVariable.totalDisAmount} Rs.</th>
                                 </tr>

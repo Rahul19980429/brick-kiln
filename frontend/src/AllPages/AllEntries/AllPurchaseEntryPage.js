@@ -153,7 +153,7 @@ const AllPurchaseEntry = () => {
                                             date = new Date(data.date)
                                             allVariable.totalEntries = allVariable.totalEntries + 1
                                             allVariable.totalDisAmount = allVariable.totalDisAmount + parseInt(data.discountInfo.amount)
-                                            return (<tr key={data._id}>                                                <><td className='border-end border-dark'>{index + 1}</td>
+                                            return (<tr key={data._id}><><td className='border-end border-dark'>{index + 1}</td>
                                                 <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
                                                 <td className='border-end border-dark'>{Math.floor(data.supplierLastBalance)}</td>
                                                 <td className='border-end border-dark'>
@@ -166,29 +166,21 @@ const AllPurchaseEntry = () => {
                                                 </td>
                                                 <td className='border-end border-dark'>{data.purchaseBillNumber}</td>
                                                 <td className='border-end border-dark'>
-                                                    <table>
-                                                        <tbody>
-                                                            {data.receiptInfo.length > 0 ? data.receiptInfo.map((data, index) => {
-                                                                allVariable.recAmountTotal = allVariable.recAmountTotal + parseInt(data.amount)
-                                                                allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
-                                                                return <tr key={index}>
-                                                                    <td>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</td>
-                                                                </tr>
-                                                            }) : 0}
-                                                        </tbody>
-                                                    </table>
+
+                                                    {data.receiptInfo.length > 0 ? data.receiptInfo.map((data, index) => {
+                                                        allVariable.recAmountTotal = allVariable.recAmountTotal + parseInt(data.amount)
+                                                        allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
+                                                        return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
+                                                    }) : 0}
+
                                                 </td>
-                                                <td className='border-end border-dark'><table>
-                                                    <tbody>
-                                                        {data.paymentInfo.length > 0 ? data.paymentInfo.map((data, index) => {
-                                                            allVariable.payAmountTotal = allVariable.payAmountTotal + parseInt(data.amount)
-                                                            allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
-                                                            return <tr key={index}>
-                                                                <td>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</td>
-                                                            </tr>
-                                                        }) : 0}
-                                                    </tbody>
-                                                </table></td>
+                                                <td className='border-end border-dark'>
+                                                    {data.paymentInfo.length > 0 ? data.paymentInfo.map((data, index) => {
+                                                        allVariable.payAmountTotal = allVariable.payAmountTotal + parseInt(data.amount)
+                                                        allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
+                                                        return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
+                                                    }) : 0}
+                                                </td>
 
 
                                                 <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
@@ -223,29 +215,22 @@ const AllPurchaseEntry = () => {
                                                         </td>
                                                         <td className='border-end border-dark'>{data.purchaseBillNumber}</td>
                                                         <td className='border-end border-dark'>
-                                                            <table>
-                                                                <tbody>
-                                                                    {data.receiptInfo.length > 0 ? data.receiptInfo.map((data, index) => {
-                                                                        allVariable.recAmountTotal = allVariable.recAmountTotal + parseInt(data.amount)
-                                                                        allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
-                                                                        return <tr key={index}>
-                                                                            <td>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</td>
-                                                                        </tr>
-                                                                    }) : 0}
-                                                                </tbody>
-                                                            </table>
+
+                                                            {data.receiptInfo.length > 0 ? data.receiptInfo.map((data, index) => {
+                                                                allVariable.recAmountTotal = allVariable.recAmountTotal + parseInt(data.amount)
+                                                                allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
+                                                                return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
+                                                            }) : 0}
+
                                                         </td>
-                                                        <td className='border-end border-dark'><table>
-                                                            <tbody>
-                                                                {data.paymentInfo.length > 0 ? data.paymentInfo.map((data, index) => {
-                                                                    allVariable.payAmountTotal = allVariable.payAmountTotal + parseInt(data.amount)
-                                                                    allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
-                                                                    return <tr key={index}>
-                                                                        <td>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</td>
-                                                                    </tr>
-                                                                }) : 0}
-                                                            </tbody>
-                                                        </table></td>
+                                                        <td className='border-end border-dark'>
+                                                            {data.paymentInfo.length > 0 ? data.paymentInfo.map((data, index) => {
+                                                                allVariable.payAmountTotal = allVariable.payAmountTotal + parseInt(data.amount)
+                                                                allVariable.totalPayAmount = allVariable.totalPayAmount + parseInt(data.amount)
+                                                                return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
+                                                            }) : 0}
+                                                        </td>
+
 
 
                                                         <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
