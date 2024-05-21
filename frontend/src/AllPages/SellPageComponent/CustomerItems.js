@@ -169,13 +169,13 @@ const CustomerItems = (props) => {
                                 <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
                             </div>
 
-                            <div className='px-1 col-lg-1 col-md-2 col-9 '>
+                            <div className='px-1 col-lg-2 col-md-2 col-9 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Item' />
                                 </div>
                             </div>
-                            <div className='px-1 col-lg-1 col-md-2 col-3 '>
+                            <div className='px-1 col-lg-2 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>QTY/WT</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.Quantity} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Quantity" name="Quantity" placeholder='Qty/Wt' />
@@ -220,7 +220,7 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
                             <hr className='border border-warning border-2 d-block d-lg-none' />
-                            <div className='px-1 col-lg-1 col col-md-4 '>
+                            <div className='px-1 col-lg-2 col col-md-4 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
                                     <input autoComplete='off' type="none" className="form-control" id="Amount" name="Amount" value={itemInput.Amount} readOnly />
@@ -233,16 +233,12 @@ const CustomerItems = (props) => {
                                 </div>
                             </div> */}
 
-                            <div className='col-lg-1 d-flex d-lg-block align-items-center'>
-                                <button className={`btn btn-${btnColor} mt-lg-4 me-2 btn-sm px-1`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.RefNo ? true : false}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
-                                        <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                                    </svg>
+                            <div className='col-lg-2 d-flex d-lg-block align-items-center'>
+                                <button className={`btn btn-${btnColor} mt-lg-4 me-2 btn-sm fw-bold`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.RefNo ? true : false}>
+                                   Add
                                 </button>
-                                <button className={`btn btn-${btnColor} mt-lg-4 btn-sm px-1`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.RefNo && !itemInput.Other ? true : false} onClick={clearForm}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
-                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                                </svg></button>
+                                <button className={`btn btn-${btnColor} mt-lg-4 btn-sm fw-bold`} disabled={!itemName.iname && !itemInput.Quantity && !itemInput.Rate && !itemInput.RefNo && !itemInput.Other ? true : false} onClick={clearForm}>
+                                    Clear</button>
                             </div>
                         </div>
                     </form>

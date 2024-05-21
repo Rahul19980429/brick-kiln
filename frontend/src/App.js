@@ -18,7 +18,7 @@ import ItemSaleNumbersCheck from "./AllPages/AllEntries/ItemSaleNumbersCheck";
 import BankTransectionEntry from "./AllPages/AllEntries/BankTransectionPage";
 import FuelCheck from "./AllPages/AllEntries/FuelEntryPage";
 import BalanceCheckPage from "./AllPages/BalanceCheckPage";
-// import Setting from "./AllPages/Setting";
+import Setting from "./AllPages/Setting";
 
 
 
@@ -70,7 +70,7 @@ function App() {
 
 
             {/* <Setting/> */}
-            {/* <Route exact path="/setting" element={<Setting />} /> */}
+            <Route exact path="/setting" element={<Setting />} />
             <Route path="*" element={<Navigate to="/login" />} />
 
             <Route exact path='/login' element={<LogIn />} />

@@ -301,7 +301,7 @@ const LaborPage = ({ btnColor }) => {
         </div>
 
         {/* part three show customer's add items data and list component */}
-        {selectedCustomer.category !== 'production-labor' ?
+        {selectedCustomer.category === 'production-labor' ?
           <PCustomerItems btnColor={btnColor} initalvalues={{ itemInput, setItemInput }} />
           : <SCustomerItems btnColor={btnColor} initalvalues={{ salaryInput, setSalaryInput }} />}
 

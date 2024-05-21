@@ -107,7 +107,7 @@ const BillPrint = (props) => {
 
                                     <tfoot>
                                         <tr className='table-dark text-start'>
-                                            <th scope="col" colSpan={3}>T.Item: {billitems.length}</th>
+                                            <th scope="col" colSpan={billitems.length > 0 && billitems[0].item?3:4}>T.Item: {billitems.length}</th>
                                             <th scope="col" colSpan={4}>T.Amount: {finalAmount}</th>
                                         </tr>
                                     </tfoot>

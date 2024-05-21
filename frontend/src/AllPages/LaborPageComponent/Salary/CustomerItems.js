@@ -196,7 +196,7 @@ const CustomerItems = (props) => {
                                     <input value={salaryInput.NumberOfDays} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="NumberOfDays" name="NumberOfDays" placeholder='' />
                                 </div>
                             </div>
-                            <div className='col-lg-1 col col-md-4 px-1'>
+                            <div className='col-lg-2 col col-md-4 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
                                     <input autoComplete='off' type="none" className="form-control" id="Amount" name="Amount" value={salaryInput.Amount} readOnly />

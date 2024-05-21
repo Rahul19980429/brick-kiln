@@ -151,7 +151,7 @@ const CustomerItems = (props) => {
                                 <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
                             </div>
 
-                            <div className='col-lg-1 col-md-2 col-9 px-1'>
+                            <div className='col-lg-2 col-md-2 col-9 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />

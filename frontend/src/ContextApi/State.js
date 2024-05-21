@@ -43,7 +43,7 @@ const States = (props) => {
   const [billNumberForNextBtn, setBillNumberForNextBtn] = useState(0)
 
 
-  
+
 
 
 
@@ -313,7 +313,7 @@ const States = (props) => {
   }
 
   // api call for creating new Purchase bill
-  const ADDNewPurchaseBill = async (supplier_id,purchaseBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,supplierLastBalance,balance) => {
+  const ADDNewPurchaseBill = async (supplier_id, purchaseBillNumber, itemsArray, receiptInfo, paymentInfo, discountInfo, supplierLastBalance, balance) => {
     setSpinner(true)
     // console.log(supplier_id,purchaseBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,supplierLastBalance,balance)
     const response = await fetch(`${host}/api/bill/createPurchaseBill`, {
@@ -323,7 +323,7 @@ const States = (props) => {
         'Content-Type': 'application/json',
         'auth-token': localStorage.getItem('Jwt_token')
       },
-      body: JSON.stringify({supplier_id,purchaseBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,supplierLastBalance,balance})
+      body: JSON.stringify({ supplier_id, purchaseBillNumber, itemsArray, receiptInfo, paymentInfo, discountInfo, supplierLastBalance, balance })
 
     });
     let data = await response.json();
@@ -389,134 +389,134 @@ const States = (props) => {
     // }
   }
 
-// api call for creating new transport bill
-const ADDNewTransportBill = async (transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,fuel,transportLastBalance,balance) => {
-  setSpinner(true)
-  // console.log(transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,transportLastBalance,balance)
-  const response = await fetch(`${host}/api/bill/createTransportBill`, {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'auth-token': localStorage.getItem('Jwt_token')
-    },
-    body: JSON.stringify({transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,fuel, transportLastBalance,balance})
+  // api call for creating new transport bill
+  const ADDNewTransportBill = async (transport_id, transportBillNumber, itemsArray, receiptInfo, paymentInfo, discountInfo, fuel, transportLastBalance, balance) => {
+    setSpinner(true)
+    // console.log(transport_id,transportBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,transportLastBalance,balance)
+    const response = await fetch(`${host}/api/bill/createTransportBill`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+      body: JSON.stringify({ transport_id, transportBillNumber, itemsArray, receiptInfo, paymentInfo, discountInfo, fuel, transportLastBalance, balance })
 
-  });
-  let data = await response.json();
-  if (data.success) {
-    getAllTransportBill();
-    getAllMember();
-    setError(data.msg)
-    setSpinner(false)
+    });
+    let data = await response.json();
+    if (data.success) {
+      getAllTransportBill();
+      getAllMember();
+      setError(data.msg)
+      setSpinner(false)
 
-  }
-  else {
-    setError(data)
-    setSpinner(false)
-  }
-}
-
- // delete Transport Bill
- const DeleteTransportBill = async (billId) => {
-  setSpinner(true)
-  const response = await fetch(`${host}/api/bill/deleteTransportBill/${billId}`, {
-    method: 'DELETE',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'auth-token': localStorage.getItem('Jwt_token')
-    },
-  });
-  let data = await response.json();
-  if (data.success) {
-    getAllTransportBill();
-    setError(data.msg);
-    setSpinner(false)
-  }
-  else {
-    setError(data)
-    setSpinner(false)
+    }
+    else {
+      setError(data)
+      setSpinner(false)
+    }
   }
 
-}
-
-// api call to get all Labor bill
-const getAllLaborBill = async () => {
-  setSpinner(true)
-  const response = await fetch(`${host}/api/bill/getLaborBill`, {
-    method: 'GET',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'auth-token': localStorage.getItem('Jwt_token')
-    },
-  });
-  let data = await response.json();
-  if (data.success) {
-    let number = data.result.length > 0 ? data.result[(data.result.length) - 1].laborBillNumber + 1 : 1;
-    setSellBill({ sellBillData: data.result, SellBillNumber: number })
-    setBillNumberForNextBtn(number)
-    setSpinner(false)
-    return data;
-  }
-  else {
-    setError(data)
-    setSpinner(false)
-  }
-}
-
-// api call for creating new Labor bill
-const ADDNewLaborBill = async (labor_id,laborBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,laborLastBalance,balance) => {
-  setSpinner(true)
-  // console.log(labor_id,laborBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,laborLastBalance,balance)
-  const response = await fetch(`${host}/api/bill/createLaborBill`, {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'auth-token': localStorage.getItem('Jwt_token')
-    },
-    body: JSON.stringify({labor_id,laborBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo, laborLastBalance,balance})
-
-  });
-  let data = await response.json();
-  if (data.success) {
-    getAllLaborBill();
-    getAllMember();
-    setError(data.msg)
-    setSpinner(false)
+  // delete Transport Bill
+  const DeleteTransportBill = async (billId) => {
+    setSpinner(true)
+    const response = await fetch(`${host}/api/bill/deleteTransportBill/${billId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+    });
+    let data = await response.json();
+    if (data.success) {
+      getAllTransportBill();
+      setError(data.msg);
+      setSpinner(false)
+    }
+    else {
+      setError(data)
+      setSpinner(false)
+    }
 
   }
-  else {
-    setError(data)
-    setSpinner(false)
-  }
-}
 
- // delete Labor Bill
- const DeleteLaborBill = async (billId) => {
-  setSpinner(true)
-  const response = await fetch(`${host}/api/bill/deleteLaborBill/${billId}`, {
-    method: 'DELETE',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'auth-token': localStorage.getItem('Jwt_token')
-    },
-  });
-  let data = await response.json();
-  if (data.success) {
-    getAllLaborBill();
-    setError(data.msg);
-    setSpinner(false)
-  }
-  else {
-    setError(data)
-    setSpinner(false)
+  // api call to get all Labor bill
+  const getAllLaborBill = async () => {
+    setSpinner(true)
+    const response = await fetch(`${host}/api/bill/getLaborBill`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+    });
+    let data = await response.json();
+    if (data.success) {
+      let number = data.result.length > 0 ? data.result[(data.result.length) - 1].laborBillNumber + 1 : 1;
+      setSellBill({ sellBillData: data.result, SellBillNumber: number })
+      setBillNumberForNextBtn(number)
+      setSpinner(false)
+      return data;
+    }
+    else {
+      setError(data)
+      setSpinner(false)
+    }
   }
 
-}
+  // api call for creating new Labor bill
+  const ADDNewLaborBill = async (labor_id, laborBillNumber, itemsArray, receiptInfo, paymentInfo, discountInfo, laborLastBalance, balance) => {
+    setSpinner(true)
+    // console.log(labor_id,laborBillNumber,itemsArray,receiptInfo,paymentInfo,discountInfo,laborLastBalance,balance)
+    const response = await fetch(`${host}/api/bill/createLaborBill`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+      body: JSON.stringify({ labor_id, laborBillNumber, itemsArray, receiptInfo, paymentInfo, discountInfo, laborLastBalance, balance })
+
+    });
+    let data = await response.json();
+    if (data.success) {
+      getAllLaborBill();
+      getAllMember();
+      setError(data.msg)
+      setSpinner(false)
+
+    }
+    else {
+      setError(data)
+      setSpinner(false)
+    }
+  }
+
+  // delete Labor Bill
+  const DeleteLaborBill = async (billId) => {
+    setSpinner(true)
+    const response = await fetch(`${host}/api/bill/deleteLaborBill/${billId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+    });
+    let data = await response.json();
+    if (data.success) {
+      getAllLaborBill();
+      setError(data.msg);
+      setSpinner(false)
+    }
+    else {
+      setError(data)
+      setSpinner(false)
+    }
+
+  }
 
 
 
@@ -542,23 +542,41 @@ const ADDNewLaborBill = async (labor_id,laborBillNumber,itemsArray,receiptInfo,p
   }
 
 
+  // Get user By Token
+  const GetSingleUser = async () => {
+    const response = await fetch(`${host}/api/auth/getUser`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+    });
+    let data = await response.json();
+    if (data.success) {
+      return data.result
+    }
+  }
+
+
 
   return (
     <context.Provider value={{
-     
-      members,items,customerItems, finalAmount, recAmount,
+
+      members, items, customerItems, finalAmount, recAmount,
       payAmount, selectedCustomer, itemName,
-      sellBill, billNumberForNextBtn,discount,spinner, error,
+      sellBill, billNumberForNextBtn, discount, spinner, error,
       setItems, getAllItem, AddNewItem, UpdateItem,
-      setMembers, getAllMember, AddNewMember, UpdateMember,DeleteMember,
+      setMembers, getAllMember, AddNewMember, UpdateMember, DeleteMember,
       setDiscount, setSellBill, setItemName,
       setSelectedCustomer, setPayAmount, setRecAmount,
       setFinalAmount, setCustomerItems,
       getAllSellBill, ADDNewSellBill, DeleteSaleBill,
       getAllPurchaseBill, ADDNewPurchaseBill, DeletePurchaseBill,
-      getAllTransportBill,ADDNewTransportBill,DeleteTransportBill,
-      getAllLaborBill,ADDNewLaborBill,DeleteLaborBill,
+      getAllTransportBill, ADDNewTransportBill, DeleteTransportBill,
+      getAllLaborBill, ADDNewLaborBill, DeleteLaborBill,
       setError, logInUser, logOutClick,
+      GetSingleUser
 
     }}>
 

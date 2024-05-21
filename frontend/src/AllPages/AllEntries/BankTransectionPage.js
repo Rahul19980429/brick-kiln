@@ -55,7 +55,7 @@ const BankTransectionEntry = () => {
     }
     const RefreshBtn = () => {
         setSearchInput({ textSearch: '', from: '', to: '' })
-        getAllSellBill().then((data) => setBankTransection(data.result))
+        getAllSellBill().then((data) => setBankTransection(data.result.filter((dataa)=>dataa.receiptInfo.find((dataaa)=>dataaa.mode==='online'))))
 
     }
 
@@ -127,8 +127,8 @@ const BankTransectionEntry = () => {
                             <thead className='sticky-top'>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Receive </th>
-                                    <th scope="col">Transfer </th>
+                                    <th scope="col">Receive From </th>
+                                    <th scope="col">Transfer In </th>
                                     {/* <th scope="col">Amount</th> */}
                                     <th scope="col">Bill No.</th>
                                     <th scope="col">Date</th>
@@ -151,7 +151,7 @@ const BankTransectionEntry = () => {
                                                     <td className='border-end border-dark'>
                                                         <table>
                                                             <tbody>
-                                                            {data.receiptInfo.length>0? data.receiptInfo.map((data,index) => {
+                                                            {data.receiptInfo.length>0? data.receiptInfo.filter((bankData)=>bankData.mode==='online').map((data,index) => {
                                                                 allVariable.recAmountTotal=allVariable.recAmountTotal+parseInt(data.amount)
                                                                 allVariable.totalRecAmount = allVariable.totalRecAmount + parseInt(data.amount)
                                                                 return <tr key={index}>

@@ -126,7 +126,35 @@ const ItemSaleNumbersCheck = () => {
                             </tbody>
                         </table>
                     </div>
+                    <div className='col-4 py-2'>
+                        <h6 className='text-center bg-dark text-white py-2 mb-0'>Item's Labor Production Detail</h6>
+                        <table className="table table-success table-striped mb-0" >
+                            <thead className='sticky-top'>
+                                <tr>
+                                    <th scope="col" className='border-end border-dark'>#</th>
+                                    <th scope="col" className='border-end border-dark'>Item Name</th>
+                                    <th scope="col" className='border-end border-dark'>Total Item Production</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                                {itemData.length > 0 ?
+                                    itemData.filter((item) => item.category === 'sale').map((data, index) => {
+                                        SalesNumbers = laborBillData ? laborBillData.length > 0 ? itemProductionNumbers(data.itemname) : '' : ''
+                                        return (
+                                            <tr key={data._id}  >
+                                                <td className='border-end border-dark'>{index + 1}</td>
+                                                <td className='border-end border-dark'>{data.itemname}</td>
+                                                <td className='border-end border-dark'>{SalesNumbers.TProduction}</td>
+                                            </tr>
+                                        )
+
+                                    })
+
+                                    : <tr><td colSpan={4} className='text-center'>Data Will Display Here </td></tr>}
+                            </tbody>
+                        </table>
+                    </div>
                     <div className='col-4 py-2'>
                         <h6 className='text-center bg-dark text-white py-2 mb-0'>Item's Purchase Detail</h6>
                         <table className="table table-success table-striped mb-0" >
@@ -159,35 +187,7 @@ const ItemSaleNumbersCheck = () => {
                         </table>
                     </div>
 
-                    <div className='col-4 py-2'>
-                        <h6 className='text-center bg-dark text-white py-2 mb-0'>Item's Labor Production Detail</h6>
-                        <table className="table table-success table-striped mb-0" >
-                            <thead className='sticky-top'>
-                                <tr>
-                                    <th scope="col" className='border-end border-dark'>#</th>
-                                    <th scope="col" className='border-end border-dark'>Item Name</th>
-                                    <th scope="col" className='border-end border-dark'>Total Item Production</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                {itemData.length > 0 ?
-                                    itemData.filter((item) => item.category === 'sale').map((data, index) => {
-                                        SalesNumbers = laborBillData ? laborBillData.length > 0 ? itemProductionNumbers(data.itemname) : '' : ''
-                                        return (
-                                            <tr key={data._id}  >
-                                                <td className='border-end border-dark'>{index + 1}</td>
-                                                <td className='border-end border-dark'>{data.itemname}</td>
-                                                <td className='border-end border-dark'>{SalesNumbers.TProduction}</td>
-                                            </tr>
-                                        )
-
-                                    })
-
-                                    : <tr><td colSpan={4} className='text-center'>Data Will Display Here </td></tr>}
-                            </tbody>
-                        </table>
-                    </div>
+                   
                 </div>
 
             </div> : ''

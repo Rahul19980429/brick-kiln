@@ -149,7 +149,7 @@ const TransportItems = (props) => {
                                 <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
                             </div>
 
-                            <div className='col-lg-1 col-md-2 col-9 px-1'>
+                            <div className='col-lg-2 col-md-2 col-9 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />
@@ -180,7 +180,7 @@ const TransportItems = (props) => {
                                 </div>
                             </div>
                             <hr className='border border-warning border-2 d-block d-lg-none' />
-                            <div className='col-lg-1 col col-md-4 px-1'>
+                            <div className='col-lg-2 col col-md-4 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
                                     <input autoComplete='off' type="none" className="form-control"id="Amount" name="Amount" value={itemInput.Amount} readOnly />

@@ -50,11 +50,11 @@ const FuelEntry = () => {
             <div className='container-fluid'>
                 <div className='row mt-3'>
                    
-                    <div className='col-lg-10 col-12'>
+                    <div className='col-lg-11 col-12'>
                         <h5 className='text-center bg-dark text-white mb-0 py-2'>Fuel Entry</h5>
                     </div>
                    
-                    <div className="col-lg-2 d-flex gap-3">
+                    <div className="col-lg-1 d-flex gap-3">
                         
                         <ReactToPrint
                             trigger={() => {
@@ -102,13 +102,14 @@ const FuelEntry = () => {
                                 }
                             </tbody>
                         </table>
+                        <h6 className='text-center bg-dark text-white mb-0 py-2'>Total Purchase Fuel: {allVariable.totalPurchasefuel} ltr </h6>
                     </div>
 
                     <div className='col-6'>
                         <table className="table table-success table-striped mb-0" >
                             <thead className='sticky-top'>
                                 <tr>
-                                    <th scope="col">PROVIDE</th>
+                                    <th scope="col">TRANSPORT</th>
                                     <th scope="col">DISTRIBUTION FUEL </th>
                                     <th scope="col">BILL NO. </th>
                                     <th scope="col">DATE</th>
@@ -132,9 +133,7 @@ const FuelEntry = () => {
                                 }
                             </tbody>
                         </table>
-                    </div>
-                    <div className='col-lg-12 mt-1'>
-                    <h5 className='text-center bg-dark text-white mb-0 py-2'>{allVariable.totalPurchasefuel} - {allVariable.totalDistributionFuel} = {allVariable.totalPurchasefuel-allVariable.totalDistributionFuel} ltr Fuel Left InStock</h5>
+                        <h6 className='text-center bg-dark text-white mb-0 py-2'>Total Provide Fuel: {allVariable.totalDistributionFuel} ltr</h6>
                     </div>
                 </div>
             </div> : ''
