@@ -3,7 +3,6 @@ import context from '../../ContextApi/Context';
 import { useNavigate} from 'react-router-dom';
 const Form = () => {
     const navigate = useNavigate();
-    let result;
     const a = useContext(context);
     const{logInUser,error,setError}=a;
 
@@ -55,19 +54,20 @@ const Form = () => {
     }
 
     // for login or submit
-    const submit=async(e)=>{
+    const submit=(e)=>{
         e.preventDefault();
-        result = await logInUser(input.contact,input.password);
-        if(result.success){
-            localStorage.setItem('Jwt_token',result.token)
-            localStorage.setItem('user_activeStatus',result.user.activeStatus)
-            localStorage.setItem('user_name',result.user.name)
-            navigate('/')
-        }
-        else{
-            setError(result)
-            navigate('/login')
-        }
+       logInUser(input.contact,input.password).then((result)=>{
+                   if(result.success){
+               localStorage.setItem('Jwt_token',result.token)
+               localStorage.setItem('user_activeStatus',result.user.activeStatus)
+               localStorage.setItem('user_name',result.user.name)
+               navigate('/')
+           }
+           else{
+               setError(result)
+               navigate('/login')
+           }
+       })
 
     }
     return (

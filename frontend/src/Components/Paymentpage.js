@@ -34,7 +34,7 @@ const PaymentCashpage = (props) => {
     // close modal
     document.getElementById('paymentCloseBtn').click()
 
-  }
+  } 
   const clearState = () => {
     setPayment({ amount: '', mode: 'cash', naration: '', bankName: '' });
   }
@@ -87,7 +87,7 @@ const PaymentCashpage = (props) => {
 
               </div>
               <div className="modal-footer">
-                <button type="submit" className={`btn btn-${btnColor}`}>save</button>
+                <button type="submit" className={`btn btn-${btnColor}`}  disabled={payment.amount === '' || (payment.mode==='online' && payment.bankName==='') ? true : false}>save</button>
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => clearState()}>cancel</button>
 
               </div>

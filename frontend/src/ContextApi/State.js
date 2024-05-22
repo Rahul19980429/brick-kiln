@@ -519,7 +519,7 @@ const States = (props) => {
   }
 
 
-
+  // user log in 
   const logInUser = async (contact, password) => {
     const response = await fetch(`${host}/api/auth/loginUser`, {
       method: 'POST',
@@ -530,7 +530,6 @@ const States = (props) => {
       body: JSON.stringify({ contact, password })
     });
     let data = await response.json();
-
     return data;
   }
   // Log out functionality
@@ -542,7 +541,7 @@ const States = (props) => {
   }
 
 
-  // Get user By Token
+  // Get user By Token 
   const GetSingleUser = async () => {
     const response = await fetch(`${host}/api/auth/getUser`, {
       method: 'GET',
@@ -558,7 +557,48 @@ const States = (props) => {
     }
   }
 
+  // user password update with old password
+  const UpdateUser = async (userdata) => {
+    const { _id, name, contact, address, oldPassword, newPassword } = userdata;
+    const response = await fetch(`${host}/api/auth/editUser`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+      body: JSON.stringify({ _id, name, contact, address, oldPassword, newPassword })
+    });
+    let data = await response.json();
+    if (data.success) {
+      setError(data.msg)
+      return data.done
+    }
+    else {
+      setError(data)
+    }
+  }
 
+  // user Reset Action perform
+  const ResetAction = async (password,deleteType) => {
+    const response = await fetch(`${host}/api/auth/resetApplication`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+      body: JSON.stringify({ password,deleteType })
+    });
+    let data = await response.json();
+    if (data.success) {
+      setError(data.msg)
+      return data;
+    }
+    else{
+      setError(data.error)
+    }
+  }
 
   return (
     <context.Provider value={{
@@ -576,7 +616,8 @@ const States = (props) => {
       getAllTransportBill, ADDNewTransportBill, DeleteTransportBill,
       getAllLaborBill, ADDNewLaborBill, DeleteLaborBill,
       setError, logInUser, logOutClick,
-      GetSingleUser
+      GetSingleUser, UpdateUser,
+      ResetAction
 
     }}>
 
