@@ -47,7 +47,7 @@ const FuelEntry = () => {
 
     return (
         localStorage.getItem('Jwt_token') && localStorage.getItem('user_activeStatus') === 'true' ?
-            <div className='container-fluid'>
+            <div className='container'>
                 <div className='row mt-3'>
                    
                     <div className='col-lg-11 col-12'>

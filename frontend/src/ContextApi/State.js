@@ -600,6 +600,30 @@ const States = (props) => {
     }
   }
 
+  // get All bills 
+  // api call to gel all customers
+  const getAllBills = async () => {
+    // setSpinner(true)
+    const response = await fetch(`${host}/api/auth/getAllBill`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+
+    });
+    let data = await response.json();
+    if (data.success) {
+      return data.Final
+    }
+    else {
+      setError(data)
+    }
+
+
+  }
+
   return (
     <context.Provider value={{
 
@@ -617,7 +641,9 @@ const States = (props) => {
       getAllLaborBill, ADDNewLaborBill, DeleteLaborBill,
       setError, logInUser, logOutClick,
       GetSingleUser, UpdateUser,
-      ResetAction
+      ResetAction,
+      getAllBills
+      
 
     }}>
 

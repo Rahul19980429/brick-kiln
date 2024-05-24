@@ -86,7 +86,7 @@ const ItemSaleNumbersCheck = () => {
 
     return (
         localStorage.getItem('Jwt_token') && localStorage.getItem('user_activeStatus') === 'true' ?
-            <div className='container-fluid'>
+            <div className='container'>
                 <div className='row mt-3'>
                     {/* text */}
                     <div className='col-lg-13 col-12'>

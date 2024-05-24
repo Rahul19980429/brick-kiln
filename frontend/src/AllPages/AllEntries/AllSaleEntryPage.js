@@ -182,8 +182,8 @@ const AllSaleEntry = () => {
                                                             return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
                                                         }) : 0}
                                                     </td>
-                                                    <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(amount) + parseFloat(data.customerLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) - parseFloat(data.discountInfo.amount))}</td>
+                                                    <td className='border-end border-dark'>{data.discountInfo.amount ? data.discountInfo.amount : 0} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(amount) + parseFloat(data.customerLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) - parseFloat(data.discountInfo.amount ? data.discountInfo.amount : 0))}</td>
                                                     <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                     {/* hidden re-initialise amount here */}
                                                     <td className='d-none'>{amount = 0} {allVariable.payAmountTotal = 0} {allVariable.recAmountTotal = 0}</td></>
@@ -231,11 +231,12 @@ const AllSaleEntry = () => {
                                                                     return <h6 key={index} className='mb-0'>{data.amount ? data.amount : 0} {data.mode ? data.mode : ''} {data.naration ? data.naration : ''}</h6>
                                                                 }) : 0}
                                                             </td>
-                                                            <td className='border-end border-dark'>{data.discountInfo.amount} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
-                                                            <td className='border-end border-dark'>{Math.floor(parseFloat(amount) + parseFloat(data.customerLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) - parseFloat(data.discountInfo.amount))}</td>
+                                                            <td className='border-end border-dark'>{data.discountInfo.amount ? data.discountInfo.amount : 0} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
+                                                            <td className='border-end border-dark'>{Math.floor(parseFloat(amount) + parseFloat(data.customerLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) - parseFloat(data.discountInfo.amount ? data.discountInfo.amount : 0))}</td>
                                                             <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                             {/* hidden re-initialise amount here */}
                                                             <td className='d-none'>{amount = 0} {allVariable.payAmountTotal = 0} {allVariable.recAmountTotal = 0}</td></>
+
 
 
                                                     </tr>)

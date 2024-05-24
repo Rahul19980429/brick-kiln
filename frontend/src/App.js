@@ -15,7 +15,8 @@ import AllPurchaseEntry from "./AllPages/AllEntries/AllPurchaseEntryPage";
 import AllTransportEntry from "./AllPages/AllEntries/AllTransportEntryPage";
 import AllLaborEntry from "./AllPages/AllEntries/AllLaborEntryPage";
 import ItemSaleNumbersCheck from "./AllPages/AllEntries/ItemSaleNumbersCheck";
-import BankTransectionEntry from "./AllPages/AllEntries/BankTransectionPage";
+import ReceiveBankTransection from "./AllPages/AllEntries/ReceiveBankTransection";
+import PaymentBankTransection from "./AllPages/AllEntries/PaymentBankTransection";
 import FuelCheck from "./AllPages/AllEntries/FuelEntryPage";
 import BalanceCheckPage from "./AllPages/BalanceCheckPage";
 import Setting from "./AllPages/Setting";
@@ -60,8 +61,10 @@ function App() {
             <Route exact path="/transport-bill-check" element={<AllTransportEntry />} />
             {/* <AllLaborEntry/> */}
             <Route exact path="/labor-bill-check" element={<AllLaborEntry />} />
-            {/* <BankTransectionEntry/> */}
-            <Route exact path="/bank-transection" element={<BankTransectionEntry />} />
+            {/* <ReceiveBankTransection/> */}
+            <Route exact path="/bank-transection-receive" element={<ReceiveBankTransection/>} />
+             {/* <PaymentBankTransection/> */}
+             <Route exact path="/bank-transection-payment" element={<PaymentBankTransection/>} />
             {/* <ItemAddPage/> */}
             <Route exact path="/item-sale-numbers" element={<ItemSaleNumbersCheck />} />
             {/* <FuelCheck/> */}
