@@ -7,7 +7,7 @@ const ItemSaleNumbersCheck = () => {
     let SalesNumbers;
     let navigate = useNavigate();
     const a = useContext(context);
-    const { getAllItem, getAllSellBill, getAllPurchaseBill,getAllLaborBill, setError, logOutClick } = a;
+    const { getAllItem, getAllSellBill, getAllPurchaseBill,getAllLaborBill, setError, logOutClick ,activeStatusUser} = a;
 
     const [itemData, setItemData] = useState([])
     const [saleBillData, setSaleBillData] = useState([])
@@ -69,8 +69,8 @@ const ItemSaleNumbersCheck = () => {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -81,6 +81,7 @@ const ItemSaleNumbersCheck = () => {
             getAllSellBill().then((data) => setSaleBillData(data.result))
             getAllPurchaseBill().then((data) => setPurchaseBillData(data.result))
             getAllLaborBill().then((data) => setLaborBillData(data.result))
+            activeStatusUser()
         }
     }, [])
 

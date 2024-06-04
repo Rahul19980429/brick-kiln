@@ -45,7 +45,7 @@ const Sellpage = ({btnColor}) => {
   const {recAmount,setRecAmount,payAmount,setPayAmount,discount,setDiscount,getAllSellBill, 
         customerItems,setCustomerItems,selectedCustomer,setSelectedCustomer,sellBill,
         setSellBill,ADDNewSellBill,members,billNumberForNextBtn,setItemName,setFinalAmount,
-        DeleteSaleBill, setError, logOutClick, finalAmount, spinner ,
+        DeleteSaleBill, setError, logOutClick, finalAmount, spinner ,activeStatusUser
      } = a;
 
 
@@ -222,14 +222,16 @@ const Sellpage = ({btnColor}) => {
 }
 
   useEffect(() => {
-    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-      if (localStorage.getItem('user_activeStatus') === 'false') {
+    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+      if (localStorage.getItem('user_activeStatus') === false) {
         setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
       }
       logOutClick();
       navigate('/login')
     }
     else {
+      activeStatusUser()
+
       // api call function get all customer
       getAllSellBill()
     

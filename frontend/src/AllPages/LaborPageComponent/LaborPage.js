@@ -40,7 +40,7 @@ const LaborPage = ({ btnColor }) => {
   const { recAmount, setRecAmount, payAmount, setPayAmount, discount, setDiscount, getAllLaborBill,
     customerItems, setCustomerItems, selectedCustomer, setSelectedCustomer, sellBill,
     setSellBill, ADDNewLaborBill, members, billNumberForNextBtn, setItemName, setFinalAmount,
-    DeleteLaborBill, setError, logOutClick, finalAmount, spinner } = a;
+    DeleteLaborBill, setError, logOutClick, finalAmount, spinner ,activeStatusUser} = a;
 
   //  save btn click function
   const billSaveBtn = () => {
@@ -209,14 +209,15 @@ const LaborPage = ({ btnColor }) => {
 
   }
   useEffect(() => {
-    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-      if (localStorage.getItem('user_activeStatus') === 'false') {
+    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+      if (localStorage.getItem('user_activeStatus') === false) {
         setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
       }
       logOutClick();
       navigate('/login')
     }
     else {
+      activeStatusUser()
       // api call function get all customer
       getAllLaborBill()
 

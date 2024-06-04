@@ -21,7 +21,7 @@ const AllPurchaseEntry = () => {
 
     }
     const a = useContext(context);
-    const { getAllTransportBill, members, getAllMember, setError, logOutClick, spinner } = a;
+    const { getAllTransportBill, members, getAllMember, setError, logOutClick, spinner,activeStatusUser } = a;
 
     // useState 
     const [transportBill, setTransportBill] = useState([])
@@ -65,8 +65,8 @@ const AllPurchaseEntry = () => {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -75,6 +75,7 @@ const AllPurchaseEntry = () => {
         else {
             getAllTransportBill().then((data) => setTransportBill(data.result))
             getAllMember()
+            activeStatusUser()
 
         }
     }, [])

@@ -20,7 +20,7 @@ const AllLaborEntry = () => {
 
     }
     const a = useContext(context);
-    const { getAllLaborBill, members, getAllMember, setError, logOutClick, spinner } = a;
+    const { getAllLaborBill, members, getAllMember, setError, logOutClick, spinner ,activeStatusUser} = a;
 
     // useState 
     const [laborBill, setLaborBill] = useState([])
@@ -64,8 +64,8 @@ const AllLaborEntry = () => {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -74,6 +74,7 @@ const AllLaborEntry = () => {
         else {
             getAllLaborBill().then((data) => setLaborBill(data.result))
             getAllMember()
+            activeStatusUser()
 
         }
     }, [])

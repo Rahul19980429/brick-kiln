@@ -6,7 +6,7 @@ import ResetButtonPressModal from '../Components/ResetButtonPressModal';
 const Setting = () => {
     let navigate = useNavigate();
     const a = useContext(context);
-    const { GetSingleUser, UpdateUser, error, setError, logOutClick } = a;
+    const { GetSingleUser, UpdateUser, error, setError, logOutClick ,activeStatusUser} = a;
     const [user, setUser] = useState('')
     const [restModal, setRestModal] = useState({Title:'',DeleteType:''})
     const [Input, setInput] = useState({ _id: '', name: '', contact: '', address: '', oldPassword: '', newPassword: '' });
@@ -60,8 +60,8 @@ const Setting = () => {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -69,6 +69,7 @@ const Setting = () => {
         }
         else {
             GetSingleUser().then((data) => setUser(data))
+            activeStatusUser()
         }
     }, [])
 

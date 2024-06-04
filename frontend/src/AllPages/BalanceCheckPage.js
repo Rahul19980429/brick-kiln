@@ -7,7 +7,7 @@ const BalanceCheckPage = () => {
     const componentRef = useRef()
     let navigate = useNavigate();
     const a = useContext(context);
-    const { getAllMember, setError, logOutClick } = a;
+    const { getAllMember, setError, logOutClick ,activeStatusUser} = a;
 
     let allVariable = {
         totalEntries: 0,
@@ -59,8 +59,8 @@ const BalanceCheckPage = () => {
 
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -69,6 +69,7 @@ const BalanceCheckPage = () => {
         else {
 
             getAllMember().then((data) => setBalanceData(data.result))
+            activeStatusUser()
         }
     }, [])
 

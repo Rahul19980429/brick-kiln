@@ -71,7 +71,7 @@ const PaymentCashpage = (props) => {
                     </div>
                     <div className='col-6'>
                       <div className="input-group">
-                        <span className="input-group-text">Transfer To</span>
+                        <span className="input-group-text">Transfer From</span>
                         <input type='text' autoComplete='off' onChange={onchangefunction} value={payment.bankName} className="form-control" id='bankName' name='bankName' placeholder='Bank Name' disabled={payment.mode !== 'online' ? true : false} />
                       </div>
 

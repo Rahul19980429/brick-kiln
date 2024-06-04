@@ -21,7 +21,7 @@ const MemberAddPage = () => {
 
     // D-structuring 
     const a = useContext(context);
-    const { members, getAllMember, AddNewMember, DeleteMember, error, setError, logOutClick, UpdateMember } = a;
+    const { members, getAllMember, AddNewMember, DeleteMember, error, setError, logOutClick, UpdateMember,activeStatusUser } = a;
     // useState for inputs
     const [input, setInput] = useState({ name: '', category: 'customer', address: '', contact: '', initialBalance: ''});
     // useState for Member's Balance
@@ -161,8 +161,8 @@ const MemberAddPage = () => {
 
     // useEffect
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -170,6 +170,7 @@ const MemberAddPage = () => {
         }
         else {
             getAllMember().then((data) => setAllmembers(data.result))
+            activeStatusUser()
         }
     }, [handleUseEffect])
 

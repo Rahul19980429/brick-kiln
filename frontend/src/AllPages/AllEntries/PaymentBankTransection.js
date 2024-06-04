@@ -16,7 +16,7 @@ const PaymentBankTransection = () => {
 
     }
     const a = useContext(context);
-    const { getAllBills, members, getAllMember, setError, logOutClick, spinner } = a;
+    const { getAllBills, members, getAllMember, setError, logOutClick, spinner,activeStatusUser } = a;
 
     // useState 
     const [bankTransection, setBankTransection] = useState([])
@@ -65,8 +65,8 @@ const PaymentBankTransection = () => {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -76,6 +76,7 @@ const PaymentBankTransection = () => {
             // getAllSellBill().then((data) => setBankTransection(data.result.filter((dataa)=>dataa.paymentInfo.find((dataaa)=>dataaa.mode==='online'))))
             getAllMember()
             getAllBills().then((final) => setBankTransection(final.filter((dataa) => dataa.paymentInfo.find((dataaa) => dataaa.mode === 'online')).sort((a, b) => setDateFunction(a.date) - setDateFunction(b.date))))
+            activeStatusUser()
 
         }
     }, [])
@@ -134,8 +135,8 @@ const PaymentBankTransection = () => {
                             <thead className='sticky-top'>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Receive From </th>
                                     <th scope="col">Transfer To </th>
+                                    <th scope="col">Payment From </th>
                                     {/* <th scope="col">Amount</th> */}
                                     <th scope="col">Bill No.</th>
                                     <th scope="col">Date</th>
@@ -154,6 +155,8 @@ const PaymentBankTransection = () => {
                                             return (<tr key={data._id}>
 
                                                 <><td className='border-end border-dark'>{index + 1}</td>
+                                                    
+                                                    <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
                                                     <td className='border-end border-dark'>
                                                         <table>
                                                             <tbody>
@@ -167,7 +170,6 @@ const PaymentBankTransection = () => {
                                                             </tbody>
                                                         </table>
                                                     </td>
-                                                    <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
                                                     {data.sellBillNumber ? <td className='border-end border-dark'>{data.sellBillNumber} sale bill</td> : ''}
                                                     {data.purchaseBillNumber ? <td className='border-end border-dark'>{data.purchaseBillNumber} purchase bill</td> : ''}
                                                     {data.transportBillNumber ? <td className='border-end border-dark'>{data.transportBillNumber} transport bill</td> : ''}
@@ -192,6 +194,7 @@ const PaymentBankTransection = () => {
                                                     return (<tr key={data._id}>
 
                                                         <><td className='border-end border-dark'>{index + 1}</td>
+                                                            <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
                                                             <td className='border-end border-dark'>
                                                                 <table>
                                                                     <tbody>
@@ -205,7 +208,6 @@ const PaymentBankTransection = () => {
                                                                     </tbody>
                                                                 </table>
                                                             </td>
-                                                            <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
                                                             {data.sellBillNumber ? <td className='border-end border-dark'>{data.sellBillNumber} sale bill</td> : ''}
                                                             {data.purchaseBillNumber ? <td className='border-end border-dark'>{data.purchaseBillNumber} purchase bill</td> : ''}
                                                             {data.transportBillNumber ? <td className='border-end border-dark'>{data.transportBillNumber} transport bill</td> : ''}
@@ -228,7 +230,7 @@ const PaymentBankTransection = () => {
                                 <tr>
                                     <th colSpan={2}> Number Of Entries:{allVariable.totalEntries}</th>
 
-                                    <th colSpan={3}> T.Receive: {allVariable.totalRecAmount} Rs.</th>
+                                    <th colSpan={3}> T.Payment: {allVariable.totalRecAmount} Rs.</th>
 
                                 </tr>
                             </tfoot>

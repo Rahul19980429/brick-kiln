@@ -17,7 +17,7 @@ const ReceiveBankTransection = () => {
 
     }
     const a = useContext(context);
-    const { getAllBills, members, getAllMember, setError, logOutClick, spinner } = a;
+    const { getAllBills, members, getAllMember, setError, logOutClick, spinner ,activeStatusUser} = a;
 
     // useState 
     const [bankTransection, setBankTransection] = useState([])
@@ -66,8 +66,8 @@ const ReceiveBankTransection = () => {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -77,7 +77,7 @@ const ReceiveBankTransection = () => {
             // getAllSellBill().then((data) => setBankTransection(data.result.filter((dataa)=>dataa.receiptInfo.find((dataaa)=>dataaa.mode==='online'))))
             getAllMember()
             getAllBills().then((final) => setBankTransection(final.filter((dataa) => dataa.receiptInfo.find((dataaa) => dataaa.mode === 'online')).sort((a, b) => setDateFunction(a.date) - setDateFunction(b.date))))
-
+            activeStatusUser()
         }
     }, [])
 

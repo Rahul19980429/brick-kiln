@@ -12,7 +12,7 @@ const Home = () => {
   }
   let navigate = useNavigate();
   const a = useContext(context);
-  const { spinner, setError, logOutClick } = a;
+  const { spinner, setError, logOutClick,activeStatusUser} = a;
 
   const logOutBtnClick = () => {
     localStorage.removeItem('Jwt_token');
@@ -22,12 +22,15 @@ const Home = () => {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-      if (localStorage.getItem('user_activeStatus') === 'false') {
+    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+      if (localStorage.getItem('user_activeStatus') === false) {
         setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
       }
       logOutClick();
       navigate('/login')
+    }
+    else{
+      activeStatusUser()
     }
 
 

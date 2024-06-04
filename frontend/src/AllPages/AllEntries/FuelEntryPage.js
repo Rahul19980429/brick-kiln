@@ -15,15 +15,15 @@ const FuelEntry = () => {
 
     }
     const a = useContext(context);
-    const { getAllPurchaseBill, getAllTransportBill, members, getAllMember, setError, logOutClick, spinner } = a;
+    const { getAllPurchaseBill, getAllTransportBill, members, getAllMember, setError, logOutClick, spinner,activeStatusUser } = a;
 
     // useState 
     const [purchaseFuel, setPurchaseFuel] = useState([])
     const [provideFuel, setProvideFuel] = useState([])
    
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-            if (localStorage.getItem('user_activeStatus') === 'false') {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+            if (localStorage.getItem('user_activeStatus') === false) {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -33,6 +33,7 @@ const FuelEntry = () => {
             getAllPurchaseBill().then((data) => setPurchaseFuel(data.result.filter((dataa) => dataa.itemsArray.find((fueldata) => fueldata.item === 'fuel'))))
             getAllTransportBill().then((data) => setProvideFuel(data.result.filter((dataa) => dataa.fuel)))
             getAllMember()
+            activeStatusUser()
 
         }
     }, [])

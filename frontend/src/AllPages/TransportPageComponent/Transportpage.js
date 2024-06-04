@@ -33,9 +33,11 @@ const TransportPage = ({ btnColor }) => {
   // useState for bill number Input
   const [inputBillNumber, setInputBillNumber] = useState('')
 
+  const [saleBill, setSaleBill] = useState([])
+
   // input field k liye useState initallize
-  const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '',RefNo:'', Other: '',Amount:0 })
-  const [salaryInput, setSalaryInput] = useState({ From:'',To:'', Chuti:0 , MonthSalary:0, NumberOfDays:0, Other:0 ,Amount:0 })
+  const [itemInput, setItemInput] = useState({ Quantity: '', Rate: '', RefNo: '', Other: '', Amount: 0 })
+  const [salaryInput, setSalaryInput] = useState({ From: '', To: '', Chuti: 0, MonthSalary: 0, NumberOfDays: 0, Other: 0, Amount: 0 })
 
   let fullYear = date.getFullYear();
   let month = date.getMonth() + 1;
@@ -46,7 +48,7 @@ const TransportPage = ({ btnColor }) => {
   const { recAmount, setRecAmount, payAmount, setPayAmount, discount, setDiscount, getAllTransportBill,
     customerItems, setCustomerItems, selectedCustomer, setSelectedCustomer, sellBill,
     setSellBill, ADDNewTransportBill, members, billNumberForNextBtn, setItemName, setFinalAmount,
-    DeleteTransportBill, setError, logOutClick, finalAmount, spinner } = a;
+    DeleteTransportBill, setError, logOutClick, finalAmount, spinner, getAllSellBill ,activeStatusUser} = a;
 
   //  save btn click function
   const billSaveBtn = () => {
@@ -55,8 +57,8 @@ const TransportPage = ({ btnColor }) => {
     }
 
     else {
-     
-      ADDNewTransportBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount,transportFuel, selectedCustomer.balance, customeKaBalanveAfterCalculation);
+
+      ADDNewTransportBill(selectedCustomer._id, sellBill.SellBillNumber, customerItems, recAmount, payAmount, discount, transportFuel, selectedCustomer.balance, customeKaBalanveAfterCalculation);
       clearAll();
     }
   }
@@ -64,8 +66,8 @@ const TransportPage = ({ btnColor }) => {
   // cancel btn click function 
   const clearAll = () => {
     setSelectedCustomer({ _id: '', name: '', address: '', contact: '', balance: '' })
-    setSalaryInput({ From:'',To:'',Chuti:0,MonthSalary:0, NumberOfDays:0, Other:0,Amount:0 })
-    setItemInput({ Quantity: '', Rate: '',RefNo:'', Other: '',Amount:0 })
+    setSalaryInput({ From: '', To: '', Chuti: 0, MonthSalary: 0, NumberOfDays: 0, Other: 0, Amount: 0 })
+    setItemInput({ Quantity: '', Rate: '', RefNo: '', Other: '', Amount: 0 })
     setRecAmount([])
     setPayAmount([])
     setDiscount(0)
@@ -220,15 +222,31 @@ const TransportPage = ({ btnColor }) => {
 
   }
 
+  function SetDateFunc(AnyDate) {
+    let newDate = new Date(AnyDate)
+    let TodayDate = new Date()
+    TodayDate = new Date(TodayDate.toLocaleDateString())
+
+    if (newDate.getTime() >= TodayDate.getTime()) {
+      return true
+    }
+    return false
+  }
+
   useEffect(() => {
-    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
-      if (localStorage.getItem('user_activeStatus') === 'false') {
+    console.log(localStorage.getItem('user_activeStatus'))
+    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
+      if (localStorage.getItem('user_activeStatus') === false) {
         setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
       }
       logOutClick();
       navigate('/login')
     }
     else {
+      activeStatusUser()
+
+      getAllSellBill('yes').then((data) => setSaleBill(data.result.filter((item) => item.itemsArray.length !== 0 && SetDateFunc(item.date))))
+      
       // api call function get all customer
       getAllTransportBill()
 
@@ -308,15 +326,15 @@ const TransportPage = ({ btnColor }) => {
           <div className='col-3 d-lg-block d-none'>
             <h6>Last Bill No:{lastBill ? lastBill : 'XXXX'}</h6>
             <h6>Last Balance: {selectedCustomer.balance ? selectedCustomer.balance : 0}</h6>
-            <button className={`btn btn-${btnColor} btn-sm mx-1`} onClick={()=>setMode('Transport')}> Transport</button>
-            <button className={`btn btn-${btnColor} btn-sm mx-1`} onClick={()=>setMode('Salary')}> Salary</button>
+            <button className={`btn btn-${btnColor} btn-sm mx-1`} onClick={() => setMode('Transport')}> Transport</button>
+            <button className={`btn btn-${btnColor} btn-sm mx-1`} onClick={() => setMode('Salary')}> Salary</button>
           </div>
 
         </div>
-        
+
         {/* part three show customer's add items data and list component */}
-        {mode==='Salary' || (customerItems.length>0 && customerItems[0].from)?<SalaryData btnColor={btnColor} initalvalues={{salaryInput, setSalaryInput  ,transportFuel}} />
-        :<TransportData btnColor={btnColor} initalvalues={{itemInput, setItemInput  ,transportFuel}} />}
+        {mode === 'Salary' || (customerItems.length > 0 && customerItems[0].from) ? <SalaryData btnColor={btnColor} initalvalues={{ salaryInput, setSalaryInput, transportFuel }} />
+          : <TransportData btnColor={btnColor} initalvalues={{ itemInput, setItemInput, transportFuel, saleBill }} />}
         {/* part forth rec,pay,discount and other functionality (all buttons) */}
 
         <div className='row mt-2'>
@@ -325,7 +343,7 @@ const TransportPage = ({ btnColor }) => {
               <ReceiptCashpage btnColor={btnColor} />
               <PaymentCashpage btnColor={btnColor} />
               <Discountpage btnColor={btnColor} />
-             <FuelAddToTransport  btnColor={btnColor} fuelValue={{ setTransportFuel}} />
+              <FuelAddToTransport btnColor={btnColor} fuelValue={{ setTransportFuel }} />
             </div>
             <hr className='mt-2 mb-1' />
             <div className='d-flex' style={{ flexWrap: 'wrap' }}>
@@ -343,7 +361,7 @@ const TransportPage = ({ btnColor }) => {
           {/* billing table part */}
           <div className='col-lg-7'>
             <div className='row border rounded-2'>
-            <div className='col-lg-12 table-responsive' id="data" style={{ height: '20vh' }}>
+              <div className='col-lg-12 table-responsive' id="data" style={{ height: '20vh' }}>
                 <table className="table mb-0">
                   <tbody>
                     {/* Final amount */}
@@ -418,8 +436,8 @@ const TransportPage = ({ btnColor }) => {
                     <th scope="col" >Left Balance:
                       {customeKaBalanveAfterCalculation = - parseInt(finalAmount)
                         + parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)
-                        - parseInt(recAmountVariable ? recAmountVariable:0)
-                        + parseInt(payAmountVariable ? payAmountVariable:0)
+                        - parseInt(recAmountVariable ? recAmountVariable : 0)
+                        + parseInt(payAmountVariable ? payAmountVariable : 0)
                         + parseInt(discount.amount ? discount.amount : 0)}</th>
 
 
@@ -434,10 +452,10 @@ const TransportPage = ({ btnColor }) => {
           <ItemNameList initalvalues={{ itemInput, setItemInput }} itemType="sale" />
           <BillPrint nameData={selectedCustomer} bdate={date}
             bno={sellBill.SellBillNumber ? sellBill.SellBillNumber : null}
-            billitems={customerItems} recData={{ recAmount,recAmountVariable }}
-            payData={{ payAmount,payAmountVariable }}
+            billitems={customerItems} recData={{ recAmount, recAmountVariable }}
+            payData={{ payAmount, payAmountVariable }}
             discountData={{ discount }}
-            fuel ={{transportFuel}}
+            fuel={{ transportFuel }}
             finalAmount={finalAmount}
           />
         </div>

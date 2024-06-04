@@ -39,6 +39,7 @@ const States = (props) => {
   // useState for sell bill data
   const [sellBill, setSellBill] = useState('')
 
+
   // 
   const [billNumberForNextBtn, setBillNumberForNextBtn] = useState(0)
 
@@ -213,7 +214,7 @@ const States = (props) => {
 
 
   // api call to get all sells bill
-  const getAllSellBill = async () => {
+  const getAllSellBill = async (Req) => {
     setSpinner(true)
     const response = await fetch(`${host}/api/bill/getSellBill`, {
       method: 'GET',
@@ -226,6 +227,9 @@ const States = (props) => {
     });
     let data = await response.json();
     if (data.success) {
+      if(Req==='yes'){
+        return data
+      }
       let number = data.result.length > 0 ? data.result[(data.result.length) - 1].sellBillNumber + 1 : 1;
       setSellBill({ sellBillData: data.result, SellBillNumber: number })
       setBillNumberForNextBtn(number)
@@ -624,6 +628,23 @@ const States = (props) => {
 
   }
 
+
+  const activeStatusUser = async () => {
+    const response = await fetch(`${host}/api/auth/activeStatus`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': localStorage.getItem('Jwt_token')
+      },
+    });
+    let data = await response.json();
+
+    if (data.success) {
+      localStorage.setItem('user_activeStatus',data.user.activeStatus)
+    }
+
+  }
   return (
     <context.Provider value={{
 
@@ -642,7 +663,8 @@ const States = (props) => {
       setError, logInUser, logOutClick,
       GetSingleUser, UpdateUser,
       ResetAction,
-      getAllBills
+      getAllBills,
+      activeStatusUser
       
 
     }}>
