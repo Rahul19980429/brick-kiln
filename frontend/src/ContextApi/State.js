@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import context from './Context';
 
-const host = "http://localhost:3002"
+const host = "https://brick-kiln-backend.vercel.app"
 
 
 const States = (props) => {
@@ -576,7 +576,7 @@ const States = (props) => {
     let data = await response.json();
     if (data.success) {
       setError(data.msg)
-      return data.done
+      GetSingleUser()
     }
     else {
       setError(data)
@@ -645,6 +645,9 @@ const States = (props) => {
     }
 
   }
+
+  
+
   return (
     <context.Provider value={{
 
@@ -664,8 +667,7 @@ const States = (props) => {
       GetSingleUser, UpdateUser,
       ResetAction,
       getAllBills,
-      activeStatusUser
-      
+      activeStatusUser,
 
     }}>
 

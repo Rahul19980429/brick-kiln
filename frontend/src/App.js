@@ -23,6 +23,7 @@ import Setting from "./AllPages/Setting";
 
 
 
+
 function App() {
   return (
     <>
@@ -62,15 +63,15 @@ function App() {
             {/* <AllLaborEntry/> */}
             <Route exact path="/labor-bill-check" element={<AllLaborEntry />} />
             {/* <ReceiveBankTransection/> */}
-            <Route exact path="/bank-transection-receive" element={<ReceiveBankTransection/>} />
-             {/* <PaymentBankTransection/> */}
-             <Route exact path="/bank-transection-payment" element={<PaymentBankTransection/>} />
+            <Route exact path="/bank-transection-receive" element={<ReceiveBankTransection />} />
+            {/* <PaymentBankTransection/> */}
+            <Route exact path="/bank-transection-payment" element={<PaymentBankTransection />} />
             {/* <ItemAddPage/> */}
             <Route exact path="/item-sale-numbers" element={<ItemSaleNumbersCheck />} />
             {/* <FuelCheck/> */}
             <Route exact path="/fuel-check" element={<FuelCheck />} />
 
-
+            
 
             {/* <Setting/> */}
             <Route exact path="/setting" element={<Setting />} />

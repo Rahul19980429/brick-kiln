@@ -12,24 +12,25 @@ const Home = () => {
   }
   let navigate = useNavigate();
   const a = useContext(context);
-  const { spinner, setError, logOutClick,activeStatusUser} = a;
+  const { spinner,  logOutClick} = a;
+
+  const logOutBtnClick = () => {
+    logOutClick()
+
+  }
 
   useEffect(() => {
-    if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === "false") {
-      if (localStorage.getItem('user_activeStatus') === "false") {
-        setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
-      }
+    if (!localStorage.getItem('Jwt_token')) {
+
       logOutClick();
       navigate('/login')
     }
-    else{
-      activeStatusUser()
-    }
+   
 
 
   }, [])
   return (
-    localStorage.getItem('Jwt_token') && localStorage.getItem('user_activeStatus') === "true" ?
+    localStorage.getItem('Jwt_token')?
       spinner !== 'true' ?
         <div className='container mt-5'>
           <div className='row px-4'>
@@ -43,46 +44,21 @@ const Home = () => {
                 <div className='card-body p-lg-5'>
                   <h3 className='text-center text-primary mb-3 text-uppercase'>WELCOME {localStorage.getItem('user_name')}</h3>
                   <h5 className='text-center text-primary mb-4 text-uppercase fw-bold'>Date: {setDateFunc(new Date())}</h5>
-                  <div className='row'>
-                    <div className='col-lg-6 col-6'>
+
+                  <div className='row mb-2'>
+                    <div className='col-lg-12'>
                       <div className='d-grid'>
-                        {/* customer bill */}
-                        <Link to="/sale-bill" className='btn btn-danger btn-lg mb-3'>Sale</Link>
+
+                        <Link to="/user" className='btn btn-danger btn-lg'>Create User</Link>
                       </div>
                     </div>
-
-                    <div className='col-lg-6 col-6'>
-                    <div className='d-grid'>
-                        {/* customer bill */}
-                        <Link to="/purchase-bill" className='btn btn-danger btn-lg  mb-3'>Purchase</Link>
-                      </div>
-                    </div>
-
                   </div>
 
-                  <div className='row'>
-                    <div className='col-lg-6 col-6'>
-                      <div className='d-grid'>
-                        {/* Driver bill */}
-                        <Link to="/transport-bill" className='btn btn-danger btn-lg  mb-3'>Transport</Link>
-                      </div>
-                    </div>
-
-                    <div className='col-lg-6 col-6'>
-                      <div className='d-grid'>
-                        {/* Labor bill */}
-                        <Link to="/labor-bill" className='btn btn-danger btn-lg mb-3'>Labor</Link>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  
                   <div className='row'>
                     <div className='col-lg-12'>
                       <div className='d-grid'>
 
-                        <Link to="/login" className='btn btn-danger btn-lg ' onClick={() =>logOutClick()}>Log Out</Link>
+                        <Link to="/login" className='btn btn-danger btn-lg ' onClick={() => logOutBtnClick()}>Log Out</Link>
                       </div>
                     </div>
                   </div>

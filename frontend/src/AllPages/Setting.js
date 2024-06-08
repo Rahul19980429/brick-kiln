@@ -30,7 +30,8 @@ const Setting = () => {
                 alert("Empty field is not allowed")
             }
             else {
-                UpdateUser(Input).then((data)=>setUser(data))
+                UpdateUser(Input)
+
                 clearInput()
                 
             }

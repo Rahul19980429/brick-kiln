@@ -60,7 +60,6 @@ const Form = () => {
                    if(result.success){
                localStorage.setItem('Jwt_token',result.token)
                localStorage.setItem('user_name',result.user.name)
-               localStorage.setItem('user_activeStatus',result.user.activeStatus)
                navigate('/')
            }
            else{
