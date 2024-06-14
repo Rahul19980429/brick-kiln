@@ -188,23 +188,7 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
 
-                            {/* <div className='px-1 col-lg-2 col-md-2 col-3 '>
-                                <h6 className='fw-bold text-lg-center mb-1'>TRANSPORT</h6>
-                                <div className=" input-group mb-3  justify-content-center">
-                                    <select className="form-select" aria-label="Default select example" name='Driver' value={itemInput.Driver} onChange={inputValueChange}>
-                                        <option value=''>Select Driver</option>
-                                        {members.filter((drivers) => drivers.category === 'transport').map((driver) => {
-                                            return <option value={driver._id} key={driver._id} className='text-capitalize'>{driver.name}</option>
-                                        })}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='px-1 col-lg-1 col-md-2 col-3 '>
-                                <h6 className='fw-bold text-lg-center mb-1'>T RATE</h6>
-                                <div className=" input-group mb-4">
-                                    <input value={itemInput.TransportRate} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="TransportRate" name="TransportRate" placeholder='T Rate' />
-                                </div>
-                            </div> */}
+                            
                             <div className='px-1 col-lg-1 col-md-2 col-3 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>REF NO.</h6>
                                 <div className=" input-group mb-3">
@@ -220,20 +204,15 @@ const CustomerItems = (props) => {
                                 </div>
                             </div>
                             <hr className='border border-warning border-2 d-block d-lg-none' />
-                            <div className='px-1 col-lg-2 col col-md-4 '>
+                            <div className='px-1 col-lg-2 col-6 col-md-4 '>
                                 <h6 className='fw-bold text-lg-center mb-1'>AMOUNT</h6>
                                 <div className=" input-group mb-3">
                                     <input autoComplete='off' type="none" className="form-control" id="Amount" name="Amount" value={itemInput.Amount} readOnly />
                                 </div>
                             </div>
-                            {/* <div className='px-1 col-lg-1 col col-md-4 '>
-                                <h6 className='fw-bold text-lg-center mb-1'>T AMOUNT</h6>
-                                <div className=" input-group mb-3">
-                                    <input autoComplete='off' type="none" className="form-control" id="TransportAmount" name="TransportAmount" value={itemInput.TransportAmount} readOnly />
-                                </div>
-                            </div> */}
+                        
 
-                            <div className='col-lg-2 d-flex d-lg-block align-items-center'>
+                            <div className='col-lg-2 col-6 d-flex d-lg-block align-items-center'>
                                 <button className={`btn btn-${btnColor} mt-lg-4 me-2 btn-sm fw-bold`} disabled={!itemName.iname || !itemInput.Quantity || !itemInput.Rate || !itemInput.RefNo ? true : false}>
                                    Add
                                 </button>

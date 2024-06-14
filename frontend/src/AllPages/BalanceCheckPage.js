@@ -59,8 +59,8 @@ const BalanceCheckPage = () => {
 
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
-            if (localStorage.getItem('user_activeStatus') === false) {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
+            if (localStorage.getItem('user_activeStatus') === 'false') {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -79,15 +79,15 @@ const BalanceCheckPage = () => {
 
                 <div className='row my-3'>
                     {/* text */}
-                    <div className='col-lg-3 col-12'>
+                    <div className='col-lg-3 col-6'>
                         <h5 className='text-center bg-dark text-white mb-0 py-2'>Balance</h5>
                     </div>
                     {/* search */}
-                    <div className='col-lg-2 '>
+                    <div className='col-lg-2 col-6'>
                         <input autoComplete='off' onChange={(e) => onChange(e)} className=" form-control me-5 ms-lg-3 " value={searchInput.textSearch} name="textSearch" id="textSearch" type="search" placeholder="Search" aria-label="Search" />
                     </div>
                     {/* date vise search */}
-                    <div className="col-lg-7 d-flex gap-3">
+                    <div className="col-lg-7 d-flex flex-column flex-lg-row gap-3 py-2 py-lg-0">
                         <div className="input-group">
                             <span className="input-group-text text-white bg-dark ">Date From</span>
                             <input onChange={(e) => onChange(e)} autoComplete="off" type="date" className="form-control" value={searchInput.from} name="from" id="from" />
@@ -114,7 +114,7 @@ const BalanceCheckPage = () => {
                 </div>
                 <hr className='mb-1' />
                 <div className='row'>
-                    <div className='col-12' ref={componentRef}>
+                    <div className='col-12' ref={componentRef} style={{overflowX:'scroll'}}>
                         <table className="table table-success table-striped mb-0 mt-2" >
                             <thead className='sticky-top'>
                                 <tr>

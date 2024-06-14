@@ -66,8 +66,8 @@ const ReceiveBankTransection = () => {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
-            if (localStorage.getItem('user_activeStatus') === false) {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
+            if (localStorage.getItem('user_activeStatus') === 'false') {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -98,11 +98,11 @@ const ReceiveBankTransection = () => {
                         <h5 className='text-center bg-dark text-white mb-0 py-2'>Bank Transection Entry</h5>
                     </div>
                     {/* search */}
-                    <div className='col-lg-2'>
+                    <div className='col-lg-2 col-12 my-2 my-lg-0'>
                         <input autoComplete='off' onChange={(e) => onChange(e)} className=" form-control me-5 ms-lg-3 " value={searchInput.textSearch} name="textSearch" id="textSearch" type="search" placeholder="Search" aria-label="Search" />
                     </div>
                     {/* date vise search */}
-                    <div className="col-lg-7 d-flex gap-3">
+                    <div className="col-lg-7 d-flex flex-column flex-lg-row gap-3 py-2 py-lg-0">
                         <div className="input-group">
                             <span className="input-group-text text-white bg-dark ">Date From</span>
                             <input onChange={(e) => onChange(e)} autoComplete="off" type="date" className="form-control" value={searchInput.from} name="from" id="from" />
@@ -129,8 +129,8 @@ const ReceiveBankTransection = () => {
                 </div>
                 <hr  />
 
-                <div className='row'>
-                    <div className='col-10' ref={componentRef} >
+                <div className='row row flex flex-column-reverse flex-lg-row '>
+                    <div className='col-10 col-12' ref={componentRef} style={{overflowX:'scroll'}} >
                         <table className="table table-success table-striped mb-0" >
                             <thead className='sticky-top'>
                                 <tr>
@@ -235,7 +235,7 @@ const ReceiveBankTransection = () => {
                             </tfoot>
                         </table>
                     </div>
-                    <div className='col-2 text-center'>
+                    <div className='col-lg-2 col-12 text-center mb-3'>
                         <Link to="/bank-transection-receive" className="btn btn-dark fw-bold me-2">Receice</Link>
                         <Link to="/bank-transection-payment" className="btn btn-dark fw-bold ">Payment</Link>
                     </div>

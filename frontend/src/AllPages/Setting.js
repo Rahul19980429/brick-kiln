@@ -157,15 +157,15 @@ const Setting = () => {
                 </div>
                 <hr className='border border-4 border-danger' />
                 <div className='row px-3'>
-                    <div className='col-lg-12 d-flex'>
+                    <div className='col-lg-12 d-flex flex-column flex-lg-row gap-2'>
                         <ResetButtonPressModal Data={restModal}/>
-                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET PURCHASE BILL',DeleteType:'purchasebill'})} className="btn btn-sm btn-danger text-white fw-bold  mx-2 border-0 rounded-2" type='button'>RESET PURCHASE BILL</button>
-                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET SALE BILL',DeleteType:'salebill'})} className="btn btn-sm btn-danger text-white fw-bold  mx-2 border-0 rounded-2" type='button'>RESET SALE BILL</button>
-                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET TRANSPORT BILL',DeleteType:'transportbill'})} className="btn btn-sm btn-danger text-white fw-bold  mx-2 border-0 rounded-2" type='button'>RESET TRANSPORT BILL</button>
-                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET LABOR BILL',DeleteType:'laborbill'})} className="btn btn-sm btn-danger text-white fw-bold  mx-2 border-0 rounded-2" type='button'>RESET LABOR BILL</button>
-                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET MEMBER BILL',DeleteType:'member'})} className="btn btn-sm btn-danger text-white fw-bold  mx-2 border-0 rounded-2" type='button'>RESET MEMBER</button>
-                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET ITEM BILL',DeleteType:'item'})} className="btn btn-sm btn-danger text-white fw-bold  mx-2 border-0 rounded-2" type='button'>RESET ITEM</button>
-                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET COMPLETE APPLICATION',DeleteType:'completeapplication'})} className="btn btn-sm btn-danger text-white fw-bold  mx-2 border-0 rounded-2" type='button'>RESET COMPLETE APPLICATION</button>
+                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET PURCHASE BILL',DeleteType:'purchasebill'})} className="btn btn-sm btn-danger text-white fw-bold   border-0 rounded-2" type='button'>RESET PURCHASE BILL</button>
+                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET SALE BILL',DeleteType:'salebill'})} className="btn btn-sm btn-danger text-white fw-bold   border-0 rounded-2" type='button'>RESET SALE BILL</button>
+                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET TRANSPORT BILL',DeleteType:'transportbill'})} className="btn btn-sm btn-danger text-white fw-bold   border-0 rounded-2" type='button'>RESET TRANSPORT BILL</button>
+                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET LABOR BILL',DeleteType:'laborbill'})} className="btn btn-sm btn-danger text-white fw-bold   border-0 rounded-2" type='button'>RESET LABOR BILL</button>
+                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET MEMBER BILL',DeleteType:'member'})} className="btn btn-sm btn-danger text-white fw-bold   border-0 rounded-2" type='button'>RESET MEMBER</button>
+                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET ITEM BILL',DeleteType:'item'})} className="btn btn-sm btn-danger text-white fw-bold   border-0 rounded-2" type='button'>RESET ITEM</button>
+                        <button data-bs-toggle="modal" data-bs-target="#ResetModalButtonPress" onClick={() => setRestModal({Title:'RESET COMPLETE APPLICATION',DeleteType:'completeapplication'})} className="btn btn-sm btn-danger text-white fw-bold   border-0 rounded-2" type='button'>RESET COMPLETE APPLICATION</button>
 
                     </div>
                 </div>

@@ -22,8 +22,8 @@ const FuelEntry = () => {
     const [provideFuel, setProvideFuel] = useState([])
    
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
-            if (localStorage.getItem('user_activeStatus') === false) {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
+            if (localStorage.getItem('user_activeStatus') === 'false') {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -51,11 +51,11 @@ const FuelEntry = () => {
             <div className='container'>
                 <div className='row mt-3'>
                    
-                    <div className='col-lg-11 col-12'>
+                    <div className='col-lg-11 col-9'>
                         <h5 className='text-center bg-dark text-white mb-0 py-2'>Fuel Entry</h5>
                     </div>
                    
-                    <div className="col-lg-1 d-flex gap-3">
+                    <div className="col-lg-1 col-3 d-flex gap-3">
                         
                         <ReactToPrint
                             trigger={() => {
@@ -70,8 +70,8 @@ const FuelEntry = () => {
                     </div>
                 </div>
                 <hr className='mb-1' />
-                <div className='row' ref={componentRef}>
-                    <div className='col-6'  >
+                <div className='row' ref={componentRef} style={{overflowX:'scroll'}}> 
+                    <div className='col-lg-6 col-12 my-2 my-lg-0' >
                         <table className="table table-success table-striped mb-0" >
                             <thead className='sticky-top'>
                                 <tr>
@@ -106,12 +106,12 @@ const FuelEntry = () => {
                         <h6 className='text-center bg-dark text-white mb-0 py-2'>Total Purchase Fuel: {allVariable.totalPurchasefuel} ltr </h6>
                     </div>
 
-                    <div className='col-6'>
-                        <table className="table table-success table-striped mb-0" >
+                    <div className='col-lg-6 col-12'>
+                        <table className="table table-success table-striped mb-0">
                             <thead className='sticky-top'>
                                 <tr>
                                     <th scope="col">TRANSPORT</th>
-                                    <th scope="col">DISTRIBUTION FUEL </th>
+                                    <th scope="col">DISTRIBUTE FUEL </th>
                                     <th scope="col">BILL NO. </th>
                                     <th scope="col">DATE</th>
                                 </tr>

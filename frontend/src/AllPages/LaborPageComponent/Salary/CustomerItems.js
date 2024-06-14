@@ -158,13 +158,13 @@ const CustomerItems = (props) => {
                 <div className='col-12 border '>
                     <form onSubmit={AddItemToCustomer}>
                         <div className={`row  text-${btnColor} pt-2`}>
-                            <div className='col-lg-2 col-md-2 col-9 px-1'>
+                            <div className='col-lg-2 col-md-2 col-6 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>FROM</h6>
                                 <div className=" input-group mb-4">
                                     <input onChange={inputValueChange} onKeyUp={keypress} autoComplete="off" type="date" className="form-control" value={salaryInput.From} name="From" id="From" />
                                 </div>
                             </div>
-                            <div className='col-lg-2 col-md-2 col-9 px-1'>
+                            <div className='col-lg-2 col-md-2 col-6 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>TO</h6>
                                 <div className=" input-group mb-4">
                                     <input onChange={inputValueChange} onKeyUp={keypress} autoComplete="off" type="date" className="form-control" value={salaryInput.To} name="To" id="To" />

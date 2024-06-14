@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import context from './Context';
 
+// const host = "http://localhost:3002"
 const host = "https://brick-kiln-backend.vercel.app"
-
 
 const States = (props) => {
   //  usestate for sipnner 
@@ -67,7 +67,7 @@ const States = (props) => {
     let data = await response.json();
     if (data.success) {
       setMembers(data.result);
-      setSpinner()
+      // setSpinner()
       return data
     }
     else {
@@ -228,6 +228,7 @@ const States = (props) => {
     let data = await response.json();
     if (data.success) {
       if(Req==='yes'){
+        setSpinner(false);
         return data
       }
       let number = data.result.length > 0 ? data.result[(data.result.length) - 1].sellBillNumber + 1 : 1;

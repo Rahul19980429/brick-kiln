@@ -147,17 +147,17 @@ const CustomerItems = (props) => {
                 <div className='col-12 border '>
                     <form onSubmit={AddItemToCustomer}>
                         <div className={`row  text-${btnColor} pt-2`}>
-                            <div className='col-lg-1 col-md-2 col-3 text-center d-flex d-lg-block align-items-center'>
+                            <div className='col-lg-1 col-md-2 col-3 px-1 text-center d-flex d-lg-block align-items-center'>
                                 <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item List</button>
                             </div>
 
-                            <div className='col-lg-2 col-md-2 col-9 px-1'>
+                            <div className='col-lg-2 col-md-2 col-5 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />
                                 </div>
                             </div>
-                            <div className='col-lg-2 col-md-2 col-3 px-1'>
+                            <div className='col-lg-2 col-md-2 col-4 px-1'>
                                 <h6 className='fw-bold text-lg-center mb-1'>Net WT/LTR</h6>
                                 <div className=" input-group mb-4">
                                     <input value={itemInput.NetWeight} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="NetWeight" name="NetWeight" placeholder='Qty/Wt' />

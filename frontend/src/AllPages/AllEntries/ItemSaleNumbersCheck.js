@@ -69,8 +69,8 @@ const ItemSaleNumbersCheck = () => {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === false) {
-            if (localStorage.getItem('user_activeStatus') === false) {
+        if (!localStorage.getItem('Jwt_token') || localStorage.getItem('user_activeStatus') === 'false') {
+            if (localStorage.getItem('user_activeStatus') === 'false') {
                 setError({ 'error': <span className='text-center'>YOUR ACCESS IS STOPPED BY ADMIN PLEASE RENEWAL YOUR ACCOUNT</span> })
             }
             logOutClick();
@@ -96,7 +96,7 @@ const ItemSaleNumbersCheck = () => {
 
                 </div>
                 <div className='row'>
-                <div className='col-4 py-2'>
+                <div className='col-lg-4 col-12 py-2'>
                         <h6 className='text-center bg-dark text-white py-2 mb-0'>Item's Purchase Detail</h6>
                         <table className="table table-success table-striped mb-0" >
                             <thead className='sticky-top'>
@@ -127,7 +127,7 @@ const ItemSaleNumbersCheck = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className='col-4 py-2'>
+                    <div className='col-lg-4 col-12 py-2'>
                         <h6 className='text-center bg-dark text-white py-2 mb-0'>Item's Sale Detail</h6>
                         <table className="table table-success table-striped mb-0" >
                             <thead className='sticky-top'>
@@ -158,7 +158,7 @@ const ItemSaleNumbersCheck = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className='col-4 py-2'>
+                    <div className='col-lg-4 col-12 py-2'>
                         <h6 className='text-center bg-dark text-white py-2 mb-0'>Item's Labor Production Detail</h6>
                         <table className="table table-success table-striped mb-0" >
                             <thead className='sticky-top'>

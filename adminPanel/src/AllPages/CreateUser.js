@@ -126,7 +126,7 @@ console.log(id,bool)
 
                         </div>
                         <hr className='mb-0' />
-                        <div className='setClient px-3 py-2 '>
+                        <div className=' px-3 py-2 ' style={{ overflowY: 'scroll', height: '70vh' }}>
                             {users.length === 0 ? <h5 className='text-danger'>No Client Added Yet</h5> :
                                 users.map((user) => {
                                     return (

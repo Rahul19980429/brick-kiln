@@ -95,7 +95,7 @@ const TransportItems = (props) => {
     return (
         <>
             <div className='row'>
-                <div className='col-9'>
+                <div className='col-lg-9'>
                     <div className='row'>
                         <div className='col-12 border text-center  p-0 table-responsive' id="data" style={{ height: '22vh' }}>
                             <table className="table table-success table-striped mb-0" >
@@ -153,35 +153,35 @@ const TransportItems = (props) => {
                         <div className='col-12 border '>
                             <form onSubmit={AddItemToCustomer}>
                                 <div className={`row  text-${btnColor} pt-2`}>
-                                    <div className='col-lg-1 col-md-2 col-3 text-center d-flex d-lg-block align-items-center'>
+                                    <div className='col-lg-1 col-md-2 col-2 text-center d-flex d-lg-block align-items-center'>
                                         <button type='button' className={`btn  btn-${btnColor} mt-lg-4 btn-sm`} id="HiddenBtnItem" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Item</button>
                                     </div>
 
-                                    <div className='col-lg-2 col-md-2 col-9 px-1'>
+                                    <div className='col-lg-2 col-md-2 col-5 px-1'>
                                         <h6 className='fw-bold text-lg-center mb-1'>ITEM</h6>
                                         <div className=" input-group mb-4">
                                             <input value={itemName.iname ? itemName.iname : ''} readOnly name="iname" autoComplete='off' type="text" className="form-control" placeholder='Add Item' />
                                         </div>
                                     </div>
-                                    <div className='col-lg-2 col-md-2 col-3 px-1'>
+                                    <div className='col-lg-2 col-md-2 col-4 px-1'>
                                         <h6 className='fw-bold text-lg-center mb-1'>Net QTY/WT</h6>
                                         <div className=" input-group mb-4">
                                             <input value={itemInput.Quantity} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Quantity" name="Quantity" placeholder='Qty/Wt' />
                                         </div>
                                     </div>
-                                    <div className='col-lg-1 col-md-2 col-3 px-1'>
+                                    <div className='col-lg-1 col-md-2 col-4 px-1'>
                                         <h6 className='fw-bold text-lg-center mb-1'>RATE</h6>
                                         <div className=" input-group mb-4">
                                             <input value={itemInput.Rate} onKeyUp={keypress} onChange={inputValueChange} step='0.1' autoComplete='off' type="text" className="form-control" id="Rate" name="Rate" placeholder='Rate' />
                                         </div>
                                     </div>
-                                    <div className='px-1 col-lg-1 col-md-2 col-3 '>
+                                    <div className='px-1 col-lg-1 col-md-2 col-4 '>
                                         <h6 className='fw-bold text-lg-center mb-1'>REF NO.</h6>
                                         <div className=" input-group mb-3">
                                             <input value={itemInput.RefNo} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="RefNo" name="RefNo" placeholder='XXXX' />
                                         </div>
                                     </div>
-                                    <div className='col-lg-1 col-md-2 col-3 px-1'>
+                                    <div className='col-lg-1 col-md-2 col-4 px-1'>
                                         <h6 className='fw-bold text-lg-center mb-1'>OTHER</h6>
                                         <div className=" input-group mb-4">
                                             <input value={itemInput.Other} onKeyUp={keypress} onChange={inputValueChange} autoComplete='off' type="text" className="form-control" id="Other" name="Other" placeholder='Other' />
@@ -203,7 +203,7 @@ const TransportItems = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className='col-3 table-responsive' style={{ height: '45vh' }}>
+                <div className='col-lg-3 table-responsive d-none d-md-block' style={{ height: '45vh' }}>
                     <h6 className='bg-dark m-0 text-white text-center'>Suggestion From Sale</h6>
                     <table className="table table-success table-striped mb-0" >
                         <tbody>

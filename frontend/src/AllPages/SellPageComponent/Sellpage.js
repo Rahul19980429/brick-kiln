@@ -248,7 +248,7 @@ const Sellpage = ({btnColor}) => {
       </div>
     )
   }
-  return (
+  return ( 
     localStorage.getItem('Jwt_token') && localStorage.getItem('user_activeStatus') === 'true' ?
       <div className='container'>
         {/* part first bill search row */}
@@ -256,9 +256,9 @@ const Sellpage = ({btnColor}) => {
           <div className='col-lg-4 col-12'>
             <h5 className='text-center py-2 bg-dark text-white'>Sale Bill</h5>
           </div>
-          <div className='col-lg-5 col-12 text-center py-1'>
-            <Link to="/member" className={`btn btn-${btnColor} btn-sm mx-1`}>Create New Member</Link>
-            <Link to="/item" className={`btn btn-${btnColor} btn-sm mx-1`}>Create New Item</Link>
+          <div className='col-lg-5 col-12 text-center py-1 mb-2'>
+            <Link to="/member" className={`btn btn-${btnColor} btn-sm mx-lg-1 me-5 `}>Create New Member</Link>
+            <Link to="/item" className={`btn btn-${btnColor} btn-sm mx-lg-1 `}>Create New Item</Link>
           </div>
           <div className='col-lg-3 col-12'>
             <div className="input-group input-group-sm mb-2 border border-white rounded-1">
@@ -269,11 +269,6 @@ const Sellpage = ({btnColor}) => {
         </div>
         {/* part second customer detail row */}
         <div className='row '>
-          <div className='d-flex d-lg-none'>
-            <h5 className='p-2'> Bill : <span className='border border rounded-2 py-1 px-3'>{sellBill.SellBillNumber ? sellBill.SellBillNumber : 1}</span></h5>
-            <h5 className='ms-auto p-2 my-0' > Date: <span className='border border rounded-2 py-1 px-3'>{day > 9 ? day : '0' + day}/{month > 9 ? month : '0' + month}/{fullYear}</span> </h5>
-          </div>
-          <hr className='d-lg-none' />
           <div className='col-lg-6'>
             <div className="row g-3">
               <div className='d-flex '>
@@ -303,12 +298,13 @@ const Sellpage = ({btnColor}) => {
             </div>
 
           </div>
-          <div className='col-3 d-lg-block d-none'>
+          <hr className='d-lg-none' />
+          <div className='col-lg-3 col-7 '>
             {/* here get bill numver update and customer's last balance  */}
             <h5 className='p-2'> Bill :<span className='border border rounded-2 py-1 px-3'>{sellBill.SellBillNumber}</span></h5>
             <h5 className='p-2'> Date: <span className='border border rounded-2 py-1 px-3'>{(day > 9 ? day : '0' + day)}/{month > 9 ? month : '0' + month}/{fullYear}</span> </h5>
           </div>
-          <div className='col-3 d-lg-block d-none'>
+          <div className='col-lg-3 col-5'>
             <h6>Last Bill No:{lastBill ? lastBill : 'XXXX'}</h6>
             <h6>Last Balance: {selectedCustomer.balance ? selectedCustomer.balance : 0}</h6>
           </div>
@@ -346,7 +342,10 @@ const Sellpage = ({btnColor}) => {
                     {/* Final Amount */}
                     <tr>
                       <th scope="row">Final Amount : {parseInt(finalAmount ? finalAmount : 0) + parseInt(selectedCustomer.balance ? selectedCustomer.balance : 0)} </th>
-                      <th colSpan={3}>T.Amount:({finalAmount ? finalAmount : 0})+ Last Balance:({selectedCustomer.balance ? selectedCustomer.balance : 0}) </th>
+                      <th colSpan={3} className='d-none d-lg-block'>T.Amount:({finalAmount ? finalAmount : 0}) + Last Balance:({selectedCustomer.balance ? selectedCustomer.balance : 0}) </th>
+                    </tr>
+                    <tr>
+                      <th colSpan={3} className='d-block d-lg-none'>T.Amount:({finalAmount ? finalAmount : 0}) + Last Balance:({selectedCustomer.balance ? selectedCustomer.balance : 0}) </th>
                     </tr>
 
                      {/* Payment*/}
@@ -420,8 +419,6 @@ const Sellpage = ({btnColor}) => {
                      - parseInt(discount.amount ? discount.amount : 0)
                      }</th>
                      
-
-
                   </tr>
                 </tfoot>
               </table>
