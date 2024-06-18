@@ -51,7 +51,7 @@ const CustomerItems = (props) => {
         }
         else {
             if (itemInput.Quantity && itemInput.Rate) {
-                setItemInput({ ...itemInput, Amount: parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0)})
+                setItemInput({ ...itemInput, Amount: Math.round(parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))})
             }
             else {
 
@@ -84,11 +84,7 @@ const CustomerItems = (props) => {
             "refNo": itemInput.RefNo ? itemInput.RefNo : 0,
             "other": itemInput.Other ? itemInput.Other : 0,
             "amount": itemInput.Amount ? itemInput.Amount : 0,
-            // "driverId": itemInput.Driver,
-            // "driverName": members.find((driver) => driver._id === itemInput.Driver).name,
-            // "transportRate": itemInput.TransportRate ? itemInput.TransportRate : 0,
-            // "transportAmount": itemInput.TransportAmount ? itemInput.TransportAmount : 0,
-           
+            
         }
         setFinalAmount(parseFloat(finalAmount) + parseFloat(itemInput.Amount ? itemInput.Amount : 0));
         setCustomerItems(customerItems.concat(newItemAdd).reverse());

@@ -85,12 +85,12 @@ const CustomerItems = (props) => {
             if (salaryInput.Chuti !== 0) {
                 Difference_In_Days = Difference_In_Days - parseInt(salaryInput.Chuti?salaryInput.Chuti:0)
                 if( Difference_In_Days>0){
-                setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30) })
+                setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Math.round(Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30))})
                 }
             }
             else {
                 if( Difference_In_Days>0){
-                setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30) })
+                setSalaryInput({ ...salaryInput, NumberOfDays: Difference_In_Days,Amount:Math.round(Difference_In_Days*(parseFloat(salaryInput.MonthSalary?salaryInput.MonthSalary:0)/30)) })
                 }
             }
         }

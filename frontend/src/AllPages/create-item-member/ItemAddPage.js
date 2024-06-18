@@ -29,7 +29,10 @@ const ItemAddPage = () => {
         e.preventDefault()
 
         if (!itemInput.itemName) {
-            alert("Empty field is not allowed")
+            setError({ error: "Empty field is not allowed" })
+        }
+        else if(itemInput.itemName.length <= 1){
+            setError({ error: "Name length is too short" })
         }
         else {
             AddNewItem(itemInput.itemName.toLowerCase(), itemInput.category, itemInput.itemRate);
@@ -41,8 +44,16 @@ const ItemAddPage = () => {
 
     const updateMember = (id, data) => {
         const { itemName, category , itemRate } = data;
-        UpdateItem(id, itemName, category,itemRate)
-        clearInput()
+        if (!itemName) {
+            setError({ error: "Empty field is not allowed" })
+        }
+        else if(itemName.length <= 1){
+            setError({ error: "Name length is too short" })
+        }
+        else{
+            UpdateItem(id, itemName, category,itemRate)
+            clearInput()
+        }
     }
     const clearInput = () => {
         setItemInput({ itemName: '', category: 'sale',itemRate: 0 })

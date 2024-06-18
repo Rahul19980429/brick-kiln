@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import context from '../../ContextApi/Context'
 import "../../App.css"
 const CustomerItems = (props) => {
@@ -15,7 +15,7 @@ const CustomerItems = (props) => {
     // function for remove item from the customer items list
     const removeItemFromList = (item) => {
         setFinalAmount(finalAmount - customerItems[item].amount)
-        let result = customerItems.filter((data, index) => index !== item);
+        let result = customerItems.filter((_, index) => index !== item);
         setCustomerItems(result);
     }
 
@@ -50,7 +50,7 @@ const CustomerItems = (props) => {
         }
         else {
             if (itemInput.Rate && itemInput.NetWeight) {
-                setItemInput({...itemInput,Amount:parseInt(itemInput.NetWeight ? itemInput.NetWeight : 0) * parseInt(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0)})
+                setItemInput({...itemInput,Amount:Math.round(parseInt(itemInput.NetWeight ? itemInput.NetWeight : 0) * parseInt(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))})
             }
             else {
                 setItemInput({...itemInput,Amount:0})

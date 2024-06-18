@@ -39,11 +39,11 @@ const ResetButtonPressModal = ({Data}) => {
                                     <h6>{error.error ? error.error : error}</h6>
                                 </div>
                                 {Data.DeleteType==="member"?<p className='mb-0'><strong>Note: Reset Member Will Also Reset Purchase, Sale, Transport, Labor. Are You Sure? </strong></p>:''}
-                                {Data.DeleteType==="item"?<p className='mb-0'><strong>Note: Reset Item Will Also Reset Purchase, Sale, Transport, Labor. Are You Sure? </strong></p>:''}
+                                {Data.DeleteType==="item"?<p className='mb-0'><strong>Note: Reset Item Will Reset Item Details. Are You Sure? </strong></p>:''}
                                 {Data.DeleteType==="salebill"?<p className='mb-0'><strong>Note: Reset Sale Bill Will Also Reset Bank Entry And Item Sale Numbers. Are You Sure? </strong></p>:''}
                                 {Data.DeleteType==="purchasebill"?<p className='mb-0'><strong>Note: Reset Purchase Bill Will Also Reset Purchase Fuel Entry And Item Sale Entry. Are You Sure? </strong></p>:''}
                                 {Data.DeleteType==="transportbill"?<p className='mb-0'><strong>Note: Reset Transport Bill Will Also Reset Provide Fuel Entry And Item Purchase Entry. Are You Sure? </strong></p>:''}
-                                {Data.DeleteType==="transportbill"?<p className='mb-0'><strong>Note: Reset Transport Bill Will Also Reset Provide Fuel Entry. Are You Sure? </strong></p>:''}
+                                {Data.DeleteType==="laborbill"?<p className='mb-0'><strong>Note: Reset Labor Bill Will Also Reset Item Production Entry. Are You Sure? </strong></p>:''}
                                 {Data.DeleteType==="completeapplication"?<p className='mb-0'><strong>Note: It Will Reset Complete Application. Are You Sure? </strong></p>:''}
 
                         </div>

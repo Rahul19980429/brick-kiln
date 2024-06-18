@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import context from './Context';
 
-// const host = "http://localhost:3002"
-const host = "https://brick-kiln-backend.vercel.app"
+const host = "http://localhost:3002"
+// const host = "https://brick-kiln-backend.vercel.app"
 
 const States = (props) => {
   //  usestate for sipnner 

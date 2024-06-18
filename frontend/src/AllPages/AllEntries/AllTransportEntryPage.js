@@ -161,7 +161,7 @@ const AllPurchaseEntry = () => {
 
                                                 <><td className='border-end border-dark'>{index + 1}</td>
                                                     <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
-                                                    <td className='border-end border-dark'>{Math.floor(data.transportLastBalance)}</td>
+                                                    <td className='border-end border-dark'>{Math.round(data.transportLastBalance)}</td>
 
                                                     <td className='border-end border-dark'>
                                                         {data.itemsArray.map((data, index) => {
@@ -202,7 +202,7 @@ const AllPurchaseEntry = () => {
 
                                                     <td className='border-end border-dark'>{data.discountInfo.amount ? data.discountInfo.amount : 0} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
                                                     <td className='border-end border-dark'>{data.fuel?data.fuel:0} </td>
-                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.transportLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount?data.discountInfo.amount:0))}</td>
+                                                    <td className='border-end border-dark'>{Math.round(parseFloat(-amount) + parseFloat(data.transportLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount?data.discountInfo.amount:0))}</td>
                                                     <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                     {/* hidden re-initialise amount here */}
                                                     <td className='d-none'>{amount = 0} {allVariable.payAmountTotal = 0} {allVariable.recAmountTotal = 0}</td></>
@@ -226,7 +226,7 @@ const AllPurchaseEntry = () => {
 
                                                         <><td className='border-end border-dark'>{index + 1}</td>
                                                             <td className='border-end border-dark'>{customerData[0].name} #{customerData[0].contact}</td>
-                                                            <td className='border-end border-dark'>{Math.floor(data.transportLastBalance)}</td>
+                                                            <td className='border-end border-dark'>{Math.round(data.transportLastBalance)}</td>
                                                             <td className='border-end border-dark'>
                                                                 {data.itemsArray.map((data, index) => {
                                                                     amount = amount + parseFloat(data.amount)
@@ -266,7 +266,7 @@ const AllPurchaseEntry = () => {
 
                                                     <td className='border-end border-dark'>{data.discountInfo.amount ? data.discountInfo.amount : 0} {data.discountInfo.naration === 'naration' ? '' : data.discountInfo.naration}</td>
                                                     <td className='border-end border-dark'>{data.fuel?data.fuel:0} </td>
-                                                    <td className='border-end border-dark'>{Math.floor(parseFloat(-amount) + parseFloat(data.transportLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount?data.discountInfo.amount:0))}</td>
+                                                    <td className='border-end border-dark'>{Math.round(parseFloat(-amount) + parseFloat(data.transportLastBalance) + parseFloat(allVariable.payAmountTotal) - parseFloat(allVariable.recAmountTotal) + parseFloat(data.discountInfo.amount?data.discountInfo.amount:0))}</td>
                                                             <td className='border-end border-dark'>{date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()} {date.getHours()}:{date.getMinutes()}</td>
                                                             {/* hidden re-initialise amount here */}
                                                             <td className='d-none'>{amount = 0} {allVariable.payAmountTotal = 0} {allVariable.recAmountTotal = 0}</td></>

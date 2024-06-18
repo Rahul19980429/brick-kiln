@@ -46,7 +46,7 @@ const CustomerItems = (props) => {
         } 
         else {
             if (itemInput.Rate && itemInput.Quantity) {
-                setItemInput({ ...itemInput, Amount:parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0)})
+                setItemInput({ ...itemInput, Amount:Math.round(parseInt(itemInput.Quantity ? itemInput.Quantity : 0) * parseFloat(itemInput.Rate ? itemInput.Rate : 0) + parseInt(itemInput.Other ? itemInput.Other : 0))})
             }
             else {
                 setItemInput({ ...itemInput, Amount: 0 }) 
